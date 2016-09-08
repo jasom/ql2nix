@@ -1,0 +1,2722 @@
+these derivations will be built:
+  /nix/store/02aim3av1i59m2x6bh0af88xzhx3a6v5-lisp-alexandria-20160421-git.drv
+  /nix/store/hlkvk4hhzd2vf8s4v1vvghiqa7c5rx78-lisp-agm-20160421-git.drv
+building path(s) ‘/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git’
++ oldPreConfigure=
++ oldPreBuild=
++ genericBuild
++ '[' -n '' ']'
++ '[' -z '' ']'
++ phases=' unpackPhase patchPhase              configurePhase  buildPhase checkPhase              installPhase  fixupPhase installCheckPhase              distPhase '
++ for curPhase in '$phases'
++ '[' unpackPhase = buildPhase -a -n '' ']'
++ '[' unpackPhase = checkPhase -a -z '' ']'
++ '[' unpackPhase = installPhase -a -n '' ']'
++ '[' unpackPhase = fixupPhase -a -n '' ']'
++ '[' unpackPhase = installCheckPhase -a -z '' ']'
++ '[' unpackPhase = distPhase -a -z '' ']'
++ '[' -n '' ']'
++ showPhaseHeader unpackPhase
++ local phase=unpackPhase
++ case $phase in
++ header 'unpacking sources'
++ startNest ''
++ nestingLevel=1
++ echo -en '\033[p'
++ echo 'unpacking sources'
+unpacking sources
++ dumpVars
++ '[' '' '!=' 1 ']'
++ export
++ eval unpackPhase
+++ unpackPhase
+++ runHook preUnpack
+++ local hookName=preUnpack
+++ shift
+++ local var=preUnpack
+++ [[ preUnpack =~ Hook$ ]]
+++ var+=Hooks
+++ eval 'local -a dummy=("${preUnpackHooks[@]}")'
++++ dummy=("${preUnpackHooks[@]}")
++++ local -a dummy
+++ for hook in '"_callImplicitHook 0 $hookName"' '"${dummy[@]}"'
+++ _eval '_callImplicitHook 0 preUnpack'
+++ local 'code=_callImplicitHook 0 preUnpack'
+++ shift
++++ type -t _callImplicitHook 0 preUnpack
+++ '[' function = function ']'
+++ eval '_callImplicitHook 0 preUnpack "$@"'
++++ _callImplicitHook 0 preUnpack
++++ local def=0
++++ local hookName=preUnpack
++++ case "$(type -t $hookName)" in
+++++ type -t preUnpack
++++ '[' -z '' ']'
++++ return 0
+++ return 0
+++ '[' -z '' ']'
+++ '[' -z /nix/store/pgn45hq6iqw0xqn7gs4d3zfbb40im6l4-alexandria-20160421-git.tgz ']'
+++ srcs=/nix/store/pgn45hq6iqw0xqn7gs4d3zfbb40im6l4-alexandria-20160421-git.tgz
+++ local dirsBefore=
+++ for i in '*'
+++ '[' -d env-vars ']'
+++ for i in '$srcs'
+++ unpackFile /nix/store/pgn45hq6iqw0xqn7gs4d3zfbb40im6l4-alexandria-20160421-git.tgz
+++ curSrc=/nix/store/pgn45hq6iqw0xqn7gs4d3zfbb40im6l4-alexandria-20160421-git.tgz
+++ header 'unpacking source archive /nix/store/pgn45hq6iqw0xqn7gs4d3zfbb40im6l4-alexandria-20160421-git.tgz' 3
+++ startNest 3
+++ nestingLevel=2
+++ echo -en '\033[3p'
+++ echo 'unpacking source archive /nix/store/pgn45hq6iqw0xqn7gs4d3zfbb40im6l4-alexandria-20160421-git.tgz'
+unpacking source archive /nix/store/pgn45hq6iqw0xqn7gs4d3zfbb40im6l4-alexandria-20160421-git.tgz
+++ runOneHook unpackCmd /nix/store/pgn45hq6iqw0xqn7gs4d3zfbb40im6l4-alexandria-20160421-git.tgz
+++ local hookName=unpackCmd
+++ shift
+++ local var=unpackCmd
+++ [[ unpackCmd =~ Hook$ ]]
+++ var+=Hooks
+++ eval 'local -a dummy=("${unpackCmdHooks[@]}")'
++++ dummy=("${unpackCmdHooks[@]}")
++++ local -a dummy
+++ for hook in '"_callImplicitHook 1 $hookName"' '"${dummy[@]}"'
+++ _eval '_callImplicitHook 1 unpackCmd' /nix/store/pgn45hq6iqw0xqn7gs4d3zfbb40im6l4-alexandria-20160421-git.tgz
+++ local 'code=_callImplicitHook 1 unpackCmd'
+++ shift
++++ type -t _callImplicitHook 1 unpackCmd
+++ '[' function = function ']'
+++ eval '_callImplicitHook 1 unpackCmd "$@"'
++++ _callImplicitHook 1 unpackCmd /nix/store/pgn45hq6iqw0xqn7gs4d3zfbb40im6l4-alexandria-20160421-git.tgz
++++ local def=1
++++ local hookName=unpackCmd
++++ case "$(type -t $hookName)" in
+++++ type -t unpackCmd
++++ '[' -z '' ']'
++++ return 1
+++ for hook in '"_callImplicitHook 1 $hookName"' '"${dummy[@]}"'
+++ _eval _defaultUnpack /nix/store/pgn45hq6iqw0xqn7gs4d3zfbb40im6l4-alexandria-20160421-git.tgz
+++ local code=_defaultUnpack
+++ shift
++++ type -t _defaultUnpack
+++ '[' function = function ']'
+++ eval '_defaultUnpack "$@"'
++++ _defaultUnpack /nix/store/pgn45hq6iqw0xqn7gs4d3zfbb40im6l4-alexandria-20160421-git.tgz
++++ local fn=/nix/store/pgn45hq6iqw0xqn7gs4d3zfbb40im6l4-alexandria-20160421-git.tgz
++++ '[' -d /nix/store/pgn45hq6iqw0xqn7gs4d3zfbb40im6l4-alexandria-20160421-git.tgz ']'
++++ case "$fn" in
++++ tar xf /nix/store/pgn45hq6iqw0xqn7gs4d3zfbb40im6l4-alexandria-20160421-git.tgz
+++ return 0
+++ stopNest
+++ nestingLevel=1
+++ echo -en '\033[q'
+++ '[' -n '' ']'
+++ '[' -z '' ']'
+++ sourceRoot=
+++ for i in '*'
+++ '[' -d alexandria-20160421-git ']'
+++ case $dirsBefore in
+++ '[' -n '' ']'
+++ sourceRoot=alexandria-20160421-git
+++ for i in '*'
+++ '[' -d env-vars ']'
+++ '[' -z alexandria-20160421-git ']'
+++ echo 'source root is alexandria-20160421-git'
+source root is alexandria-20160421-git
+++ '[' '' '!=' 1 ']'
+++ chmod -R u+w alexandria-20160421-git
+++ runHook postUnpack
+++ local hookName=postUnpack
+++ shift
+++ local var=postUnpack
+++ [[ postUnpack =~ Hook$ ]]
+++ var+=Hooks
+++ eval 'local -a dummy=("${postUnpackHooks[@]}")'
++++ dummy=("${postUnpackHooks[@]}")
++++ local -a dummy
+++ for hook in '"_callImplicitHook 0 $hookName"' '"${dummy[@]}"'
+++ _eval '_callImplicitHook 0 postUnpack'
+++ local 'code=_callImplicitHook 0 postUnpack'
+++ shift
++++ type -t _callImplicitHook 0 postUnpack
+++ '[' function = function ']'
+++ eval '_callImplicitHook 0 postUnpack "$@"'
++++ _callImplicitHook 0 postUnpack
++++ local def=0
++++ local hookName=postUnpack
++++ case "$(type -t $hookName)" in
+++++ type -t postUnpack
++++ '[' -z '' ']'
++++ return 0
+++ for hook in '"_callImplicitHook 0 $hookName"' '"${dummy[@]}"'
+++ _eval _updateSourceDateEpochFromSourceRoot
+++ local code=_updateSourceDateEpochFromSourceRoot
+++ shift
++++ type -t _updateSourceDateEpochFromSourceRoot
+++ '[' function = function ']'
+++ eval '_updateSourceDateEpochFromSourceRoot "$@"'
++++ _updateSourceDateEpochFromSourceRoot
++++ '[' -n alexandria-20160421-git ']'
++++ updateSourceDateEpoch alexandria-20160421-git
++++ local path=alexandria-20160421-git
++++ res=($(find "$path" -type f -print0 | xargs -0 -r stat -c '%Y %n' | sort -n | tail -n1))
+++++ find alexandria-20160421-git -type f -print0
+++++ xargs -0 -r stat -c '%Y %n'
+++++ sort -n
+++++ tail -n1
++++ local -a res
++++ local time=1459687157
++++ local newestFile=alexandria-20160421-git/types.lisp
++++ '[' 1459687157 -gt 1 ']'
++++ echo 'setting SOURCE_DATE_EPOCH to timestamp 1459687157 of file alexandria-20160421-git/types.lisp'
+setting SOURCE_DATE_EPOCH to timestamp 1459687157 of file alexandria-20160421-git/types.lisp
++++ export SOURCE_DATE_EPOCH=1459687157
++++ SOURCE_DATE_EPOCH=1459687157
+++++ date +%s
++++ local now=1472958279
++++ '[' 1459687157 -gt 1472958219 ']'
+++ return 0
++ '[' unpackPhase = unpackPhase ']'
++ cd alexandria-20160421-git
++ '[' -n '' ']'
++ stopNest
++ nestingLevel=0
++ echo -en '\033[q'
++ for curPhase in '$phases'
++ '[' patchPhase = buildPhase -a -n '' ']'
++ '[' patchPhase = checkPhase -a -z '' ']'
++ '[' patchPhase = installPhase -a -n '' ']'
++ '[' patchPhase = fixupPhase -a -n '' ']'
++ '[' patchPhase = installCheckPhase -a -z '' ']'
++ '[' patchPhase = distPhase -a -z '' ']'
++ '[' -n '' ']'
++ showPhaseHeader patchPhase
++ local phase=patchPhase
++ case $phase in
++ header 'patching sources'
++ startNest ''
++ nestingLevel=1
++ echo -en '\033[p'
++ echo 'patching sources'
+patching sources
++ dumpVars
++ '[' '' '!=' 1 ']'
++ export
++ eval patchPhase
+++ patchPhase
+++ runHook prePatch
+++ local hookName=prePatch
+++ shift
+++ local var=prePatch
+++ [[ prePatch =~ Hook$ ]]
+++ var+=Hooks
+++ eval 'local -a dummy=("${prePatchHooks[@]}")'
++++ dummy=("${prePatchHooks[@]}")
++++ local -a dummy
+++ for hook in '"_callImplicitHook 0 $hookName"' '"${dummy[@]}"'
+++ _eval '_callImplicitHook 0 prePatch'
+++ local 'code=_callImplicitHook 0 prePatch'
+++ shift
++++ type -t _callImplicitHook 0 prePatch
+++ '[' function = function ']'
+++ eval '_callImplicitHook 0 prePatch "$@"'
++++ _callImplicitHook 0 prePatch
++++ local def=0
++++ local hookName=prePatch
++++ case "$(type -t $hookName)" in
+++++ type -t prePatch
++++ '[' -z '' ']'
++++ return 0
+++ return 0
+++ runHook postPatch
+++ local hookName=postPatch
+++ shift
+++ local var=postPatch
+++ [[ postPatch =~ Hook$ ]]
+++ var+=Hooks
+++ eval 'local -a dummy=("${postPatchHooks[@]}")'
++++ dummy=("${postPatchHooks[@]}")
++++ local -a dummy
+++ for hook in '"_callImplicitHook 0 $hookName"' '"${dummy[@]}"'
+++ _eval '_callImplicitHook 0 postPatch'
+++ local 'code=_callImplicitHook 0 postPatch'
+++ shift
++++ type -t _callImplicitHook 0 postPatch
+++ '[' function = function ']'
+++ eval '_callImplicitHook 0 postPatch "$@"'
++++ _callImplicitHook 0 postPatch
++++ local def=0
++++ local hookName=postPatch
++++ case "$(type -t $hookName)" in
+++++ type -t postPatch
++++ '[' -z '' ']'
++++ return 0
+++ return 0
++ '[' patchPhase = unpackPhase ']'
++ '[' -n '' ']'
++ stopNest
++ nestingLevel=0
++ echo -en '\033[q'
++ for curPhase in '$phases'
++ '[' configurePhase = buildPhase -a -n '' ']'
++ '[' configurePhase = checkPhase -a -z '' ']'
++ '[' configurePhase = installPhase -a -n '' ']'
++ '[' configurePhase = fixupPhase -a -n '' ']'
++ '[' configurePhase = installCheckPhase -a -z '' ']'
++ '[' configurePhase = distPhase -a -z '' ']'
++ '[' -n '' ']'
++ showPhaseHeader configurePhase
++ local phase=configurePhase
++ case $phase in
++ header configuring
++ startNest ''
++ nestingLevel=1
++ echo -en '\033[p'
++ echo configuring
+configuring
++ dumpVars
++ '[' '' '!=' 1 ']'
++ export
++ eval configurePhase
+++ configurePhase
+++ runHook preConfigure
+++ local hookName=preConfigure
+++ shift
+++ local var=preConfigure
+++ [[ preConfigure =~ Hook$ ]]
+++ var+=Hooks
+++ eval 'local -a dummy=("${preConfigureHooks[@]}")'
++++ dummy=("${preConfigureHooks[@]}")
++++ local -a dummy
+++ for hook in '"_callImplicitHook 0 $hookName"' '"${dummy[@]}"'
+++ _eval '_callImplicitHook 0 preConfigure'
+++ local 'code=_callImplicitHook 0 preConfigure'
+++ shift
++++ type -t _callImplicitHook 0 preConfigure
+++ '[' 'function
+function' = function ']'
+++ eval '_callImplicitHook 0 preConfigure'
++++ _callImplicitHook 0 preConfigure
++++ local def=0
++++ local hookName=preConfigure
++++ case "$(type -t $hookName)" in
+++++ type -t preConfigure
++++ preConfigure
++++ eval ''
++++ mkdir -p /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source-registry
++++ mkdir -p /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/bin-cache
++++ mkdir -p /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source
++++ mkdir -p /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/output-translations
++++ mkdir -p /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/bin
++++ printf '(:output-translations\n'
++++ printf '(:source-registry\n'
++++ printf '(:tree "%s"):ignore-inherited-configuration)' /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/
++++ printf '("%s/common-lisp/source/" ("%s/common-lisp/bin-cache/" :implementation :**/ :*.*.*)):ignore-inherited-configuration)' /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git
+++ return 0
+++ '[' -z '' -a -x ./configure ']'
+++ '[' -z '' ']'
+++ find . -iname ltmain.sh
+++ read i
+++ '[' -z '' ']'
+++ configureFlags='--prefix=/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git '
+++ '[' -z '' ']'
+++ grep -q dependency-tracking ''
+grep: : No such file or directory
+++ '[' -z '' ']'
+++ grep -q enable-static ''
+grep: : No such file or directory
+++ '[' -n '' ']'
+++ echo 'no configure script, doing nothing'
+no configure script, doing nothing
+++ runHook postConfigure
+++ local hookName=postConfigure
+++ shift
+++ local var=postConfigure
+++ [[ postConfigure =~ Hook$ ]]
+++ var+=Hooks
+++ eval 'local -a dummy=("${postConfigureHooks[@]}")'
++++ dummy=("${postConfigureHooks[@]}")
++++ local -a dummy
+++ for hook in '"_callImplicitHook 0 $hookName"' '"${dummy[@]}"'
+++ _eval '_callImplicitHook 0 postConfigure'
+++ local 'code=_callImplicitHook 0 postConfigure'
+++ shift
++++ type -t _callImplicitHook 0 postConfigure
+++ '[' function = function ']'
+++ eval '_callImplicitHook 0 postConfigure "$@"'
++++ _callImplicitHook 0 postConfigure
++++ local def=0
++++ local hookName=postConfigure
++++ case "$(type -t $hookName)" in
+++++ type -t postConfigure
++++ '[' -z '' ']'
++++ return 0
+++ return 0
++ '[' configurePhase = unpackPhase ']'
++ '[' -n '' ']'
++ stopNest
++ nestingLevel=0
++ echo -en '\033[q'
++ for curPhase in '$phases'
++ '[' buildPhase = buildPhase -a -n '' ']'
++ '[' buildPhase = checkPhase -a -z '' ']'
++ '[' buildPhase = installPhase -a -n '' ']'
++ '[' buildPhase = fixupPhase -a -n '' ']'
++ '[' buildPhase = installCheckPhase -a -z '' ']'
++ '[' buildPhase = distPhase -a -z '' ']'
++ '[' -n '' ']'
++ showPhaseHeader buildPhase
++ local phase=buildPhase
++ case $phase in
++ header building
++ startNest ''
++ nestingLevel=1
++ echo -en '\033[p'
++ echo building
+building
++ dumpVars
++ '[' '' '!=' 1 ']'
++ export
++ eval buildPhase
+++ buildPhase
+++ runHook preBuild
+++ local hookName=preBuild
+++ shift
+++ local var=preBuild
+++ [[ preBuild =~ Hook$ ]]
+++ var+=Hooks
+++ eval 'local -a dummy=("${preBuildHooks[@]}")'
++++ dummy=("${preBuildHooks[@]}")
++++ local -a dummy
+++ for hook in '"_callImplicitHook 0 $hookName"' '"${dummy[@]}"'
+++ _eval '_callImplicitHook 0 preBuild'
+++ local 'code=_callImplicitHook 0 preBuild'
+++ shift
++++ type -t _callImplicitHook 0 preBuild
+++ '[' 'function
+function' = function ']'
+++ eval '_callImplicitHook 0 preBuild'
++++ _callImplicitHook 0 preBuild
++++ local def=0
++++ local hookName=preBuild
++++ case "$(type -t $hookName)" in
+++++ type -t preBuild
++++ preBuild
++++ eval ''
++++ cp -a ./AUTHORS ./LICENCE ./README ./alexandria-tests.asd ./alexandria.asd ./arrays.lisp ./binding.lisp ./conditions.lisp ./control-flow.lisp ./definitions.lisp ./doc ./features.lisp ./functions.lisp ./hash-tables.lisp ./io.lisp ./lists.lisp ./macros.lisp ./numbers.lisp ./package.lisp ./sequences.lisp ./strings.lisp ./symbols.lisp ./tests.lisp ./types.lisp /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/
++++ cat
++++ echo 'SBCL: '
+SBCL: 
++++ cat - /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/bin/sbcl-alexandria
+sbcl-alexandria binary
+#!/bin/sh
+set -x
+NIX_LISP="${NIX_LISP:-/nix/store/kp2n76n941za7c8fbqd3z61l0nvsag5n-sbcl-1.3.2/bin/sbcl --no-sysinit --no-userinit}"
+export CL_SOURCE_REGISTRY='(:source-registry (:include "/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source-registry/nix.conf"):ignore-inherited-configuration)'
+export ASDF_OUTPUT_TRANSLATIONS='(:output-translations (:include "/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/output-translations/nix.conf"):ignore-inherited-configuration)'
+echo $NIX_LISP >&2
+$NIX_LISP "$@"
++++ chmod +x /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/bin/sbcl-alexandria
++++ /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/bin/sbcl-alexandria
++ NIX_LISP='/nix/store/kp2n76n941za7c8fbqd3z61l0nvsag5n-sbcl-1.3.2/bin/sbcl --no-sysinit --no-userinit'
++ export 'CL_SOURCE_REGISTRY=(:source-registry (:include "/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source-registry/nix.conf"):ignore-inherited-configuration)'
++ CL_SOURCE_REGISTRY='(:source-registry (:include "/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source-registry/nix.conf"):ignore-inherited-configuration)'
++ export 'ASDF_OUTPUT_TRANSLATIONS=(:output-translations (:include "/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/output-translations/nix.conf"):ignore-inherited-configuration)'
++ ASDF_OUTPUT_TRANSLATIONS='(:output-translations (:include "/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/output-translations/nix.conf"):ignore-inherited-configuration)'
++ echo /nix/store/kp2n76n941za7c8fbqd3z61l0nvsag5n-sbcl-1.3.2/bin/sbcl --no-sysinit --no-userinit
+/nix/store/kp2n76n941za7c8fbqd3z61l0nvsag5n-sbcl-1.3.2/bin/sbcl --no-sysinit --no-userinit
++ /nix/store/kp2n76n941za7c8fbqd3z61l0nvsag5n-sbcl-1.3.2/bin/sbcl --no-sysinit --no-userinit
+This is SBCL 1.3.2.nixos, an implementation of ANSI Common Lisp.
+More information about SBCL is available at <http://www.sbcl.org/>.
+
+SBCL is free software, provided as is, with absolutely no warranty.
+It is mostly in the public domain; some portions are provided under
+BSD-style licenses.  See the CREDITS and COPYING files in the
+distribution for more information.
+* 
+T
+* 
+; compiling file "/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/package.lisp" (written 03 APR 2016 12:39:17 PM):
+; compiling (DEFPACKAGE :ALEXANDRIA.0.DEV ...)
+
+; /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/bin-cache/sbcl-1.3.2.nixos-linux-x64/package-tmpGHU3ALSV.fasl written
+; compilation finished in 0:00:00.001
+; compiling file "/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/definitions.lisp" (written 03 APR 2016 12:39:17 PM):
+; compiling (IN-PACKAGE :ALEXANDRIA)
+; compiling (DEFUN %REEVALUATE-CONSTANT ...)
+; compiling (DEFMACRO DEFINE-CONSTANT ...)
+
+; /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/bin-cache/sbcl-1.3.2.nixos-linux-x64/definitions-tmpAAURSO1.fasl written
+; compilation finished in 0:00:00.008
+; compiling file "/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/binding.lisp" (written 03 APR 2016 12:39:17 PM):
+; compiling (IN-PACKAGE :ALEXANDRIA)
+; compiling (DEFMACRO IF-LET ...)
+; compiling (DEFMACRO WHEN-LET ...)
+; compiling (DEFMACRO WHEN-LET* ...)
+
+; /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/bin-cache/sbcl-1.3.2.nixos-linux-x64/binding-tmp5GEXGEG5.fasl written
+; compilation finished in 0:00:00.009
+; compiling file "/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/strings.lisp" (written 03 APR 2016 12:39:17 PM):
+; compiling (IN-PACKAGE :ALEXANDRIA)
+; compiling (DEFTYPE STRING-DESIGNATOR ...)
+
+; /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/bin-cache/sbcl-1.3.2.nixos-linux-x64/strings-tmpAR3FSGEY.fasl written
+; compilation finished in 0:00:00.001
+; compiling file "/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/conditions.lisp" (written 03 APR 2016 12:39:17 PM):
+; compiling (IN-PACKAGE :ALEXANDRIA)
+; compiling (DEFUN REQUIRED-ARGUMENT ...)
+; compiling (DEFINE-CONDITION SIMPLE-STYLE-WARNING ...)
+; compiling (DEFUN SIMPLE-STYLE-WARNING ...)
+; compiling (DEFINE-CONDITION SIMPLE-READER-ERROR ...)
+; compiling (DEFUN SIMPLE-READER-ERROR ...)
+; compiling (DEFINE-CONDITION SIMPLE-PARSE-ERROR ...)
+; compiling (DEFUN SIMPLE-PARSE-ERROR ...)
+; compiling (DEFINE-CONDITION SIMPLE-PROGRAM-ERROR ...)
+; compiling (DEFUN SIMPLE-PROGRAM-ERROR ...)
+; compiling (DEFMACRO IGNORE-SOME-CONDITIONS ...)
+; compiling (DEFMACRO UNWIND-PROTECT-CASE ...)
+
+; /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/bin-cache/sbcl-1.3.2.nixos-linux-x64/conditions-tmpJAIDFZTC.fasl written
+; compilation finished in 0:00:00.011
+; compiling file "/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/symbols.lisp" (written 03 APR 2016 12:39:17 PM):
+; compiling (IN-PACKAGE :ALEXANDRIA)
+; compiling (DECLAIM (INLINE ENSURE-SYMBOL))
+; compiling (DEFUN ENSURE-SYMBOL ...)
+; compiling (DEFUN MAYBE-INTERN ...)
+; compiling (DECLAIM (INLINE FORMAT-SYMBOL))
+; compiling (DEFUN FORMAT-SYMBOL ...)
+; compiling (DEFUN MAKE-KEYWORD ...)
+; compiling (DEFUN MAKE-GENSYM ...)
+; compiling (DEFUN MAKE-GENSYM-LIST ...)
+; compiling (DEFUN SYMBOLICATE ...)
+
+; /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/bin-cache/sbcl-1.3.2.nixos-linux-x64/symbols-tmp8V3J6PE9.fasl written
+; compilation finished in 0:00:00.008
+; compiling file "/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/macros.lisp" (written 03 APR 2016 12:39:17 PM):
+; compiling (IN-PACKAGE :ALEXANDRIA)
+; compiling (DEFMACRO WITH-GENSYMS ...)
+; compiling (DEFMACRO WITH-UNIQUE-NAMES ...)
+; compiling (DEFMACRO ONCE-ONLY ...)
+; compiling (DEFUN PARSE-BODY ...)
+; compiling (DEFUN PARSE-ORDINARY-LAMBDA-LIST ...)
+; compiling (DEFUN EXPAND-DESTRUCTURING-CASE ...)
+; compiling (DEFMACRO DESTRUCTURING-CASE ...)
+; compiling (DEFMACRO DESTRUCTURING-CCASE ...)
+; compiling (DEFMACRO DESTRUCTURING-ECASE ...)
+; compiling (DOLIST (NAME #) ...)
+
+; /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/bin-cache/sbcl-1.3.2.nixos-linux-x64/macros-tmp9V47YWQF.fasl written
+; compilation finished in 0:00:00.045
+; compiling file "/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/functions.lisp" (written 03 APR 2016 12:39:17 PM):
+; compiling (IN-PACKAGE :ALEXANDRIA)
+; compiling (DECLAIM (INLINE ENSURE-FUNCTION))
+; compiling (DECLAIM (FTYPE # ...))
+; compiling (DEFUN ENSURE-FUNCTION ...)
+; compiling (DEFINE-MODIFY-MACRO ENSURE-FUNCTIONF/1 ...)
+; compiling (DEFMACRO ENSURE-FUNCTIONF ...)
+; compiling (DEFUN DISJOIN ...)
+; compiling (DEFUN CONJOIN ...)
+; compiling (DEFUN COMPOSE ...)
+; compiling (DEFINE-COMPILER-MACRO COMPOSE ...)
+; compiling (DEFUN MULTIPLE-VALUE-COMPOSE ...)
+; compiling (DEFINE-COMPILER-MACRO MULTIPLE-VALUE-COMPOSE ...)
+; compiling (DEFUN CURRY ...)
+; compiling (DEFINE-COMPILER-MACRO CURRY ...)
+; compiling (DEFUN RCURRY ...)
+; compiling (DEFMACRO NAMED-LAMBDA ...)
+
+; /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/bin-cache/sbcl-1.3.2.nixos-linux-x64/functions-tmp9BN22RMA.fasl written
+; compilation finished in 0:00:00.024
+; compiling file "/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/lists.lisp" (written 03 APR 2016 12:39:17 PM):
+; compiling (IN-PACKAGE :ALEXANDRIA)
+; compiling (DECLAIM (INLINE SAFE-ENDP))
+; compiling (DEFUN SAFE-ENDP ...)
+; compiling (DEFUN ALIST-PLIST ...)
+; compiling (DEFUN PLIST-ALIST ...)
+; compiling (DECLAIM (INLINE RACONS))
+; compiling (DEFUN RACONS ...)
+; compiling (DEFINE-ALIST-GET ASSOC-VALUE ...)
+; compiling (DEFINE-ALIST-GET RASSOC-VALUE ...)
+; compiling (DEFUN MALFORMED-PLIST ...)
+; compiling (DEFMACRO DOPLIST ...)
+; compiling (DEFINE-MODIFY-MACRO APPENDF ...)
+; compiling (DEFINE-MODIFY-MACRO NCONCF ...)
+; compiling (DEFINE-MODIFY-MACRO UNIONF ...)
+; compiling (DEFINE-MODIFY-MACRO NUNIONF ...)
+; compiling (DEFINE-MODIFY-MACRO REVERSEF ...)
+; compiling (DEFINE-MODIFY-MACRO NREVERSEF ...)
+; compiling (DEFUN CIRCULAR-LIST ...)
+; compiling (DEFUN CIRCULAR-LIST-P ...)
+; compiling (DEFUN CIRCULAR-TREE-P ...)
+; compiling (DEFUN PROPER-LIST-P ...)
+; compiling (DEFTYPE PROPER-LIST ...)
+; compiling (DEFUN CIRCULAR-LIST-ERROR ...)
+; compiling (DEF PROPER-LIST-LENGTH ...)
+; compiling (DEF LASTCAR ...)
+; compiling (DEF (SETF LASTCAR) ...)
+; compiling (DEFUN MAKE-CIRCULAR-LIST ...)
+; compiling (DEFTYPE CIRCULAR-LIST ...)
+; compiling (DEFUN ENSURE-CAR ...)
+; compiling (DEFUN ENSURE-CONS ...)
+; compiling (DEFUN ENSURE-LIST ...)
+; compiling (DEFUN REMOVE-FROM-PLIST ...)
+; compiling (DEFUN DELETE-FROM-PLIST ...)
+; compiling (DEFINE-MODIFY-MACRO REMOVE-FROM-PLISTF ...)
+; compiling (DEFINE-MODIFY-MACRO DELETE-FROM-PLISTF ...)
+; compiling (DECLAIM (INLINE SANS))
+; compiling (DEFUN SANS ...)
+; compiling (DEFUN MAPPEND ...)
+; compiling (DEFUN SETP ...)
+; compiling (DEFUN SET-EQUAL ...)
+; compiling (DEFUN MAP-PRODUCT ...)
+; compiling (DEFUN FLATTEN ...)
+
+; /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/bin-cache/sbcl-1.3.2.nixos-linux-x64/lists-tmp1CXFJSK9.fasl written
+; compilation finished in 0:00:00.064
+; compiling file "/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/types.lisp" (written 03 APR 2016 12:39:17 PM):
+; compiling (IN-PACKAGE :ALEXANDRIA)
+; compiling (DEFTYPE ARRAY-INDEX ...)
+; compiling (DEFTYPE ARRAY-LENGTH ...)
+; compiling (FROB FIXNUM ...)
+; compiling (FROB INTEGER)
+; compiling (FROB RATIONAL)
+; compiling (FROB REAL)
+; compiling (FROB FLOAT)
+; compiling (FROB SHORT-FLOAT)
+; compiling (FROB SINGLE-FLOAT)
+; compiling (FROB DOUBLE-FLOAT)
+; compiling (FROB LONG-FLOAT)
+; compiling (DEFUN OF-TYPE ...)
+; compiling (DEFINE-COMPILER-MACRO OF-TYPE ...)
+; compiling (DECLAIM (INLINE TYPE=))
+; compiling (DEFUN TYPE= ...)
+; compiling (DEFINE-MODIFY-MACRO COERCEF ...)
+
+; /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/bin-cache/sbcl-1.3.2.nixos-linux-x64/types-tmpX4BRKI0R.fasl written
+; compilation finished in 0:00:00.081
+; compiling file "/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/io.lisp" (written 03 APR 2016 12:39:17 PM):
+; compiling (IN-PACKAGE :ALEXANDRIA)
+; compiling (DEFMACRO WITH-OPEN-FILE* ...)
+; compiling (DEFMACRO WITH-INPUT-FROM-FILE ...)
+; compiling (DEFMACRO WITH-OUTPUT-TO-FILE ...)
+; compiling (DEFUN READ-STREAM-CONTENT-INTO-STRING ...)
+; compiling (DEFUN READ-FILE-INTO-STRING ...)
+; compiling (DEFUN WRITE-STRING-INTO-FILE ...)
+; compiling (DEFUN READ-STREAM-CONTENT-INTO-BYTE-VECTOR ...)
+; compiling (DEFUN READ-FILE-INTO-BYTE-VECTOR ...)
+; compiling (DEFUN WRITE-BYTE-VECTOR-INTO-FILE ...)
+; compiling (DEFUN COPY-FILE ...)
+; compiling (DEFUN COPY-STREAM ...)
+
+; /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/bin-cache/sbcl-1.3.2.nixos-linux-x64/io-tmpQ371UGST.fasl written
+; compilation finished in 0:00:00.042
+; compiling file "/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/hash-tables.lisp" (written 03 APR 2016 12:39:17 PM):
+; compiling (IN-PACKAGE :ALEXANDRIA)
+; compiling (DEFUN COPY-HASH-TABLE ...)
+; compiling (DECLAIM (INLINE MAPHASH-KEYS))
+; compiling (DEFUN MAPHASH-KEYS ...)
+; compiling (DECLAIM (INLINE MAPHASH-VALUES))
+; compiling (DEFUN MAPHASH-VALUES ...)
+; compiling (DEFUN HASH-TABLE-KEYS ...)
+; compiling (DEFUN HASH-TABLE-VALUES ...)
+; compiling (DEFUN HASH-TABLE-ALIST ...)
+; compiling (DEFUN HASH-TABLE-PLIST ...)
+; compiling (DEFUN ALIST-HASH-TABLE ...)
+; compiling (DEFUN PLIST-HASH-TABLE ...)
+; compiling (DEFMACRO ENSURE-GETHASH ...)
+
+; /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/bin-cache/sbcl-1.3.2.nixos-linux-x64/hash-tables-tmp2OWI3Q7U.fasl written
+; compilation finished in 0:00:00.023
+; compiling file "/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/control-flow.lisp" (written 03 APR 2016 12:39:17 PM):
+; compiling (IN-PACKAGE :ALEXANDRIA)
+; compiling (DEFUN EXTRACT-FUNCTION-NAME ...)
+; compiling (DEFUN GENERATE-SWITCH-BODY ...)
+; compiling (DEFMACRO SWITCH ...)
+; compiling (DEFMACRO ESWITCH ...)
+; compiling (DEFMACRO CSWITCH ...)
+; compiling (DEFMACRO WHICHEVER ...)
+; compiling (DEFMACRO XOR ...)
+; compiling (DEFMACRO NTH-VALUE-OR ...)
+; compiling (DEFMACRO MULTIPLE-VALUE-PROG2 ...)
+
+; /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/bin-cache/sbcl-1.3.2.nixos-linux-x64/control-flow-tmp9KKTJMYV.fasl written
+; compilation finished in 0:00:00.027
+; compiling file "/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/arrays.lisp" (written 03 APR 2016 12:39:17 PM):
+; compiling (IN-PACKAGE :ALEXANDRIA)
+; compiling (DEFUN COPY-ARRAY ...)
+
+; /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/bin-cache/sbcl-1.3.2.nixos-linux-x64/arrays-tmpJU0JWO19.fasl written
+; compilation finished in 0:00:00.004
+; compiling file "/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/sequences.lisp" (written 03 APR 2016 12:39:17 PM):
+; compiling (IN-PACKAGE :ALEXANDRIA)
+; compiling (DECLAIM (INLINE COPY-SEQUENCE ...))
+; compiling (DEFUN SEQUENCE-OF-LENGTH-P ...)
+; compiling (DEFUN ROTATE-TAIL-TO-HEAD ...)
+; compiling (DEFUN ROTATE-HEAD-TO-TAIL ...)
+; compiling (DEFUN ROTATE ...)
+; compiling (DEFUN SHUFFLE ...)
+; compiling (DEFUN RANDOM-ELT ...)
+; compiling (DECLAIM (INLINE REMOVE/SWAPPED-ARGUMENTS))
+; compiling (DEFUN REMOVE/SWAPPED-ARGUMENTS ...)
+; compiling (DEFINE-MODIFY-MACRO REMOVEF ...)
+; compiling (DECLAIM (INLINE DELETE/SWAPPED-ARGUMENTS))
+; compiling (DEFUN DELETE/SWAPPED-ARGUMENTS ...)
+; compiling (DEFINE-MODIFY-MACRO DELETEF ...)
+; compiling (DEFTYPE PROPER-SEQUENCE ...)
+; compiling (WHEN (AND # ...) ...)
+; compiling (DECLAIM (FTYPE # ...))
+; compiling (SETF (SYMBOL-FUNCTION #) ...)
+; compiling (DEFINE-COMPILER-MACRO EMPTYP ...)
+; compiling (DEFUN LENGTH= ...)
+; file: /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/sequences.lisp
+; in: DEFUN LENGTH=
+;     (LENGTH FIRST)
+; 
+; note: unable to
+;   optimize
+; due to type uncertainty:
+;   The first argument is a SEQUENCE, not a (SIMPLE-ARRAY * (*)).
+; 
+; note: unable to
+;   optimize
+; due to type uncertainty:
+;   The first argument is a SEQUENCE, not a VECTOR.
+
+; compiling (DEFINE-COMPILER-MACRO LENGTH= ...)
+; compiling (DEFUN COPY-SEQUENCE ...)
+; compiling (DEFUN FIRST-ELT ...)
+; compiling (DEFUN (SETF FIRST-ELT) ...)
+; compiling (DEFUN LAST-ELT ...)
+; compiling (DEFUN (SETF LAST-ELT) ...)
+; compiling (DEFUN STARTS-WITH-SUBSEQ ...)
+; compiling (DEFUN ENDS-WITH-SUBSEQ ...)
+; compiling (DEFUN STARTS-WITH ...)
+; compiling (DEFUN ENDS-WITH ...)
+; compiling (DEFUN MAP-COMBINATIONS ...)
+; compiling (DEFUN MAP-PERMUTATIONS ...)
+; compiling (DEFUN MAP-DERANGEMENTS ...)
+; file: /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/sequences.lisp
+; in: DEFUN MAP-DERANGEMENTS
+;     (MAKE-ARRAY ALEXANDRIA.0.DEV::SIZE :ELEMENT-TYPE 'BIT :INITIAL-ELEMENT 0)
+; --> LOCALLY MAKE-ARRAY TRULY-THE 
+; ==>
+;   (SB-KERNEL:ALLOCATE-VECTOR 213 (THE SB-INT:INDEX LENGTH)
+;                              (CEILING (TRULY-THE SB-INT:INDEX LENGTH) 64))
+; 
+; note: could not stack allocate:
+;        (MAKE-ARRAY SIZE :ELEMENT-TYPE 'BIT :INITIAL-ELEMENT 0)
+
+; compiling (DECLAIM (NOTINLINE SEQUENCE-OF-LENGTH-P))
+; compiling (DEFUN EXTREMUM ...)
+
+; /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/bin-cache/sbcl-1.3.2.nixos-linux-x64/sequences-tmpZX2WN8N4.fasl written
+; compilation finished in 0:00:00.072
+; compiling file "/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/numbers.lisp" (written 03 APR 2016 12:39:17 PM):
+; compiling (IN-PACKAGE :ALEXANDRIA)
+; compiling (DECLAIM (INLINE CLAMP))
+; compiling (DEFUN CLAMP ...)
+; compiling (DEFUN GAUSSIAN-RANDOM ...)
+; compiling (DECLAIM (INLINE IOTA))
+; compiling (DEFUN IOTA ...)
+; compiling (DECLAIM (INLINE MAP-IOTA))
+; compiling (DEFUN MAP-IOTA ...)
+; compiling (DECLAIM (INLINE LERP))
+; compiling (DEFUN LERP ...)
+; compiling (DECLAIM (INLINE MEAN))
+; compiling (DEFUN MEAN ...)
+; compiling (DECLAIM (INLINE MEDIAN))
+; compiling (DEFUN MEDIAN ...)
+; compiling (DECLAIM (INLINE VARIANCE))
+; compiling (DEFUN VARIANCE ...)
+; compiling (DECLAIM (INLINE STANDARD-DEVIATION))
+; compiling (DEFUN STANDARD-DEVIATION ...)
+; compiling (DEFINE-MODIFY-MACRO MAXF ...)
+; compiling (DEFINE-MODIFY-MACRO MINF ...)
+; compiling (DEFCONSTANT +FACTORIAL-BISECTION-RANGE-LIMIT+ ...)
+; compiling (DEFCONSTANT +FACTORIAL-DIRECT-MULTIPLICATION-LIMIT+ ...)
+; compiling (DEFUN %MULTIPLY-RANGE ...)
+; compiling (DECLAIM (INLINE FACTORIAL))
+; compiling (DEFUN %FACTORIAL ...)
+; compiling (DEFUN FACTORIAL ...)
+; compiling (DEFUN BINOMIAL-COEFFICIENT ...)
+; compiling (DEFUN SUBFACTORIAL ...)
+; compiling (DEFUN COUNT-PERMUTATIONS ...)
+
+; /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/bin-cache/sbcl-1.3.2.nixos-linux-x64/numbers-tmpOU81XRV0.fasl written
+; compilation finished in 0:00:00.045
+; compiling file "/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/features.lisp" (written 03 APR 2016 12:39:17 PM):
+; compiling (IN-PACKAGE :ALEXANDRIA)
+; compiling (DEFUN FEATUREP ...)
+
+; /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/bin-cache/sbcl-1.3.2.nixos-linux-x64/features-tmpY2ML9CFA.fasl written
+; compilation finished in 0:00:00.004
+; 
+; compilation unit finished
+;   printed 3 notes
+T
+* ++ return 0
+++ '[' -z '' ']'
+++ '[' -n '' -o -e Makefile -o -e makefile -o -e GNUmakefile ']'
+++ echo 'no Makefile, doing nothing'
+no Makefile, doing nothing
+++ runHook postBuild
+++ local hookName=postBuild
+++ shift
+++ local var=postBuild
+++ [[ postBuild =~ Hook$ ]]
+++ var+=Hooks
+++ eval 'local -a dummy=("${postBuildHooks[@]}")'
++++ dummy=("${postBuildHooks[@]}")
++++ local -a dummy
+++ for hook in '"_callImplicitHook 0 $hookName"' '"${dummy[@]}"'
+++ _eval '_callImplicitHook 0 postBuild'
+++ local 'code=_callImplicitHook 0 postBuild'
+++ shift
++++ type -t _callImplicitHook 0 postBuild
+++ '[' function = function ']'
+++ eval '_callImplicitHook 0 postBuild "$@"'
++++ _callImplicitHook 0 postBuild
++++ local def=0
++++ local hookName=postBuild
++++ case "$(type -t $hookName)" in
+++++ type -t postBuild
++++ '[' -z '' ']'
++++ return 0
+++ return 0
++ '[' buildPhase = unpackPhase ']'
++ '[' -n '' ']'
++ stopNest
++ nestingLevel=0
++ echo -en '\033[q'
++ for curPhase in '$phases'
++ '[' checkPhase = buildPhase -a -n '' ']'
++ '[' checkPhase = checkPhase -a -z '' ']'
++ continue
++ for curPhase in '$phases'
++ '[' installPhase = buildPhase -a -n '' ']'
++ '[' installPhase = checkPhase -a -z '' ']'
++ '[' installPhase = installPhase -a -n '' ']'
++ '[' installPhase = fixupPhase -a -n '' ']'
++ '[' installPhase = installCheckPhase -a -z '' ']'
++ '[' installPhase = distPhase -a -z '' ']'
++ '[' -n '' ']'
++ showPhaseHeader installPhase
++ local phase=installPhase
++ case $phase in
++ header installing
++ startNest ''
++ nestingLevel=1
++ echo -en '\033[p'
++ echo installing
+installing
++ dumpVars
++ '[' '' '!=' 1 ']'
++ export
++ eval installPhase
+++ installPhase
+++ :
++ '[' installPhase = unpackPhase ']'
++ '[' -n '' ']'
++ stopNest
++ nestingLevel=0
++ echo -en '\033[q'
++ for curPhase in '$phases'
++ '[' fixupPhase = buildPhase -a -n '' ']'
++ '[' fixupPhase = checkPhase -a -z '' ']'
++ '[' fixupPhase = installPhase -a -n '' ']'
++ '[' fixupPhase = fixupPhase -a -n '' ']'
++ '[' fixupPhase = installCheckPhase -a -z '' ']'
++ '[' fixupPhase = distPhase -a -z '' ']'
++ '[' -n '' ']'
++ showPhaseHeader fixupPhase
++ local phase=fixupPhase
++ case $phase in
++ header 'post-installation fixup'
++ startNest ''
++ nestingLevel=1
++ echo -en '\033[p'
++ echo 'post-installation fixup'
+post-installation fixup
++ dumpVars
++ '[' '' '!=' 1 ']'
++ export
++ eval fixupPhase
+++ fixupPhase
+++ for output in '$outputs'
+++ '[' -e /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git ']'
+++ chmod -R u+w /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git
+++ runHook preFixup
+++ local hookName=preFixup
+++ shift
+++ local var=preFixup
+++ [[ preFixup =~ Hook$ ]]
+++ var+=Hooks
+++ eval 'local -a dummy=("${preFixupHooks[@]}")'
++++ dummy=("${preFixupHooks[@]}")
++++ local -a dummy
+++ for hook in '"_callImplicitHook 0 $hookName"' '"${dummy[@]}"'
+++ _eval '_callImplicitHook 0 preFixup'
+++ local 'code=_callImplicitHook 0 preFixup'
+++ shift
++++ type -t _callImplicitHook 0 preFixup
+++ '[' function = function ']'
+++ eval '_callImplicitHook 0 preFixup "$@"'
++++ _callImplicitHook 0 preFixup
++++ local def=0
++++ local hookName=preFixup
++++ case "$(type -t $hookName)" in
+++++ type -t preFixup
++++ '[' -z '' ']'
++++ return 0
+++ for hook in '"_callImplicitHook 0 $hookName"' '"${dummy[@]}"'
+++ _eval _moveDocs
+++ local code=_moveDocs
+++ shift
++++ type -t _moveDocs
+++ '[' function = function ']'
+++ eval '_moveDocs "$@"'
++++ _moveDocs
++++ _moveToShare
++++ forceShare='man doc info'
++++ '[' -z 'man doc info' -o -z /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git ']'
++++ for d in '$forceShare'
++++ '[' -d /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/man ']'
++++ for d in '$forceShare'
++++ '[' -d /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/doc ']'
++++ for d in '$forceShare'
++++ '[' -d /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/info ']'
++++ _moveToOutput share/man ''
++++ local d=share/man
++++ local dst=
++++ '[' -z '' -a '!' -e /share/man ']'
++++ return
++++ _moveToOutput share/info ''
++++ local d=share/info
++++ local dst=
++++ '[' -z '' -a '!' -e /share/info ']'
++++ return
++++ _moveToOutput share/doc ''
++++ local d=share/doc
++++ local dst=
++++ '[' -z '' -a '!' -e /share/doc ']'
++++ return
++++ _moveToOutput share/gtk-doc ''
++++ local d=share/gtk-doc
++++ local dst=
++++ '[' -z '' -a '!' -e /share/gtk-doc ']'
++++ return
++++ '[' -d /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/share ']'
+++ return 0
+++ local output
+++ for output in '$outputs'
+++ prefix=/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git
+++ runHook fixupOutput
+++ local hookName=fixupOutput
+++ shift
+++ local var=fixupOutput
+++ [[ fixupOutput =~ Hook$ ]]
+++ var+=Hooks
+++ eval 'local -a dummy=("${fixupOutputHooks[@]}")'
++++ dummy=("${fixupOutputHooks[@]}")
++++ local -a dummy
+++ for hook in '"_callImplicitHook 0 $hookName"' '"${dummy[@]}"'
+++ _eval '_callImplicitHook 0 fixupOutput'
+++ local 'code=_callImplicitHook 0 fixupOutput'
+++ shift
++++ type -t _callImplicitHook 0 fixupOutput
+++ '[' function = function ']'
+++ eval '_callImplicitHook 0 fixupOutput "$@"'
++++ _callImplicitHook 0 fixupOutput
++++ local def=0
++++ local hookName=fixupOutput
++++ case "$(type -t $hookName)" in
+++++ type -t fixupOutput
++++ '[' -z '' ']'
++++ return 0
+++ for hook in '"_callImplicitHook 0 $hookName"' '"${dummy[@]}"'
+++ _eval 'if [ -z "$dontPatchELF" ]; then patchELF "$prefix"; fi'
+++ local 'code=if [ -z "$dontPatchELF" ]; then patchELF "$prefix"; fi'
+++ shift
++++ type -t if '[' -z '"$dontPatchELF"' '];' then patchELF '"$prefix";' fi
+++ '[' 'keyword
+builtin
+keyword
+function
+keyword' = function ']'
+++ eval 'if [ -z "$dontPatchELF" ]; then patchELF "$prefix"; fi'
++++ '[' -z '' ']'
++++ patchELF /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git
++++ local dir=/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git
++++ header 'shrinking RPATHs of ELF executables and libraries in /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git'
++++ startNest ''
++++ nestingLevel=2
++++ echo -en '\033[p'
++++ echo 'shrinking RPATHs of ELF executables and libraries in /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git'
+shrinking RPATHs of ELF executables and libraries in /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git
++++ local i
++++ IFS=
++++ read -r -d '' i
+++++ find /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git -type f -print0
++++ [[ /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/bin/sbcl-alexandria =~ .build-id ]]
++++ isELF /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/bin/sbcl-alexandria
++++ local fn=/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/bin/sbcl-alexandria
++++ local magic
++++ exec
++++ read -n 4 -u 11 magic
++++ exec
++++ [[ #!/b =~ ELF ]]
++++ return 1
++++ continue
++++ IFS=
++++ read -r -d '' i
++++ [[ /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/sequences.lisp =~ .build-id ]]
++++ isELF /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/sequences.lisp
++++ local fn=/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/sequences.lisp
++++ local magic
++++ exec
++++ read -n 4 -u 11 magic
++++ exec
++++ [[ (in- =~ ELF ]]
++++ return 1
++++ continue
++++ IFS=
++++ read -r -d '' i
++++ [[ /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/arrays.lisp =~ .build-id ]]
++++ isELF /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/arrays.lisp
++++ local fn=/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/arrays.lisp
++++ local magic
++++ exec
++++ read -n 4 -u 11 magic
++++ exec
++++ [[ (in- =~ ELF ]]
++++ return 1
++++ continue
++++ IFS=
++++ read -r -d '' i
++++ [[ /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/LICENCE =~ .build-id ]]
++++ isELF /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/LICENCE
++++ local fn=/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/LICENCE
++++ local magic
++++ exec
++++ read -n 4 -u 11 magic
++++ exec
++++ [[ Alex =~ ELF ]]
++++ return 1
++++ continue
++++ IFS=
++++ read -r -d '' i
++++ [[ /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/conditions.lisp =~ .build-id ]]
++++ isELF /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/conditions.lisp
++++ local fn=/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/conditions.lisp
++++ local magic
++++ exec
++++ read -n 4 -u 11 magic
++++ exec
++++ [[ (in- =~ ELF ]]
++++ return 1
++++ continue
++++ IFS=
++++ read -r -d '' i
++++ [[ /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/numbers.lisp =~ .build-id ]]
++++ isELF /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/numbers.lisp
++++ local fn=/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/numbers.lisp
++++ local magic
++++ exec
++++ read -n 4 -u 11 magic
++++ exec
++++ [[ (in- =~ ELF ]]
++++ return 1
++++ continue
++++ IFS=
++++ read -r -d '' i
++++ [[ /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/README =~ .build-id ]]
++++ isELF /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/README
++++ local fn=/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/README
++++ local magic
++++ exec
++++ read -n 4 -u 11 magic
++++ exec
++++ [[ Alex =~ ELF ]]
++++ return 1
++++ continue
++++ IFS=
++++ read -r -d '' i
++++ [[ /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/control-flow.lisp =~ .build-id ]]
++++ isELF /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/control-flow.lisp
++++ local fn=/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/control-flow.lisp
++++ local magic
++++ exec
++++ read -n 4 -u 11 magic
++++ exec
++++ [[ (in- =~ ELF ]]
++++ return 1
++++ continue
++++ IFS=
++++ read -r -d '' i
++++ [[ /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/functions.lisp =~ .build-id ]]
++++ isELF /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/functions.lisp
++++ local fn=/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/functions.lisp
++++ local magic
++++ exec
++++ read -n 4 -u 11 magic
++++ exec
++++ [[ (in- =~ ELF ]]
++++ return 1
++++ continue
++++ IFS=
++++ read -r -d '' i
++++ [[ /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/symbols.lisp =~ .build-id ]]
++++ isELF /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/symbols.lisp
++++ local fn=/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/symbols.lisp
++++ local magic
++++ exec
++++ read -n 4 -u 11 magic
++++ exec
++++ [[ (in- =~ ELF ]]
++++ return 1
++++ continue
++++ IFS=
++++ read -r -d '' i
++++ [[ /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/types.lisp =~ .build-id ]]
++++ isELF /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/types.lisp
++++ local fn=/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/types.lisp
++++ local magic
++++ exec
++++ read -n 4 -u 11 magic
++++ exec
++++ [[ (in- =~ ELF ]]
++++ return 1
++++ continue
++++ IFS=
++++ read -r -d '' i
++++ [[ /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/definitions.lisp =~ .build-id ]]
++++ isELF /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/definitions.lisp
++++ local fn=/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/definitions.lisp
++++ local magic
++++ exec
++++ read -n 4 -u 11 magic
++++ exec
++++ [[ (in- =~ ELF ]]
++++ return 1
++++ continue
++++ IFS=
++++ read -r -d '' i
++++ [[ /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/macros.lisp =~ .build-id ]]
++++ isELF /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/macros.lisp
++++ local fn=/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/macros.lisp
++++ local magic
++++ exec
++++ read -n 4 -u 11 magic
++++ exec
++++ [[ (in- =~ ELF ]]
++++ return 1
++++ continue
++++ IFS=
++++ read -r -d '' i
++++ [[ /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/io.lisp =~ .build-id ]]
++++ isELF /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/io.lisp
++++ local fn=/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/io.lisp
++++ local magic
++++ exec
++++ read -n 4 -u 11 magic
++++ exec
++++ [[ ;; C =~ ELF ]]
++++ return 1
++++ continue
++++ IFS=
++++ read -r -d '' i
++++ [[ /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/doc/.gitignore =~ .build-id ]]
++++ isELF /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/doc/.gitignore
++++ local fn=/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/doc/.gitignore
++++ local magic
++++ exec
++++ read -n 4 -u 11 magic
++++ exec
++++ [[ alex =~ ELF ]]
++++ return 1
++++ continue
++++ IFS=
++++ read -r -d '' i
++++ [[ /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/doc/docstrings.lisp =~ .build-id ]]
++++ isELF /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/doc/docstrings.lisp
++++ local fn=/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/doc/docstrings.lisp
++++ local magic
++++ exec
++++ read -n 4 -u 11 magic
++++ exec
++++ [[ ;;; =~ ELF ]]
++++ return 1
++++ continue
++++ IFS=
++++ read -r -d '' i
++++ [[ /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/doc/alexandria.texinfo =~ .build-id ]]
++++ isELF /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/doc/alexandria.texinfo
++++ local fn=/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/doc/alexandria.texinfo
++++ local magic
++++ exec
++++ read -n 4 -u 11 magic
++++ exec
++++ [[ inpu =~ ELF ]]
++++ return 1
++++ continue
++++ IFS=
++++ read -r -d '' i
++++ [[ /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/doc/Makefile =~ .build-id ]]
++++ isELF /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/doc/Makefile
++++ local fn=/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/doc/Makefile
++++ local magic
++++ exec
++++ read -n 4 -u 11 magic
++++ exec
++++ [[ .PHO =~ ELF ]]
++++ return 1
++++ continue
++++ IFS=
++++ read -r -d '' i
++++ [[ /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/package.lisp =~ .build-id ]]
++++ isELF /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/package.lisp
++++ local fn=/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/package.lisp
++++ local magic
++++ exec
++++ read -n 4 -u 11 magic
++++ exec
++++ [[ (def =~ ELF ]]
++++ return 1
++++ continue
++++ IFS=
++++ read -r -d '' i
++++ [[ /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/alexandria.asd =~ .build-id ]]
++++ isELF /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/alexandria.asd
++++ local fn=/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/alexandria.asd
++++ local magic
++++ exec
++++ read -n 4 -u 11 magic
++++ exec
++++ [[ (def =~ ELF ]]
++++ return 1
++++ continue
++++ IFS=
++++ read -r -d '' i
++++ [[ /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/lists.lisp =~ .build-id ]]
++++ isELF /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/lists.lisp
++++ local fn=/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/lists.lisp
++++ local magic
++++ exec
++++ read -n 4 -u 11 magic
++++ exec
++++ [[ (in- =~ ELF ]]
++++ return 1
++++ continue
++++ IFS=
++++ read -r -d '' i
++++ [[ /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/features.lisp =~ .build-id ]]
++++ isELF /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/features.lisp
++++ local fn=/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/features.lisp
++++ local magic
++++ exec
++++ read -n 4 -u 11 magic
++++ exec
++++ [[ (in- =~ ELF ]]
++++ return 1
++++ continue
++++ IFS=
++++ read -r -d '' i
++++ [[ /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/binding.lisp =~ .build-id ]]
++++ isELF /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/binding.lisp
++++ local fn=/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/binding.lisp
++++ local magic
++++ exec
++++ read -n 4 -u 11 magic
++++ exec
++++ [[ (in- =~ ELF ]]
++++ return 1
++++ continue
++++ IFS=
++++ read -r -d '' i
++++ [[ /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/hash-tables.lisp =~ .build-id ]]
++++ isELF /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/hash-tables.lisp
++++ local fn=/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/hash-tables.lisp
++++ local magic
++++ exec
++++ read -n 4 -u 11 magic
++++ exec
++++ [[ (in- =~ ELF ]]
++++ return 1
++++ continue
++++ IFS=
++++ read -r -d '' i
++++ [[ /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/tests.lisp =~ .build-id ]]
++++ isELF /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/tests.lisp
++++ local fn=/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/tests.lisp
++++ local magic
++++ exec
++++ read -n 4 -u 11 magic
++++ exec
++++ [[ (in- =~ ELF ]]
++++ return 1
++++ continue
++++ IFS=
++++ read -r -d '' i
++++ [[ /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/strings.lisp =~ .build-id ]]
++++ isELF /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/strings.lisp
++++ local fn=/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/strings.lisp
++++ local magic
++++ exec
++++ read -n 4 -u 11 magic
++++ exec
++++ [[ (in- =~ ELF ]]
++++ return 1
++++ continue
++++ IFS=
++++ read -r -d '' i
++++ [[ /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/alexandria-tests.asd =~ .build-id ]]
++++ isELF /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/alexandria-tests.asd
++++ local fn=/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/alexandria-tests.asd
++++ local magic
++++ exec
++++ read -n 4 -u 11 magic
++++ exec
++++ [[ (def =~ ELF ]]
++++ return 1
++++ continue
++++ IFS=
++++ read -r -d '' i
++++ [[ /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/AUTHORS =~ .build-id ]]
++++ isELF /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/AUTHORS
++++ local fn=/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source/AUTHORS
++++ local magic
++++ exec
++++ read -n 4 -u 11 magic
++++ exec
++++ [[ '' =~ ELF ]]
++++ return 1
++++ continue
++++ IFS=
++++ read -r -d '' i
++++ [[ /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/bin-cache/sbcl-1.3.2.nixos-linux-x64/symbols.fasl =~ .build-id ]]
++++ isELF /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/bin-cache/sbcl-1.3.2.nixos-linux-x64/symbols.fasl
++++ local fn=/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/bin-cache/sbcl-1.3.2.nixos-linux-x64/symbols.fasl
++++ local magic
++++ exec
++++ read -n 4 -u 11 magic
++++ exec
++++ [[ #!/n =~ ELF ]]
++++ return 1
++++ continue
++++ IFS=
++++ read -r -d '' i
++++ [[ /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/bin-cache/sbcl-1.3.2.nixos-linux-x64/control-flow.fasl =~ .build-id ]]
++++ isELF /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/bin-cache/sbcl-1.3.2.nixos-linux-x64/control-flow.fasl
++++ local fn=/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/bin-cache/sbcl-1.3.2.nixos-linux-x64/control-flow.fasl
++++ local magic
++++ exec
++++ read -n 4 -u 11 magic
++++ exec
++++ [[ #!/n =~ ELF ]]
++++ return 1
++++ continue
++++ IFS=
++++ read -r -d '' i
++++ [[ /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/bin-cache/sbcl-1.3.2.nixos-linux-x64/numbers.fasl =~ .build-id ]]
++++ isELF /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/bin-cache/sbcl-1.3.2.nixos-linux-x64/numbers.fasl
++++ local fn=/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/bin-cache/sbcl-1.3.2.nixos-linux-x64/numbers.fasl
++++ local magic
++++ exec
++++ read -n 4 -u 11 magic
++++ exec
++++ [[ #!/n =~ ELF ]]
++++ return 1
++++ continue
++++ IFS=
++++ read -r -d '' i
++++ [[ /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/bin-cache/sbcl-1.3.2.nixos-linux-x64/types.fasl =~ .build-id ]]
++++ isELF /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/bin-cache/sbcl-1.3.2.nixos-linux-x64/types.fasl
++++ local fn=/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/bin-cache/sbcl-1.3.2.nixos-linux-x64/types.fasl
++++ local magic
++++ exec
++++ read -n 4 -u 11 magic
++++ exec
++++ [[ #!/n =~ ELF ]]
++++ return 1
++++ continue
++++ IFS=
++++ read -r -d '' i
++++ [[ /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/bin-cache/sbcl-1.3.2.nixos-linux-x64/io.fasl =~ .build-id ]]
++++ isELF /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/bin-cache/sbcl-1.3.2.nixos-linux-x64/io.fasl
++++ local fn=/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/bin-cache/sbcl-1.3.2.nixos-linux-x64/io.fasl
++++ local magic
++++ exec
++++ read -n 4 -u 11 magic
++++ exec
++++ [[ #!/n =~ ELF ]]
++++ return 1
++++ continue
++++ IFS=
++++ read -r -d '' i
++++ [[ /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/bin-cache/sbcl-1.3.2.nixos-linux-x64/macros.fasl =~ .build-id ]]
++++ isELF /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/bin-cache/sbcl-1.3.2.nixos-linux-x64/macros.fasl
++++ local fn=/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/bin-cache/sbcl-1.3.2.nixos-linux-x64/macros.fasl
++++ local magic
++++ exec
++++ read -n 4 -u 11 magic
++++ exec
++++ [[ #!/n =~ ELF ]]
++++ return 1
++++ continue
++++ IFS=
++++ read -r -d '' i
++++ [[ /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/bin-cache/sbcl-1.3.2.nixos-linux-x64/lists.fasl =~ .build-id ]]
++++ isELF /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/bin-cache/sbcl-1.3.2.nixos-linux-x64/lists.fasl
++++ local fn=/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/bin-cache/sbcl-1.3.2.nixos-linux-x64/lists.fasl
++++ local magic
++++ exec
++++ read -n 4 -u 11 magic
++++ exec
++++ [[ #!/n =~ ELF ]]
++++ return 1
++++ continue
++++ IFS=
++++ read -r -d '' i
++++ [[ /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/bin-cache/sbcl-1.3.2.nixos-linux-x64/conditions.fasl =~ .build-id ]]
++++ isELF /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/bin-cache/sbcl-1.3.2.nixos-linux-x64/conditions.fasl
++++ local fn=/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/bin-cache/sbcl-1.3.2.nixos-linux-x64/conditions.fasl
++++ local magic
++++ exec
++++ read -n 4 -u 11 magic
++++ exec
++++ [[ #!/n =~ ELF ]]
++++ return 1
++++ continue
++++ IFS=
++++ read -r -d '' i
++++ [[ /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/bin-cache/sbcl-1.3.2.nixos-linux-x64/hash-tables.fasl =~ .build-id ]]
++++ isELF /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/bin-cache/sbcl-1.3.2.nixos-linux-x64/hash-tables.fasl
++++ local fn=/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/bin-cache/sbcl-1.3.2.nixos-linux-x64/hash-tables.fasl
++++ local magic
++++ exec
++++ read -n 4 -u 11 magic
++++ exec
++++ [[ #!/n =~ ELF ]]
++++ return 1
++++ continue
++++ IFS=
++++ read -r -d '' i
++++ [[ /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/bin-cache/sbcl-1.3.2.nixos-linux-x64/features.fasl =~ .build-id ]]
++++ isELF /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/bin-cache/sbcl-1.3.2.nixos-linux-x64/features.fasl
++++ local fn=/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/bin-cache/sbcl-1.3.2.nixos-linux-x64/features.fasl
++++ local magic
++++ exec
++++ read -n 4 -u 11 magic
++++ exec
++++ [[ #!/n =~ ELF ]]
++++ return 1
++++ continue
++++ IFS=
++++ read -r -d '' i
++++ [[ /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/bin-cache/sbcl-1.3.2.nixos-linux-x64/sequences.fasl =~ .build-id ]]
++++ isELF /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/bin-cache/sbcl-1.3.2.nixos-linux-x64/sequences.fasl
++++ local fn=/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/bin-cache/sbcl-1.3.2.nixos-linux-x64/sequences.fasl
++++ local magic
++++ exec
++++ read -n 4 -u 11 magic
++++ exec
++++ [[ #!/n =~ ELF ]]
++++ return 1
++++ continue
++++ IFS=
++++ read -r -d '' i
++++ [[ /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/bin-cache/sbcl-1.3.2.nixos-linux-x64/definitions.fasl =~ .build-id ]]
++++ isELF /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/bin-cache/sbcl-1.3.2.nixos-linux-x64/definitions.fasl
++++ local fn=/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/bin-cache/sbcl-1.3.2.nixos-linux-x64/definitions.fasl
++++ local magic
++++ exec
++++ read -n 4 -u 11 magic
++++ exec
++++ [[ #!/n =~ ELF ]]
++++ return 1
++++ continue
++++ IFS=
++++ read -r -d '' i
++++ [[ /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/bin-cache/sbcl-1.3.2.nixos-linux-x64/strings.fasl =~ .build-id ]]
++++ isELF /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/bin-cache/sbcl-1.3.2.nixos-linux-x64/strings.fasl
++++ local fn=/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/bin-cache/sbcl-1.3.2.nixos-linux-x64/strings.fasl
++++ local magic
++++ exec
++++ read -n 4 -u 11 magic
++++ exec
++++ [[ #!/n =~ ELF ]]
++++ return 1
++++ continue
++++ IFS=
++++ read -r -d '' i
++++ [[ /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/bin-cache/sbcl-1.3.2.nixos-linux-x64/package.fasl =~ .build-id ]]
++++ isELF /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/bin-cache/sbcl-1.3.2.nixos-linux-x64/package.fasl
++++ local fn=/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/bin-cache/sbcl-1.3.2.nixos-linux-x64/package.fasl
++++ local magic
++++ exec
++++ read -n 4 -u 11 magic
++++ exec
++++ [[ #!/n =~ ELF ]]
++++ return 1
++++ continue
++++ IFS=
++++ read -r -d '' i
++++ [[ /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/bin-cache/sbcl-1.3.2.nixos-linux-x64/functions.fasl =~ .build-id ]]
++++ isELF /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/bin-cache/sbcl-1.3.2.nixos-linux-x64/functions.fasl
++++ local fn=/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/bin-cache/sbcl-1.3.2.nixos-linux-x64/functions.fasl
++++ local magic
++++ exec
++++ read -n 4 -u 11 magic
++++ exec
++++ [[ #!/n =~ ELF ]]
++++ return 1
++++ continue
++++ IFS=
++++ read -r -d '' i
++++ [[ /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/bin-cache/sbcl-1.3.2.nixos-linux-x64/arrays.fasl =~ .build-id ]]
++++ isELF /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/bin-cache/sbcl-1.3.2.nixos-linux-x64/arrays.fasl
++++ local fn=/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/bin-cache/sbcl-1.3.2.nixos-linux-x64/arrays.fasl
++++ local magic
++++ exec
++++ read -n 4 -u 11 magic
++++ exec
++++ [[ #!/n =~ ELF ]]
++++ return 1
++++ continue
++++ IFS=
++++ read -r -d '' i
++++ [[ /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/bin-cache/sbcl-1.3.2.nixos-linux-x64/binding.fasl =~ .build-id ]]
++++ isELF /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/bin-cache/sbcl-1.3.2.nixos-linux-x64/binding.fasl
++++ local fn=/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/bin-cache/sbcl-1.3.2.nixos-linux-x64/binding.fasl
++++ local magic
++++ exec
++++ read -n 4 -u 11 magic
++++ exec
++++ [[ #!/n =~ ELF ]]
++++ return 1
++++ continue
++++ IFS=
++++ read -r -d '' i
++++ [[ /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source-registry/nix.conf =~ .build-id ]]
++++ isELF /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source-registry/nix.conf
++++ local fn=/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/source-registry/nix.conf
++++ local magic
++++ exec
++++ read -n 4 -u 11 magic
++++ exec
++++ [[ (:so =~ ELF ]]
++++ return 1
++++ continue
++++ IFS=
++++ read -r -d '' i
++++ [[ /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/output-translations/nix.conf =~ .build-id ]]
++++ isELF /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/output-translations/nix.conf
++++ local fn=/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/common-lisp/output-translations/nix.conf
++++ local magic
++++ exec
++++ read -n 4 -u 11 magic
++++ exec
++++ [[ (:ou =~ ELF ]]
++++ return 1
++++ continue
++++ IFS=
++++ read -r -d '' i
++++ stopNest
++++ nestingLevel=1
++++ echo -en '\033[q'
+++ for hook in '"_callImplicitHook 0 $hookName"' '"${dummy[@]}"'
+++ _eval 'if [ -z "$dontGzipMan" ]; then compressManPages "$prefix"; fi'
+++ local 'code=if [ -z "$dontGzipMan" ]; then compressManPages "$prefix"; fi'
+++ shift
++++ type -t if '[' -z '"$dontGzipMan"' '];' then compressManPages '"$prefix";' fi
+++ '[' 'keyword
+builtin
+keyword
+function
+keyword' = function ']'
+++ eval 'if [ -z "$dontGzipMan" ]; then compressManPages "$prefix"; fi'
++++ '[' -z '' ']'
++++ compressManPages /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git
++++ local dir=/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git
++++ echo 'gzipping man pages in /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git'
+gzipping man pages in /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git
++++ GLOBIGNORE='.:..:*.gz:*.bz2'
++++ unset GLOBIGNORE
+++ for hook in '"_callImplicitHook 0 $hookName"' '"${dummy[@]}"'
+++ _eval _doStrip
+++ local code=_doStrip
+++ shift
++++ type -t _doStrip
+++ '[' function = function ']'
+++ eval '_doStrip "$@"'
++++ _doStrip
++++ '[' -z '' ']'
++++ stripDebugList='lib lib32 lib64 libexec bin sbin'
++++ '[' -n 'lib lib32 lib64 libexec bin sbin' ']'
++++ stripDirs 'lib lib32 lib64 libexec bin sbin' -S
++++ local 'dirs=lib lib32 lib64 libexec bin sbin'
++++ local stripFlags=-S
++++ local dirsNew=
++++ for d in '${dirs}'
++++ '[' -d /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/lib ']'
++++ for d in '${dirs}'
++++ '[' -d /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/lib32 ']'
++++ for d in '${dirs}'
++++ '[' -d /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/lib64 ']'
++++ for d in '${dirs}'
++++ '[' -d /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/libexec ']'
++++ for d in '${dirs}'
++++ '[' -d /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/bin ']'
++++ dirsNew=' /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/bin '
++++ for d in '${dirs}'
++++ '[' -d /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/sbin ']'
++++ dirs=' /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/bin '
++++ '[' -n ' /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/bin ' ']'
++++ header 'stripping (with flags -S) in /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/bin '
++++ startNest ''
++++ nestingLevel=2
++++ echo -en '\033[p'
++++ echo 'stripping (with flags -S) in /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/bin '
+stripping (with flags -S) in /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/bin 
++++ find /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/bin -type f -print0
++++ xargs -0 -r strip --enable-deterministic-archives -S
+strip:/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/bin/sbcl-alexandria: File format not recognized
++++ true
++++ stopNest
++++ nestingLevel=1
++++ echo -en '\033[q'
++++ stripAllList=
++++ '[' -n '' ']'
+++ for hook in '"_callImplicitHook 0 $hookName"' '"${dummy[@]}"'
+++ _eval 'if [ -z "$dontPatchShebangs" -a -e "$prefix" ]; then patchShebangs "$prefix"; fi'
+++ local 'code=if [ -z "$dontPatchShebangs" -a -e "$prefix" ]; then patchShebangs "$prefix"; fi'
+++ shift
++++ type -t if '[' -z '"$dontPatchShebangs"' -a -e '"$prefix"' '];' then patchShebangs '"$prefix";' fi
+++ '[' 'keyword
+builtin
+keyword
+function
+keyword' = function ']'
+++ eval 'if [ -z "$dontPatchShebangs" -a -e "$prefix" ]; then patchShebangs "$prefix"; fi'
++++ '[' -z '' -a -e /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git ']'
++++ patchShebangs /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git
++++ local dir=/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git
++++ header 'patching script interpreter paths in /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git'
++++ startNest ''
++++ nestingLevel=2
++++ echo -en '\033[p'
++++ echo 'patching script interpreter paths in /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git'
+patching script interpreter paths in /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git
++++ local f
++++ local oldPath
++++ local newPath
++++ local arg0
++++ local args
++++ local oldInterpreterLine
++++ local newInterpreterLine
++++ find /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git -type f -perm -0100
++++ read f
+++++ head -1 /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/bin/sbcl-alexandria
+++++ head -c+2
++++ '[' '#!' '!=' '#!' ']'
+++++ head -1 /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/bin/sbcl-alexandria
+++++ tail -c+3
++++ oldInterpreterLine=/bin/sh
++++ read -r oldPath arg0 args
+++++ echo /bin/sh
+++++ grep -q '/bin/env$'
++++ '[' /bin/sh = '' ']'
++++++ basename /bin/sh
+++++ command -v sh
++++ newPath=/nix/store/i7hx6w6zy3bv53f2xm1r23ya8qbzn4is-bash-4.3-p42/bin/sh
++++ args=' '
++++ newInterpreterLine='/nix/store/i7hx6w6zy3bv53f2xm1r23ya8qbzn4is-bash-4.3-p42/bin/sh  '
++++ '[' -n /bin/sh -a /bin/sh '!=' /nix/store ']'
++++ '[' -n /nix/store/i7hx6w6zy3bv53f2xm1r23ya8qbzn4is-bash-4.3-p42/bin/sh -a /nix/store/i7hx6w6zy3bv53f2xm1r23ya8qbzn4is-bash-4.3-p42/bin/sh '!=' /bin/sh ']'
++++ echo '/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/bin/sbcl-alexandria: interpreter directive changed from "/bin/sh" to "/nix/store/i7hx6w6zy3bv53f2xm1r23ya8qbzn4is-bash-4.3-p42/bin/sh  "'
+/nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/bin/sbcl-alexandria: interpreter directive changed from "/bin/sh" to "/nix/store/i7hx6w6zy3bv53f2xm1r23ya8qbzn4is-bash-4.3-p42/bin/sh  "
+++++ echo '/nix/store/i7hx6w6zy3bv53f2xm1r23ya8qbzn4is-bash-4.3-p42/bin/sh  '
+++++ sed 's|\\|\\\\|g'
++++ escapedInterpreterLine='/nix/store/i7hx6w6zy3bv53f2xm1r23ya8qbzn4is-bash-4.3-p42/bin/sh  '
++++ sed -i -e '1 s|.*|#\!/nix/store/i7hx6w6zy3bv53f2xm1r23ya8qbzn4is-bash-4.3-p42/bin/sh  |' /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/bin/sbcl-alexandria
++++ read f
++++ stopNest
++++ nestingLevel=1
++++ echo -en '\033[q'
+++ for hook in '"_callImplicitHook 0 $hookName"' '"${dummy[@]}"'
+++ _eval _moveSbin
+++ local code=_moveSbin
+++ shift
++++ type -t _moveSbin
+++ '[' function = function ']'
+++ eval '_moveSbin "$@"'
++++ _moveSbin
++++ '[' '' = 1 ']'
++++ '[' '!' -e /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/sbin -o -L /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/sbin ']'
++++ return
+++ for hook in '"_callImplicitHook 0 $hookName"' '"${dummy[@]}"'
+++ _eval _moveLib64
+++ local code=_moveLib64
+++ shift
++++ type -t _moveLib64
+++ '[' function = function ']'
+++ eval '_moveLib64 "$@"'
++++ _moveLib64
++++ '[' '' = 1 ']'
++++ '[' '!' -e /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/lib64 -o -L /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git/lib64 ']'
++++ return
+++ return 0
+++ '[' -n '' ']'
+++ '[' -n '' ']'
+++ '[' -n '' ']'
+++ '[' -n '' ']'
+++ runHook postFixup
+++ local hookName=postFixup
+++ shift
+++ local var=postFixup
+++ [[ postFixup =~ Hook$ ]]
+++ var+=Hooks
+++ eval 'local -a dummy=("${postFixupHooks[@]}")'
++++ dummy=("${postFixupHooks[@]}")
++++ local -a dummy
+++ for hook in '"_callImplicitHook 0 $hookName"' '"${dummy[@]}"'
+++ _eval '_callImplicitHook 0 postFixup'
+++ local 'code=_callImplicitHook 0 postFixup'
+++ shift
++++ type -t _callImplicitHook 0 postFixup
+++ '[' function = function ']'
+++ eval '_callImplicitHook 0 postFixup "$@"'
++++ _callImplicitHook 0 postFixup
++++ local def=0
++++ local hookName=postFixup
++++ case "$(type -t $hookName)" in
+++++ type -t postFixup
++++ '[' -z '' ']'
++++ return 0
+++ return 0
++ '[' fixupPhase = unpackPhase ']'
++ '[' -n '' ']'
++ stopNest
++ nestingLevel=0
++ echo -en '\033[q'
++ for curPhase in '$phases'
++ '[' installCheckPhase = buildPhase -a -n '' ']'
++ '[' installCheckPhase = checkPhase -a -z '' ']'
++ '[' installCheckPhase = installPhase -a -n '' ']'
++ '[' installCheckPhase = fixupPhase -a -n '' ']'
++ '[' installCheckPhase = installCheckPhase -a -z '' ']'
++ continue
++ for curPhase in '$phases'
++ '[' distPhase = buildPhase -a -n '' ']'
++ '[' distPhase = checkPhase -a -z '' ']'
++ '[' distPhase = installPhase -a -n '' ']'
++ '[' distPhase = fixupPhase -a -n '' ']'
++ '[' distPhase = installCheckPhase -a -z '' ']'
++ '[' distPhase = distPhase -a -z '' ']'
++ continue
++ exitHandler
++ exitCode=0
++ set +e
++ closeNest
++ '[' 0 -gt 0 ']'
++ '[' -n '' ']'
++ '[' 0 '!=' 0 ']'
++ runHook exitHook
++ local hookName=exitHook
++ shift
++ local var=exitHook
++ [[ exitHook =~ Hook$ ]]
++ var+=s
++ eval 'local -a dummy=("${exitHooks[@]}")'
+++ dummy=("${exitHooks[@]}")
+++ local -a dummy
++ for hook in '"_callImplicitHook 0 $hookName"' '"${dummy[@]}"'
++ _eval '_callImplicitHook 0 exitHook'
++ local 'code=_callImplicitHook 0 exitHook'
++ shift
+++ type -t _callImplicitHook 0 exitHook
++ '[' function = function ']'
++ eval '_callImplicitHook 0 exitHook "$@"'
+++ _callImplicitHook 0 exitHook
+++ local def=0
+++ local hookName=exitHook
+++ case "$(type -t $hookName)" in
++++ type -t exitHook
+++ '[' -z '' ']'
+++ return 0
++ return 0
++ exit 0
+building path(s) ‘/nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git’
++ oldPreConfigure=
++ oldPreBuild=
++ genericBuild
++ '[' -n '' ']'
++ '[' -z '' ']'
++ phases=' unpackPhase patchPhase              configurePhase  buildPhase checkPhase              installPhase  fixupPhase installCheckPhase              distPhase '
++ for curPhase in '$phases'
++ '[' unpackPhase = buildPhase -a -n '' ']'
++ '[' unpackPhase = checkPhase -a -z '' ']'
++ '[' unpackPhase = installPhase -a -n '' ']'
++ '[' unpackPhase = fixupPhase -a -n '' ']'
++ '[' unpackPhase = installCheckPhase -a -z '' ']'
++ '[' unpackPhase = distPhase -a -z '' ']'
++ '[' -n '' ']'
++ showPhaseHeader unpackPhase
++ local phase=unpackPhase
++ case $phase in
++ header 'unpacking sources'
++ startNest ''
++ nestingLevel=1
++ echo -en '\033[p'
++ echo 'unpacking sources'
+unpacking sources
++ dumpVars
++ '[' '' '!=' 1 ']'
++ export
++ eval unpackPhase
+++ unpackPhase
+++ runHook preUnpack
+++ local hookName=preUnpack
+++ shift
+++ local var=preUnpack
+++ [[ preUnpack =~ Hook$ ]]
+++ var+=Hooks
+++ eval 'local -a dummy=("${preUnpackHooks[@]}")'
++++ dummy=("${preUnpackHooks[@]}")
++++ local -a dummy
+++ for hook in '"_callImplicitHook 0 $hookName"' '"${dummy[@]}"'
+++ _eval '_callImplicitHook 0 preUnpack'
+++ local 'code=_callImplicitHook 0 preUnpack'
+++ shift
++++ type -t _callImplicitHook 0 preUnpack
+++ '[' function = function ']'
+++ eval '_callImplicitHook 0 preUnpack "$@"'
++++ _callImplicitHook 0 preUnpack
++++ local def=0
++++ local hookName=preUnpack
++++ case "$(type -t $hookName)" in
+++++ type -t preUnpack
++++ '[' -z '' ']'
++++ return 0
+++ return 0
+++ '[' -z '' ']'
+++ '[' -z /nix/store/fcaz5larfadpxal4jqdbxly2hsx8gpdd-agm-20160318-git.tgz ']'
+++ srcs=/nix/store/fcaz5larfadpxal4jqdbxly2hsx8gpdd-agm-20160318-git.tgz
+++ local dirsBefore=
+++ for i in '*'
+++ '[' -d env-vars ']'
+++ for i in '$srcs'
+++ unpackFile /nix/store/fcaz5larfadpxal4jqdbxly2hsx8gpdd-agm-20160318-git.tgz
+++ curSrc=/nix/store/fcaz5larfadpxal4jqdbxly2hsx8gpdd-agm-20160318-git.tgz
+++ header 'unpacking source archive /nix/store/fcaz5larfadpxal4jqdbxly2hsx8gpdd-agm-20160318-git.tgz' 3
+++ startNest 3
+++ nestingLevel=2
+++ echo -en '\033[3p'
+++ echo 'unpacking source archive /nix/store/fcaz5larfadpxal4jqdbxly2hsx8gpdd-agm-20160318-git.tgz'
+unpacking source archive /nix/store/fcaz5larfadpxal4jqdbxly2hsx8gpdd-agm-20160318-git.tgz
+++ runOneHook unpackCmd /nix/store/fcaz5larfadpxal4jqdbxly2hsx8gpdd-agm-20160318-git.tgz
+++ local hookName=unpackCmd
+++ shift
+++ local var=unpackCmd
+++ [[ unpackCmd =~ Hook$ ]]
+++ var+=Hooks
+++ eval 'local -a dummy=("${unpackCmdHooks[@]}")'
++++ dummy=("${unpackCmdHooks[@]}")
++++ local -a dummy
+++ for hook in '"_callImplicitHook 1 $hookName"' '"${dummy[@]}"'
+++ _eval '_callImplicitHook 1 unpackCmd' /nix/store/fcaz5larfadpxal4jqdbxly2hsx8gpdd-agm-20160318-git.tgz
+++ local 'code=_callImplicitHook 1 unpackCmd'
+++ shift
++++ type -t _callImplicitHook 1 unpackCmd
+++ '[' function = function ']'
+++ eval '_callImplicitHook 1 unpackCmd "$@"'
++++ _callImplicitHook 1 unpackCmd /nix/store/fcaz5larfadpxal4jqdbxly2hsx8gpdd-agm-20160318-git.tgz
++++ local def=1
++++ local hookName=unpackCmd
++++ case "$(type -t $hookName)" in
+++++ type -t unpackCmd
++++ '[' -z '' ']'
++++ return 1
+++ for hook in '"_callImplicitHook 1 $hookName"' '"${dummy[@]}"'
+++ _eval _defaultUnpack /nix/store/fcaz5larfadpxal4jqdbxly2hsx8gpdd-agm-20160318-git.tgz
+++ local code=_defaultUnpack
+++ shift
++++ type -t _defaultUnpack
+++ '[' function = function ']'
+++ eval '_defaultUnpack "$@"'
++++ _defaultUnpack /nix/store/fcaz5larfadpxal4jqdbxly2hsx8gpdd-agm-20160318-git.tgz
++++ local fn=/nix/store/fcaz5larfadpxal4jqdbxly2hsx8gpdd-agm-20160318-git.tgz
++++ '[' -d /nix/store/fcaz5larfadpxal4jqdbxly2hsx8gpdd-agm-20160318-git.tgz ']'
++++ case "$fn" in
++++ tar xf /nix/store/fcaz5larfadpxal4jqdbxly2hsx8gpdd-agm-20160318-git.tgz
+++ return 0
+++ stopNest
+++ nestingLevel=1
+++ echo -en '\033[q'
+++ '[' -n '' ']'
+++ '[' -z '' ']'
+++ sourceRoot=
+++ for i in '*'
+++ '[' -d agm-20160318-git ']'
+++ case $dirsBefore in
+++ '[' -n '' ']'
+++ sourceRoot=agm-20160318-git
+++ for i in '*'
+++ '[' -d env-vars ']'
+++ '[' -z agm-20160318-git ']'
+++ echo 'source root is agm-20160318-git'
+source root is agm-20160318-git
+++ '[' '' '!=' 1 ']'
+++ chmod -R u+w agm-20160318-git
+++ runHook postUnpack
+++ local hookName=postUnpack
+++ shift
+++ local var=postUnpack
+++ [[ postUnpack =~ Hook$ ]]
+++ var+=Hooks
+++ eval 'local -a dummy=("${postUnpackHooks[@]}")'
++++ dummy=("${postUnpackHooks[@]}")
++++ local -a dummy
+++ for hook in '"_callImplicitHook 0 $hookName"' '"${dummy[@]}"'
+++ _eval '_callImplicitHook 0 postUnpack'
+++ local 'code=_callImplicitHook 0 postUnpack'
+++ shift
++++ type -t _callImplicitHook 0 postUnpack
+++ '[' function = function ']'
+++ eval '_callImplicitHook 0 postUnpack "$@"'
++++ _callImplicitHook 0 postUnpack
++++ local def=0
++++ local hookName=postUnpack
++++ case "$(type -t $hookName)" in
+++++ type -t postUnpack
++++ '[' -z '' ']'
++++ return 0
+++ for hook in '"_callImplicitHook 0 $hookName"' '"${dummy[@]}"'
+++ _eval _updateSourceDateEpochFromSourceRoot
+++ local code=_updateSourceDateEpochFromSourceRoot
+++ shift
++++ type -t _updateSourceDateEpochFromSourceRoot
+++ '[' function = function ']'
+++ eval '_updateSourceDateEpochFromSourceRoot "$@"'
++++ _updateSourceDateEpochFromSourceRoot
++++ '[' -n agm-20160318-git ']'
++++ updateSourceDateEpoch agm-20160318-git
++++ local path=agm-20160318-git
++++ res=($(find "$path" -type f -print0 | xargs -0 -r stat -c '%Y %n' | sort -n | tail -n1))
+++++ find agm-20160318-git -type f -print0
+++++ sort -n
+++++ xargs -0 -r stat -c '%Y %n'
+++++ tail -n1
++++ local -a res
++++ local time=1455817798
++++ local newestFile=agm-20160318-git/vector.lisp
++++ '[' 1455817798 -gt 1 ']'
++++ echo 'setting SOURCE_DATE_EPOCH to timestamp 1455817798 of file agm-20160318-git/vector.lisp'
+setting SOURCE_DATE_EPOCH to timestamp 1455817798 of file agm-20160318-git/vector.lisp
++++ export SOURCE_DATE_EPOCH=1455817798
++++ SOURCE_DATE_EPOCH=1455817798
+++++ date +%s
++++ local now=1472958281
++++ '[' 1455817798 -gt 1472958221 ']'
+++ return 0
++ '[' unpackPhase = unpackPhase ']'
++ cd agm-20160318-git
++ '[' -n '' ']'
++ stopNest
++ nestingLevel=0
++ echo -en '\033[q'
++ for curPhase in '$phases'
++ '[' patchPhase = buildPhase -a -n '' ']'
++ '[' patchPhase = checkPhase -a -z '' ']'
++ '[' patchPhase = installPhase -a -n '' ']'
++ '[' patchPhase = fixupPhase -a -n '' ']'
++ '[' patchPhase = installCheckPhase -a -z '' ']'
++ '[' patchPhase = distPhase -a -z '' ']'
++ '[' -n '' ']'
++ showPhaseHeader patchPhase
++ local phase=patchPhase
++ case $phase in
++ header 'patching sources'
++ startNest ''
++ nestingLevel=1
++ echo -en '\033[p'
++ echo 'patching sources'
+patching sources
++ dumpVars
++ '[' '' '!=' 1 ']'
++ export
++ eval patchPhase
+++ patchPhase
+++ runHook prePatch
+++ local hookName=prePatch
+++ shift
+++ local var=prePatch
+++ [[ prePatch =~ Hook$ ]]
+++ var+=Hooks
+++ eval 'local -a dummy=("${prePatchHooks[@]}")'
++++ dummy=("${prePatchHooks[@]}")
++++ local -a dummy
+++ for hook in '"_callImplicitHook 0 $hookName"' '"${dummy[@]}"'
+++ _eval '_callImplicitHook 0 prePatch'
+++ local 'code=_callImplicitHook 0 prePatch'
+++ shift
++++ type -t _callImplicitHook 0 prePatch
+++ '[' function = function ']'
+++ eval '_callImplicitHook 0 prePatch "$@"'
++++ _callImplicitHook 0 prePatch
++++ local def=0
++++ local hookName=prePatch
++++ case "$(type -t $hookName)" in
+++++ type -t prePatch
++++ '[' -z '' ']'
++++ return 0
+++ return 0
+++ runHook postPatch
+++ local hookName=postPatch
+++ shift
+++ local var=postPatch
+++ [[ postPatch =~ Hook$ ]]
+++ var+=Hooks
+++ eval 'local -a dummy=("${postPatchHooks[@]}")'
++++ dummy=("${postPatchHooks[@]}")
++++ local -a dummy
+++ for hook in '"_callImplicitHook 0 $hookName"' '"${dummy[@]}"'
+++ _eval '_callImplicitHook 0 postPatch'
+++ local 'code=_callImplicitHook 0 postPatch'
+++ shift
++++ type -t _callImplicitHook 0 postPatch
+++ '[' function = function ']'
+++ eval '_callImplicitHook 0 postPatch "$@"'
++++ _callImplicitHook 0 postPatch
++++ local def=0
++++ local hookName=postPatch
++++ case "$(type -t $hookName)" in
+++++ type -t postPatch
++++ '[' -z '' ']'
++++ return 0
+++ return 0
++ '[' patchPhase = unpackPhase ']'
++ '[' -n '' ']'
++ stopNest
++ nestingLevel=0
++ echo -en '\033[q'
++ for curPhase in '$phases'
++ '[' configurePhase = buildPhase -a -n '' ']'
++ '[' configurePhase = checkPhase -a -z '' ']'
++ '[' configurePhase = installPhase -a -n '' ']'
++ '[' configurePhase = fixupPhase -a -n '' ']'
++ '[' configurePhase = installCheckPhase -a -z '' ']'
++ '[' configurePhase = distPhase -a -z '' ']'
++ '[' -n '' ']'
++ showPhaseHeader configurePhase
++ local phase=configurePhase
++ case $phase in
++ header configuring
++ startNest ''
++ nestingLevel=1
++ echo -en '\033[p'
++ echo configuring
+configuring
++ dumpVars
++ '[' '' '!=' 1 ']'
++ export
++ eval configurePhase
+++ configurePhase
+++ runHook preConfigure
+++ local hookName=preConfigure
+++ shift
+++ local var=preConfigure
+++ [[ preConfigure =~ Hook$ ]]
+++ var+=Hooks
+++ eval 'local -a dummy=("${preConfigureHooks[@]}")'
++++ dummy=("${preConfigureHooks[@]}")
++++ local -a dummy
+++ for hook in '"_callImplicitHook 0 $hookName"' '"${dummy[@]}"'
+++ _eval '_callImplicitHook 0 preConfigure'
+++ local 'code=_callImplicitHook 0 preConfigure'
+++ shift
++++ type -t _callImplicitHook 0 preConfigure
+++ '[' 'function
+function' = function ']'
+++ eval '_callImplicitHook 0 preConfigure'
++++ _callImplicitHook 0 preConfigure
++++ local def=0
++++ local hookName=preConfigure
++++ case "$(type -t $hookName)" in
+++++ type -t preConfigure
++++ preConfigure
++++ eval ''
++++ mkdir -p /nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git/common-lisp/source-registry
++++ mkdir -p /nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git/common-lisp/bin-cache
++++ mkdir -p /nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git/common-lisp/source
++++ mkdir -p /nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git/common-lisp/output-translations
++++ mkdir -p /nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git/bin
++++ printf '(:output-translations\n'
++++ printf '(:source-registry\n'
++++ for dependency in '$lisp_dependencies'
+++++ eval printf '%s\n' '${b}'
++++++ printf %sn /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-git
++++ printf ' (:include "%s")\n' /nix/store/l107ng7zpmi2si6h044hk45k3gk8v90y-lisp-alexandria-20160421-gitn/common-lisp/output-translations/
++++ printf ' (:include "%s/common-lisp/source-registry/")\n' b
++++ printf '(:tree "%s"):ignore-inherited-configuration)' /nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git/common-lisp/source/
++++ printf '("%s/common-lisp/source/" ("%s/common-lisp/bin-cache/" :implementation :**/ :*.*.*)):ignore-inherited-configuration)' /nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git /nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git
+++ return 0
+++ '[' -z '' -a -x ./configure ']'
+++ '[' -z '' ']'
+++ find . -iname ltmain.sh
+++ read i
+++ '[' -z '' ']'
+++ configureFlags='--prefix=/nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git '
+++ '[' -z '' ']'
+++ grep -q dependency-tracking ''
+grep: : No such file or directory
+++ '[' -z '' ']'
+++ grep -q enable-static ''
+grep: : No such file or directory
+++ '[' -n '' ']'
+++ echo 'no configure script, doing nothing'
+no configure script, doing nothing
+++ runHook postConfigure
+++ local hookName=postConfigure
+++ shift
+++ local var=postConfigure
+++ [[ postConfigure =~ Hook$ ]]
+++ var+=Hooks
+++ eval 'local -a dummy=("${postConfigureHooks[@]}")'
++++ dummy=("${postConfigureHooks[@]}")
++++ local -a dummy
+++ for hook in '"_callImplicitHook 0 $hookName"' '"${dummy[@]}"'
+++ _eval '_callImplicitHook 0 postConfigure'
+++ local 'code=_callImplicitHook 0 postConfigure'
+++ shift
++++ type -t _callImplicitHook 0 postConfigure
+++ '[' function = function ']'
+++ eval '_callImplicitHook 0 postConfigure "$@"'
++++ _callImplicitHook 0 postConfigure
++++ local def=0
++++ local hookName=postConfigure
++++ case "$(type -t $hookName)" in
+++++ type -t postConfigure
++++ '[' -z '' ']'
++++ return 0
+++ return 0
++ '[' configurePhase = unpackPhase ']'
++ '[' -n '' ']'
++ stopNest
++ nestingLevel=0
++ echo -en '\033[q'
++ for curPhase in '$phases'
++ '[' buildPhase = buildPhase -a -n '' ']'
++ '[' buildPhase = checkPhase -a -z '' ']'
++ '[' buildPhase = installPhase -a -n '' ']'
++ '[' buildPhase = fixupPhase -a -n '' ']'
++ '[' buildPhase = installCheckPhase -a -z '' ']'
++ '[' buildPhase = distPhase -a -z '' ']'
++ '[' -n '' ']'
++ showPhaseHeader buildPhase
++ local phase=buildPhase
++ case $phase in
++ header building
++ startNest ''
++ nestingLevel=1
++ echo -en '\033[p'
++ echo building
+building
++ dumpVars
++ '[' '' '!=' 1 ']'
++ export
++ eval buildPhase
+++ buildPhase
+++ runHook preBuild
+++ local hookName=preBuild
+++ shift
+++ local var=preBuild
+++ [[ preBuild =~ Hook$ ]]
+++ var+=Hooks
+++ eval 'local -a dummy=("${preBuildHooks[@]}")'
++++ dummy=("${preBuildHooks[@]}")
++++ local -a dummy
+++ for hook in '"_callImplicitHook 0 $hookName"' '"${dummy[@]}"'
+++ _eval '_callImplicitHook 0 preBuild'
+++ local 'code=_callImplicitHook 0 preBuild'
+++ shift
++++ type -t _callImplicitHook 0 preBuild
+++ '[' 'function
+function' = function ']'
+++ eval '_callImplicitHook 0 preBuild'
++++ _callImplicitHook 0 preBuild
++++ local def=0
++++ local hookName=preBuild
++++ case "$(type -t $hookName)" in
+++++ type -t preBuild
++++ preBuild
++++ eval ''
++++ cp -a ./README.md ./agm.asd ./matrix.lisp ./package.lisp ./vector.lisp /nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git/common-lisp/source/
++++ cat
++++ echo 'SBCL: '
+SBCL: 
++++ cat - /nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git/bin/sbcl-agm
+sbcl-agm binary
+#!/bin/sh
+set -x
+NIX_LISP="${NIX_LISP:-/nix/store/kp2n76n941za7c8fbqd3z61l0nvsag5n-sbcl-1.3.2/bin/sbcl --no-sysinit --no-userinit}"
+export CL_SOURCE_REGISTRY='(:source-registry (:include "/nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git/common-lisp/source-registry/nix.conf"):ignore-inherited-configuration)'
+export ASDF_OUTPUT_TRANSLATIONS='(:output-translations (:include "/nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git/common-lisp/output-translations/nix.conf"):ignore-inherited-configuration)'
+echo $NIX_LISP >&2
+$NIX_LISP "$@"
++++ chmod +x /nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git/bin/sbcl-agm
++++ /nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git/bin/sbcl-agm
++ NIX_LISP='/nix/store/kp2n76n941za7c8fbqd3z61l0nvsag5n-sbcl-1.3.2/bin/sbcl --no-sysinit --no-userinit'
++ export 'CL_SOURCE_REGISTRY=(:source-registry (:include "/nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git/common-lisp/source-registry/nix.conf"):ignore-inherited-configuration)'
++ CL_SOURCE_REGISTRY='(:source-registry (:include "/nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git/common-lisp/source-registry/nix.conf"):ignore-inherited-configuration)'
++ export 'ASDF_OUTPUT_TRANSLATIONS=(:output-translations (:include "/nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git/common-lisp/output-translations/nix.conf"):ignore-inherited-configuration)'
++ ASDF_OUTPUT_TRANSLATIONS='(:output-translations (:include "/nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git/common-lisp/output-translations/nix.conf"):ignore-inherited-configuration)'
++ echo /nix/store/kp2n76n941za7c8fbqd3z61l0nvsag5n-sbcl-1.3.2/bin/sbcl --no-sysinit --no-userinit
+/nix/store/kp2n76n941za7c8fbqd3z61l0nvsag5n-sbcl-1.3.2/bin/sbcl --no-sysinit --no-userinit
++ /nix/store/kp2n76n941za7c8fbqd3z61l0nvsag5n-sbcl-1.3.2/bin/sbcl --no-sysinit --no-userinit
+This is SBCL 1.3.2.nixos, an implementation of ANSI Common Lisp.
+More information about SBCL is available at <http://www.sbcl.org/>.
+
+SBCL is free software, provided as is, with absolutely no warranty.
+It is mostly in the public domain; some portions are provided under
+BSD-style licenses.  See the CREDITS and COPYING files in the
+distribution for more information.
+* 
+T
+* 
+debugger invoked on a SIMPLE-ERROR in thread
+#<THREAD "main thread" RUNNING {1002A54343}>:
+  Invalid pathname #P"b/common-lisp/source-registry/": Expected an absolute pathname
+
+Type HELP for debugger help, or (SB-EXT:EXIT) to exit from SBCL.
+
+restarts (invokable by number or by possibly-abbreviated name):
+  0: [RETRY                        ] Retry ASDF operation.
+  1: [CLEAR-CONFIGURATION-AND-RETRY] Retry ASDF operation after resetting the
+                                     configuration.
+  2: [ABORT                        ] Exit debugger, returning to top level.
+
+(UIOP/PATHNAME:ENSURE-PATHNAME #P"b/common-lisp/source-registry/" :ON-ERROR NIL :DEFAULTS NIL :TYPE NIL :DOT-DOT NIL :NAMESTRING NIL :EMPTY-IS-NIL NIL :WANT-PATHNAME NIL :WANT-LOGICAL NIL :WANT-PHYSICAL NIL :ENSURE-PHYSICAL NIL :WANT-RELATIVE NIL :WANT-ABSOLUTE T :ENSURE-ABSOLUTE NIL :ENSURE-SUBPATH NIL :WANT-NON-WILD NIL :WANT-WILD NIL :WILDEN NIL :WANT-FILE NIL :WANT-DIRECTORY NIL :ENSURE-DIRECTORY NIL :WANT-EXISTING NIL :ENSURE-DIRECTORIES-EXIST NIL :TRUENAME NIL :RESOLVE-SYMLINKS T :TRUENAMIZE NIL)
+0] 
+* ++ return 0
+++ '[' -z '' ']'
+++ '[' -n '' -o -e Makefile -o -e makefile -o -e GNUmakefile ']'
+++ echo 'no Makefile, doing nothing'
+no Makefile, doing nothing
+++ runHook postBuild
+++ local hookName=postBuild
+++ shift
+++ local var=postBuild
+++ [[ postBuild =~ Hook$ ]]
+++ var+=Hooks
+++ eval 'local -a dummy=("${postBuildHooks[@]}")'
++++ dummy=("${postBuildHooks[@]}")
++++ local -a dummy
+++ for hook in '"_callImplicitHook 0 $hookName"' '"${dummy[@]}"'
+++ _eval '_callImplicitHook 0 postBuild'
+++ local 'code=_callImplicitHook 0 postBuild'
+++ shift
++++ type -t _callImplicitHook 0 postBuild
+++ '[' function = function ']'
+++ eval '_callImplicitHook 0 postBuild "$@"'
++++ _callImplicitHook 0 postBuild
++++ local def=0
++++ local hookName=postBuild
++++ case "$(type -t $hookName)" in
+++++ type -t postBuild
++++ '[' -z '' ']'
++++ return 0
+++ return 0
++ '[' buildPhase = unpackPhase ']'
++ '[' -n '' ']'
++ stopNest
++ nestingLevel=0
++ echo -en '\033[q'
++ for curPhase in '$phases'
++ '[' checkPhase = buildPhase -a -n '' ']'
++ '[' checkPhase = checkPhase -a -z '' ']'
++ continue
++ for curPhase in '$phases'
++ '[' installPhase = buildPhase -a -n '' ']'
++ '[' installPhase = checkPhase -a -z '' ']'
++ '[' installPhase = installPhase -a -n '' ']'
++ '[' installPhase = fixupPhase -a -n '' ']'
++ '[' installPhase = installCheckPhase -a -z '' ']'
++ '[' installPhase = distPhase -a -z '' ']'
++ '[' -n '' ']'
++ showPhaseHeader installPhase
++ local phase=installPhase
++ case $phase in
++ header installing
++ startNest ''
++ nestingLevel=1
++ echo -en '\033[p'
++ echo installing
+installing
++ dumpVars
++ '[' '' '!=' 1 ']'
++ export
++ eval installPhase
+++ installPhase
+++ :
++ '[' installPhase = unpackPhase ']'
++ '[' -n '' ']'
++ stopNest
++ nestingLevel=0
++ echo -en '\033[q'
++ for curPhase in '$phases'
++ '[' fixupPhase = buildPhase -a -n '' ']'
++ '[' fixupPhase = checkPhase -a -z '' ']'
++ '[' fixupPhase = installPhase -a -n '' ']'
++ '[' fixupPhase = fixupPhase -a -n '' ']'
++ '[' fixupPhase = installCheckPhase -a -z '' ']'
++ '[' fixupPhase = distPhase -a -z '' ']'
++ '[' -n '' ']'
++ showPhaseHeader fixupPhase
++ local phase=fixupPhase
++ case $phase in
++ header 'post-installation fixup'
++ startNest ''
++ nestingLevel=1
++ echo -en '\033[p'
++ echo 'post-installation fixup'
+post-installation fixup
++ dumpVars
++ '[' '' '!=' 1 ']'
++ export
++ eval fixupPhase
+++ fixupPhase
+++ for output in '$outputs'
+++ '[' -e /nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git ']'
+++ chmod -R u+w /nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git
+++ runHook preFixup
+++ local hookName=preFixup
+++ shift
+++ local var=preFixup
+++ [[ preFixup =~ Hook$ ]]
+++ var+=Hooks
+++ eval 'local -a dummy=("${preFixupHooks[@]}")'
++++ dummy=("${preFixupHooks[@]}")
++++ local -a dummy
+++ for hook in '"_callImplicitHook 0 $hookName"' '"${dummy[@]}"'
+++ _eval '_callImplicitHook 0 preFixup'
+++ local 'code=_callImplicitHook 0 preFixup'
+++ shift
++++ type -t _callImplicitHook 0 preFixup
+++ '[' function = function ']'
+++ eval '_callImplicitHook 0 preFixup "$@"'
++++ _callImplicitHook 0 preFixup
++++ local def=0
++++ local hookName=preFixup
++++ case "$(type -t $hookName)" in
+++++ type -t preFixup
++++ '[' -z '' ']'
++++ return 0
+++ for hook in '"_callImplicitHook 0 $hookName"' '"${dummy[@]}"'
+++ _eval _moveDocs
+++ local code=_moveDocs
+++ shift
++++ type -t _moveDocs
+++ '[' function = function ']'
+++ eval '_moveDocs "$@"'
++++ _moveDocs
++++ _moveToShare
++++ forceShare='man doc info'
++++ '[' -z 'man doc info' -o -z /nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git ']'
++++ for d in '$forceShare'
++++ '[' -d /nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git/man ']'
++++ for d in '$forceShare'
++++ '[' -d /nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git/doc ']'
++++ for d in '$forceShare'
++++ '[' -d /nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git/info ']'
++++ _moveToOutput share/man ''
++++ local d=share/man
++++ local dst=
++++ '[' -z '' -a '!' -e /share/man ']'
++++ return
++++ _moveToOutput share/info ''
++++ local d=share/info
++++ local dst=
++++ '[' -z '' -a '!' -e /share/info ']'
++++ return
++++ _moveToOutput share/doc ''
++++ local d=share/doc
++++ local dst=
++++ '[' -z '' -a '!' -e /share/doc ']'
++++ return
++++ _moveToOutput share/gtk-doc ''
++++ local d=share/gtk-doc
++++ local dst=
++++ '[' -z '' -a '!' -e /share/gtk-doc ']'
++++ return
++++ '[' -d /nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git/share ']'
+++ return 0
+++ local output
+++ for output in '$outputs'
+++ prefix=/nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git
+++ runHook fixupOutput
+++ local hookName=fixupOutput
+++ shift
+++ local var=fixupOutput
+++ [[ fixupOutput =~ Hook$ ]]
+++ var+=Hooks
+++ eval 'local -a dummy=("${fixupOutputHooks[@]}")'
++++ dummy=("${fixupOutputHooks[@]}")
++++ local -a dummy
+++ for hook in '"_callImplicitHook 0 $hookName"' '"${dummy[@]}"'
+++ _eval '_callImplicitHook 0 fixupOutput'
+++ local 'code=_callImplicitHook 0 fixupOutput'
+++ shift
++++ type -t _callImplicitHook 0 fixupOutput
+++ '[' function = function ']'
+++ eval '_callImplicitHook 0 fixupOutput "$@"'
++++ _callImplicitHook 0 fixupOutput
++++ local def=0
++++ local hookName=fixupOutput
++++ case "$(type -t $hookName)" in
+++++ type -t fixupOutput
++++ '[' -z '' ']'
++++ return 0
+++ for hook in '"_callImplicitHook 0 $hookName"' '"${dummy[@]}"'
+++ _eval 'if [ -z "$dontPatchELF" ]; then patchELF "$prefix"; fi'
+++ local 'code=if [ -z "$dontPatchELF" ]; then patchELF "$prefix"; fi'
+++ shift
++++ type -t if '[' -z '"$dontPatchELF"' '];' then patchELF '"$prefix";' fi
+++ '[' 'keyword
+builtin
+keyword
+function
+keyword' = function ']'
+++ eval 'if [ -z "$dontPatchELF" ]; then patchELF "$prefix"; fi'
++++ '[' -z '' ']'
++++ patchELF /nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git
++++ local dir=/nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git
++++ header 'shrinking RPATHs of ELF executables and libraries in /nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git'
++++ startNest ''
++++ nestingLevel=2
++++ echo -en '\033[p'
++++ echo 'shrinking RPATHs of ELF executables and libraries in /nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git'
+shrinking RPATHs of ELF executables and libraries in /nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git
++++ local i
++++ IFS=
++++ read -r -d '' i
+++++ find /nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git -type f -print0
++++ [[ /nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git/bin/sbcl-agm =~ .build-id ]]
++++ isELF /nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git/bin/sbcl-agm
++++ local fn=/nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git/bin/sbcl-agm
++++ local magic
++++ exec
++++ read -n 4 -u 11 magic
++++ exec
++++ [[ #!/b =~ ELF ]]
++++ return 1
++++ continue
++++ IFS=
++++ read -r -d '' i
++++ [[ /nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git/common-lisp/output-translations/nix.conf =~ .build-id ]]
++++ isELF /nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git/common-lisp/output-translations/nix.conf
++++ local fn=/nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git/common-lisp/output-translations/nix.conf
++++ local magic
++++ exec
++++ read -n 4 -u 11 magic
++++ exec
++++ [[ (:ou =~ ELF ]]
++++ return 1
++++ continue
++++ IFS=
++++ read -r -d '' i
++++ [[ /nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git/common-lisp/source-registry/nix.conf =~ .build-id ]]
++++ isELF /nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git/common-lisp/source-registry/nix.conf
++++ local fn=/nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git/common-lisp/source-registry/nix.conf
++++ local magic
++++ exec
++++ read -n 4 -u 11 magic
++++ exec
++++ [[ (:so =~ ELF ]]
++++ return 1
++++ continue
++++ IFS=
++++ read -r -d '' i
++++ [[ /nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git/common-lisp/source/matrix.lisp =~ .build-id ]]
++++ isELF /nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git/common-lisp/source/matrix.lisp
++++ local fn=/nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git/common-lisp/source/matrix.lisp
++++ local magic
++++ exec
++++ read -n 4 -u 11 magic
++++ exec
++++ [[ (in- =~ ELF ]]
++++ return 1
++++ continue
++++ IFS=
++++ read -r -d '' i
++++ [[ /nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git/common-lisp/source/package.lisp =~ .build-id ]]
++++ isELF /nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git/common-lisp/source/package.lisp
++++ local fn=/nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git/common-lisp/source/package.lisp
++++ local magic
++++ exec
++++ read -n 4 -u 11 magic
++++ exec
++++ [[ (in- =~ ELF ]]
++++ return 1
++++ continue
++++ IFS=
++++ read -r -d '' i
++++ [[ /nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git/common-lisp/source/agm.asd =~ .build-id ]]
++++ isELF /nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git/common-lisp/source/agm.asd
++++ local fn=/nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git/common-lisp/source/agm.asd
++++ local magic
++++ exec
++++ read -n 4 -u 11 magic
++++ exec
++++ [[ (def =~ ELF ]]
++++ return 1
++++ continue
++++ IFS=
++++ read -r -d '' i
++++ [[ /nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git/common-lisp/source/README.md =~ .build-id ]]
++++ isELF /nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git/common-lisp/source/README.md
++++ local fn=/nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git/common-lisp/source/README.md
++++ local magic
++++ exec
++++ read -n 4 -u 11 magic
++++ exec
++++ [[ # AG =~ ELF ]]
++++ return 1
++++ continue
++++ IFS=
++++ read -r -d '' i
++++ [[ /nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git/common-lisp/source/vector.lisp =~ .build-id ]]
++++ isELF /nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git/common-lisp/source/vector.lisp
++++ local fn=/nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git/common-lisp/source/vector.lisp
++++ local magic
++++ exec
++++ read -n 4 -u 11 magic
++++ exec
++++ [[ (in- =~ ELF ]]
++++ return 1
++++ continue
++++ IFS=
++++ read -r -d '' i
++++ stopNest
++++ nestingLevel=1
++++ echo -en '\033[q'
+++ for hook in '"_callImplicitHook 0 $hookName"' '"${dummy[@]}"'
+++ _eval 'if [ -z "$dontGzipMan" ]; then compressManPages "$prefix"; fi'
+++ local 'code=if [ -z "$dontGzipMan" ]; then compressManPages "$prefix"; fi'
+++ shift
++++ type -t if '[' -z '"$dontGzipMan"' '];' then compressManPages '"$prefix";' fi
+++ '[' 'keyword
+builtin
+keyword
+function
+keyword' = function ']'
+++ eval 'if [ -z "$dontGzipMan" ]; then compressManPages "$prefix"; fi'
++++ '[' -z '' ']'
++++ compressManPages /nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git
++++ local dir=/nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git
++++ echo 'gzipping man pages in /nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git'
+gzipping man pages in /nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git
++++ GLOBIGNORE='.:..:*.gz:*.bz2'
++++ unset GLOBIGNORE
+++ for hook in '"_callImplicitHook 0 $hookName"' '"${dummy[@]}"'
+++ _eval _doStrip
+++ local code=_doStrip
+++ shift
++++ type -t _doStrip
+++ '[' function = function ']'
+++ eval '_doStrip "$@"'
++++ _doStrip
++++ '[' -z '' ']'
++++ stripDebugList='lib lib32 lib64 libexec bin sbin'
++++ '[' -n 'lib lib32 lib64 libexec bin sbin' ']'
++++ stripDirs 'lib lib32 lib64 libexec bin sbin' -S
++++ local 'dirs=lib lib32 lib64 libexec bin sbin'
++++ local stripFlags=-S
++++ local dirsNew=
++++ for d in '${dirs}'
++++ '[' -d /nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git/lib ']'
++++ for d in '${dirs}'
++++ '[' -d /nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git/lib32 ']'
++++ for d in '${dirs}'
++++ '[' -d /nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git/lib64 ']'
++++ for d in '${dirs}'
++++ '[' -d /nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git/libexec ']'
++++ for d in '${dirs}'
++++ '[' -d /nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git/bin ']'
++++ dirsNew=' /nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git/bin '
++++ for d in '${dirs}'
++++ '[' -d /nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git/sbin ']'
++++ dirs=' /nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git/bin '
++++ '[' -n ' /nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git/bin ' ']'
++++ header 'stripping (with flags -S) in /nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git/bin '
++++ startNest ''
++++ nestingLevel=2
++++ echo -en '\033[p'
++++ echo 'stripping (with flags -S) in /nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git/bin '
+stripping (with flags -S) in /nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git/bin 
++++ find /nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git/bin -type f -print0
++++ xargs -0 -r strip --enable-deterministic-archives -S
+strip:/nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git/bin/sbcl-agm: File format not recognized
++++ true
++++ stopNest
++++ nestingLevel=1
++++ echo -en '\033[q'
++++ stripAllList=
++++ '[' -n '' ']'
+++ for hook in '"_callImplicitHook 0 $hookName"' '"${dummy[@]}"'
+++ _eval 'if [ -z "$dontPatchShebangs" -a -e "$prefix" ]; then patchShebangs "$prefix"; fi'
+++ local 'code=if [ -z "$dontPatchShebangs" -a -e "$prefix" ]; then patchShebangs "$prefix"; fi'
+++ shift
++++ type -t if '[' -z '"$dontPatchShebangs"' -a -e '"$prefix"' '];' then patchShebangs '"$prefix";' fi
+++ '[' 'keyword
+builtin
+keyword
+function
+keyword' = function ']'
+++ eval 'if [ -z "$dontPatchShebangs" -a -e "$prefix" ]; then patchShebangs "$prefix"; fi'
++++ '[' -z '' -a -e /nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git ']'
++++ patchShebangs /nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git
++++ local dir=/nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git
++++ header 'patching script interpreter paths in /nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git'
++++ startNest ''
++++ nestingLevel=2
++++ echo -en '\033[p'
++++ echo 'patching script interpreter paths in /nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git'
+patching script interpreter paths in /nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git
++++ local f
++++ local oldPath
++++ local newPath
++++ local arg0
++++ local args
++++ local oldInterpreterLine
++++ local newInterpreterLine
++++ find /nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git -type f -perm -0100
++++ read f
+++++ head -1 /nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git/bin/sbcl-agm
+++++ head -c+2
++++ '[' '#!' '!=' '#!' ']'
+++++ head -1 /nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git/bin/sbcl-agm
+++++ tail -c+3
++++ oldInterpreterLine=/bin/sh
++++ read -r oldPath arg0 args
+++++ echo /bin/sh
+++++ grep -q '/bin/env$'
++++ '[' /bin/sh = '' ']'
++++++ basename /bin/sh
+++++ command -v sh
++++ newPath=/nix/store/i7hx6w6zy3bv53f2xm1r23ya8qbzn4is-bash-4.3-p42/bin/sh
++++ args=' '
++++ newInterpreterLine='/nix/store/i7hx6w6zy3bv53f2xm1r23ya8qbzn4is-bash-4.3-p42/bin/sh  '
++++ '[' -n /bin/sh -a /bin/sh '!=' /nix/store ']'
++++ '[' -n /nix/store/i7hx6w6zy3bv53f2xm1r23ya8qbzn4is-bash-4.3-p42/bin/sh -a /nix/store/i7hx6w6zy3bv53f2xm1r23ya8qbzn4is-bash-4.3-p42/bin/sh '!=' /bin/sh ']'
++++ echo '/nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git/bin/sbcl-agm: interpreter directive changed from "/bin/sh" to "/nix/store/i7hx6w6zy3bv53f2xm1r23ya8qbzn4is-bash-4.3-p42/bin/sh  "'
+/nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git/bin/sbcl-agm: interpreter directive changed from "/bin/sh" to "/nix/store/i7hx6w6zy3bv53f2xm1r23ya8qbzn4is-bash-4.3-p42/bin/sh  "
+++++ echo '/nix/store/i7hx6w6zy3bv53f2xm1r23ya8qbzn4is-bash-4.3-p42/bin/sh  '
+++++ sed 's|\\|\\\\|g'
++++ escapedInterpreterLine='/nix/store/i7hx6w6zy3bv53f2xm1r23ya8qbzn4is-bash-4.3-p42/bin/sh  '
++++ sed -i -e '1 s|.*|#\!/nix/store/i7hx6w6zy3bv53f2xm1r23ya8qbzn4is-bash-4.3-p42/bin/sh  |' /nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git/bin/sbcl-agm
++++ read f
++++ stopNest
++++ nestingLevel=1
++++ echo -en '\033[q'
+++ for hook in '"_callImplicitHook 0 $hookName"' '"${dummy[@]}"'
+++ _eval _moveSbin
+++ local code=_moveSbin
+++ shift
++++ type -t _moveSbin
+++ '[' function = function ']'
+++ eval '_moveSbin "$@"'
++++ _moveSbin
++++ '[' '' = 1 ']'
++++ '[' '!' -e /nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git/sbin -o -L /nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git/sbin ']'
++++ return
+++ for hook in '"_callImplicitHook 0 $hookName"' '"${dummy[@]}"'
+++ _eval _moveLib64
+++ local code=_moveLib64
+++ shift
++++ type -t _moveLib64
+++ '[' function = function ']'
+++ eval '_moveLib64 "$@"'
++++ _moveLib64
++++ '[' '' = 1 ']'
++++ '[' '!' -e /nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git/lib64 -o -L /nix/store/b957mldnky9wd7r0271wjjiqh2b7y9fj-lisp-agm-20160421-git/lib64 ']'
++++ return
+++ return 0
+++ '[' -n '' ']'
+++ '[' -n '' ']'
+++ '[' -n '' ']'
+++ '[' -n '' ']'
+++ runHook postFixup
+++ local hookName=postFixup
+++ shift
+++ local var=postFixup
+++ [[ postFixup =~ Hook$ ]]
+++ var+=Hooks
+++ eval 'local -a dummy=("${postFixupHooks[@]}")'
++++ dummy=("${postFixupHooks[@]}")
++++ local -a dummy
+++ for hook in '"_callImplicitHook 0 $hookName"' '"${dummy[@]}"'
+++ _eval '_callImplicitHook 0 postFixup'
+++ local 'code=_callImplicitHook 0 postFixup'
+++ shift
++++ type -t _callImplicitHook 0 postFixup
+++ '[' function = function ']'
+++ eval '_callImplicitHook 0 postFixup "$@"'
++++ _callImplicitHook 0 postFixup
++++ local def=0
++++ local hookName=postFixup
++++ case "$(type -t $hookName)" in
+++++ type -t postFixup
++++ '[' -z '' ']'
++++ return 0
+++ return 0
++ '[' fixupPhase = unpackPhase ']'
++ '[' -n '' ']'
++ stopNest
++ nestingLevel=0
++ echo -en '\033[q'
++ for curPhase in '$phases'
++ '[' installCheckPhase = buildPhase -a -n '' ']'
++ '[' installCheckPhase = checkPhase -a -z '' ']'
++ '[' installCheckPhase = installPhase -a -n '' ']'
++ '[' installCheckPhase = fixupPhase -a -n '' ']'
++ '[' installCheckPhase = installCheckPhase -a -z '' ']'
++ continue
++ for curPhase in '$phases'
++ '[' distPhase = buildPhase -a -n '' ']'
++ '[' distPhase = checkPhase -a -z '' ']'
++ '[' distPhase = installPhase -a -n '' ']'
++ '[' distPhase = fixupPhase -a -n '' ']'
++ '[' distPhase = installCheckPhase -a -z '' ']'
++ '[' distPhase = distPhase -a -z '' ']'
++ continue
++ exitHandler
++ exitCode=0
++ set +e
++ closeNest
++ '[' 0 -gt 0 ']'
++ '[' -n '' ']'
++ '[' 0 '!=' 0 ']'
++ runHook exitHook
++ local hookName=exitHook
++ shift
++ local var=exitHook
++ [[ exitHook =~ Hook$ ]]
++ var+=s
++ eval 'local -a dummy=("${exitHooks[@]}")'
+++ dummy=("${exitHooks[@]}")
+++ local -a dummy
++ for hook in '"_callImplicitHook 0 $hookName"' '"${dummy[@]}"'
++ _eval '_callImplicitHook 0 exitHook'
++ local 'code=_callImplicitHook 0 exitHook'
++ shift
+++ type -t _callImplicitHook 0 exitHook
++ '[' function = function ']'
++ eval '_callImplicitHook 0 exitHook "$@"'
+++ _callImplicitHook 0 exitHook
+++ local def=0
+++ local hookName=exitHook
+++ case "$(type -t $hookName)" in
++++ type -t exitHook
+++ '[' -z '' ']'
+++ return 0
++ return 0
++ exit 0

@@ -1,0 +1,3 @@
+(defsystem #:ql2nix
+    :depends-on (#:cl-interpol #:uiop)
+    :components ((:file "ql2nixlib")))
