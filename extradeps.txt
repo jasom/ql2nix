@@ -1,0 +1,2 @@
+qt kde4 kde4.qt4
+qt kde4 kde4.smokeqt

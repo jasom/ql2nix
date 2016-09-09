@@ -8,15 +8,15 @@ in
   buildLispPackage {
       propagatedBuildInputs = [ sbcl asdf   ];
       inherit stdenv;
-      lisp_name = "sbcl-alexandria";
+      lisp_name = "sbcl-closer-mop";
       LD_LIBRARY_PATH = "";
-      systemName = "alexandria";
+      systemName = "closer-mop";
       lisp_dependencies = "";
-      name = "alexandria-20160825-git";
+      name = "closer-mop-20160825-git";
       asdf="${pkgs.asdf}";
       lisp = "${pkgs.sbcl}/bin/sbcl --no-sysinit --no-userinit";
       src = pkgs.fetchurl {
-        url = "http://beta.quicklisp.org/archive/alexandria/2016-08-25/alexandria-20160825-git.tgz";
-        md5 = "9eb868ea171d8a7707b0c9accee8a91f";
+        url = "http://beta.quicklisp.org/archive/closer-mop/2016-08-25/closer-mop-20160825-git.tgz";
+        md5 = "4cee13b6703bf8883e3da0d869cd5da4";
       };
     }

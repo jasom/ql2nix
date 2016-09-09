@@ -8,15 +8,15 @@ in
   buildLispPackage {
       propagatedBuildInputs = [ sbcl asdf   ];
       inherit stdenv;
-      lisp_name = "sbcl-alexandria";
+      lisp_name = "sbcl-named-readtables";
       LD_LIBRARY_PATH = "";
-      systemName = "alexandria";
+      systemName = "named-readtables";
       lisp_dependencies = "";
-      name = "alexandria-20160825-git";
+      name = "named-readtables-20150923-git";
       asdf="${pkgs.asdf}";
       lisp = "${pkgs.sbcl}/bin/sbcl --no-sysinit --no-userinit";
       src = pkgs.fetchurl {
-        url = "http://beta.quicklisp.org/archive/alexandria/2016-08-25/alexandria-20160825-git.tgz";
-        md5 = "9eb868ea171d8a7707b0c9accee8a91f";
+        url = "http://beta.quicklisp.org/archive/named-readtables/2015-09-23/named-readtables-20150923-git.tgz";
+        md5 = "43b5ef0f1b8e84a0feff1a96201a5dc1";
       };
     }

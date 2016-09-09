@@ -1,0 +1,15 @@
+diff -ur y/qt.asd x/qt.asd
+--- y/qt.asd	2016-09-08 22:09:05.000000000 -0700
++++ x/qt.asd	2016-09-08 23:06:55.000000000 -0700
+@@ -1,5 +1,10 @@
+ (eval-when (:compile-toplevel :load-toplevel :execute)
+-  (asdf:oos 'asdf:load-op :trivial-features))
++ (asdf:oos 'asdf:load-op :trivial-features)
++ (defun run-shell-command (&rest args)
++  (apply 'format *error-output* args)
++  (terpri *error-output*)
++  (nth-value 2 (uiop:run-program (apply 'format nil args) :error-output *error-output* :output *error-output* :ignore-error-status t)))
++  (trace run-shell-command))
+ 
+ ;;; .cpp
+ 
