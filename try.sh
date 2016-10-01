@@ -3,7 +3,7 @@ if nix-build output 2> stderr.out; then
     echo "Success"
 else
     {
-        tail stderr.out > tail.out
+        tail -n100 stderr.out > tail.out
         read
         while test "" != "$REPLY"; do
             if grep -q "$REPLY" tail.out; then

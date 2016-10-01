@@ -1,1 +1,4 @@
 /qlclean
+/output
+/*.out
+/localql

@@ -1,0 +1,28 @@
+diff -ur a/Makefile b/Makefile
+--- a/Makefile	2016-06-08 10:14:42.000000000 -0700
++++ b/Makefile	2016-09-15 13:52:10.000000000 -0700
+@@ -4,10 +4,10 @@
+ # single core version
+ glucose4-sequencial:
+ 	curl http://www.labri.fr/perso/lsimon/downloads/softwares/glucose-syrup.tgz | tar xz
+-	cd $(CURDIR)/glucose-syrup/simp/ ; $(MAKE) rs
++	cd $(CURDIR)/glucose-syrup/simp/ ; $(MAKE) r
+ 
+ glucose4-parallel:
+ 	curl http://www.labri.fr/perso/lsimon/downloads/softwares/glucose-syrup.tgz | tar xz
+-	cd $(CURDIR)/glucose-syrup/parallel/ ; $(MAKE) rs
++	cd $(CURDIR)/glucose-syrup/parallel/ ; $(MAKE) r
+ 
+ all: glucose4-sequencial
+diff -ur a/src/package.lisp b/src/package.lisp
+--- a/src/package.lisp	2016-06-08 10:14:42.000000000 -0700
++++ b/src/package.lisp	2016-09-15 13:52:36.000000000 -0700
+@@ -13,7 +13,7 @@
+ (defvar *glucose-home* (asdf:system-relative-pathname :cl-sat.glucose.build "glucose-syrup/"))
+ 
+ (defun glucose-binary (&optional (*glucose-home* *glucose-home*))
+-  (merge-pathnames "simp/glucose_static" *glucose-home*))
++  (merge-pathnames "simp/glucose" *glucose-home*))
+ 
+ (defmethod solve ((input pathname) (solver (eql :glucose)) &rest options)
+   (with-temp (dir :directory t :template "glucose.XXXXXXXX")

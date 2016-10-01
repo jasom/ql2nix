@@ -1,0 +1,6 @@
+(defpackage :nix-asdf
+  (:use :cl :uiop))
+
+(defun apply-standard-translation (path)
+  (translate-pathname* path (wilden (pathname-root path)) 
+			    (resolve-location '(:home ".cache" "common-lisp" :implementation :**/ :*.*.*)) (pathname-root path)))

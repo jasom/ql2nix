@@ -4,3 +4,5 @@ ASDF/USER::CPP->SO
 kde4 kde4.smokeqt
 ASDF/USER::CPP->SO
 which which
+ffi-types-unix.c")
+libfixposix libfixposix

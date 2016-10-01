@@ -4,26 +4,35 @@ SCRIPT_DIR="$(dirname "$0")"
 exec sbcl --noinform --disable-ldb --lose-on-corruption --disable-debugger \
 --no-sysinit --no-userinit --noprint \
 --eval '(set-dispatch-macro-character #\# #\! (lambda (s c n)(declare (ignore c n)) (read-line s) (values)))' \
---eval "(defvar *system-to-load* \"$1\")" \
---eval "(defvar *ql-install* \"$SCRIPT_DIR/quicklisp.lisp\")" \
+--eval "(defvar *script-args* '(\"$1\" \"$2\"))" \
 --eval "(require :asdf)" \
---eval "(defvar *qlclean* \"$SCRIPT_DIR/qlclean/\")" \
 --load "$0"
 |#
+(defpackage ql2nix-user
+  (:use :cl :uiop))
+(in-package :ql2nix-user)
+(defmacro script-pathname ()
+  '*load-pathname*)
+
+(defvar *input-directory* (first cl-user::*script-args*))
+(defvar *output-directory* (second cl-user::*script-args*))
+
 (defvar *extra-deps* (make-hash-table :test #'equal))
 
 (asdf:initialize-source-registry '(:source-registry :ignore-inherited-configuration))
-(if (probe-file (merge-pathnames "setup.lisp" *qlclean*))
-  (load (merge-pathnames "setup.lisp" *qlclean*))
+(if (probe-file (merge-pathnames* "localql/setup.lisp" (script-pathname)))
+  (load (merge-pathnames* "localql/setup.lisp" (script-pathname)))
   (let ((*standard-output* *error-output*)
         (*trace-output* *error-output*))
-    (load *ql-install*)
-    (funcall (intern "INSTALL" "QUICKLISP-QUICKSTART") :path *qlclean*)))
+    (load (merge-pathnames* "quicklisp.lisp" (script-pathname)))
+    (funcall (intern "INSTALL" "QUICKLISP-QUICKSTART") :path (merge-pathnames* "localql/" (pathname-directory-pathname (script-pathname))))))
 
 ;(asdf:clear-source-registry)
-(asdf:load-asd (merge-pathnames "ql2nix.asd" *load-pathname*))
-(defvar *script-pathname* *load-pathname*)
+(asdf:load-asd (merge-pathnames "ql2nix.asd" (script-pathname)))
 (ql:quickload "ql2nix" :silent t)
-(funcall (intern "MAIN" :ql2nix) *system-to-load*)
+;(eval `(trace ,(intern "MAIN" :ql2nix)))
+(funcall (intern "MAIN" :ql2nix)
+	 (uiop:ensure-directory-pathname *input-directory*)
+	 (uiop:ensure-directory-pathname *output-directory*))
 ;(print (list-all-packages))
 (uiop:quit)
