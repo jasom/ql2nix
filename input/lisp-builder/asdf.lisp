@@ -10937,6 +10937,8 @@ for all the linkable object files associated with the system or its dependencies
            (asd (first (output-files o s)))
            (name (if (and fasl asd) (pathname-name asd) (return-from perform)))
            (version (component-version s))
+	   (properties
+	    (component-properties s))
            (dependencies
              (if (operation-monolithic-p o)
                  (remove-if-not 'builtin-system-p
@@ -10944,10 +10946,16 @@ for all the linkable object files associated with the system or its dependencies
                                                        :keep-operation 'load-op))
                  (while-collecting (x) ;; resolve the sideway-dependencies of s
                    (map-direct-dependencies
+                    t 'prepare-op s
+                    #'(lambda (o c)
+                        (when (and (typep o 'load-op) (typep c 'system))
+                          (x c))))
+		   (map-direct-dependencies
                     t 'load-op s
                     #'(lambda (o c)
                         (when (and (typep o 'load-op) (typep c 'system))
-                          (x c)))))))
+                          (x c))))
+		   )))
            (depends-on (mapcar 'coerce-name dependencies)))
       (when (pathname-equal asd (system-source-file s))
         (cerror "overwrite the asd file"
@@ -10968,6 +10976,7 @@ for all the linkable object files associated with the system or its dependencies
                      :class prebuilt-system
                      :version ,version
                      :depends-on ,depends-on
+		     :properties ,properties
                      :components ((:compiled-file ,(pathname-name fasl)))
                      ,@(when library `(:lib ,(file-namestring library))))
                   s)

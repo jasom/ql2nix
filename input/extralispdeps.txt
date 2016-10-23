@@ -1,5 +1,4 @@
 cl-scripting fare-utils
-cl-scripting cl-launch/dispatch
 cl-scripting/test fare-utils
 cl-unicode cl-unicode/base
 garten iterate
@@ -20,6 +19,7 @@ liter iterate
 liter serapeum
 mathkit mathkit
 workout-timer mixalot
+cl-scripting cl-launch/dispatch
 cl-scripting/test hu.dwim.stefil
 cl-unicode cl-unicode/build
 clsql-cffi :cffi-uffi-compat
@@ -29,3 +29,11 @@ lil/test hu.dwim.stefil
 qt-libs qt
 workout-timer local-time
 workout-timer command-line-arguments
+classimp-samples classimp-samples
+trivia.balland2006.enabled.test trivia.level2.test
+cl-gpu.buffers sb-vector-io
+hu.dwim.quasi-quote.js iolib/os
+hu.dwim.reiterate hu.dwim.walker
+simple-blog weblocks-prevalence
+weblocks-demo-popover weblocks-prevalence
+weblocks-store-test weblocks-prevalence

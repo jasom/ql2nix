@@ -1,0 +1,47 @@
+diff -urN a/js-parser.asd b/js-parser.asd
+--- a/js-parser.asd	2016-10-19 11:41:22.530034106 -0700
++++ b/js-parser.asd	2016-10-19 11:55:53.838997034 -0700
+@@ -34,7 +34,8 @@
+   :author "Red Daly"
+   :licence "MIT License <http://www.opensource.org/licenses/mit-license.php>"
+   :serial t
+-  :components ((:module "external"
++  :components ((:file "nix-fixups")
++	       (:module "external"
+ 			:components
+ 			((:file "jsyacc")))
+ 	       (:module
+@@ -72,4 +73,4 @@
+   (operate 'test-op 'js-parser-tests))
+ 
+ (defmethod operation-done-p ((o test-op) (c (eql (find-system 'js-parser-tests))))
+-  nil)
+\ No newline at end of file
++  nil)
+diff -urN a/nix-fixups.lisp b/nix-fixups.lisp
+--- a/nix-fixups.lisp	1969-12-31 16:00:00.000000000 -0800
++++ b/nix-fixups.lisp	2016-10-19 11:52:36.110500614 -0700
+@@ -0,0 +1,23 @@
++(defpackage :js-parser-system
++  (:use :cl :asdf)
++  (:export
++   #:*version*
++   #:*executable-name*))
++
++(in-package :js-parser-system)
++
++;;;; ======= Build parameters ======================================================================
++
++(defparameter *version* "alpha2"
++  "The current version")
++
++;;;; ======= Compilation configuration =============================================================
++(defparameter *muffle-conflicts* t
++  "When T, yacc warnings about Shift/Reduce and Reduce/Reduce conflicts will be muffled.
++   When NIL, all such conflicts will be reported.
++   When non-NIL, non-T, a single summary warning will be reported when conflicts exist.
++
++   This value should be set to NIL or non-T during grammar
++   development/debugging (so that we find out about the conflicts), but T
++   at all other times (so that SBCL won't drop into the debugger when
++   we're trying to load parse-javascript.lisp).")

@@ -1,0 +1,9 @@
+diff -ur a/gordon.asd b/gordon.asd
+--- a/gordon.asd	1969-12-31 16:00:01.000000000 -0800
++++ b/gordon.asd	2016-10-19 11:35:48.382208849 -0700
+@@ -39,4 +39,4 @@
+ 		 (:file "types-library" :depends-on ("contours"))
+ 		 (:file "actions" :depends-on ("constants"))
+ 		 (:file "tags" :depends-on ("constants"))
+-		 (:file "movie" :depends-on ("constants"))))
++		 (:file "movie" :depends-on ("constants" "tags"))))

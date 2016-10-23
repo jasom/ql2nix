@@ -1,0 +1,31 @@
+diff -ur a/cl-utilities.asd b/cl-utilities.asd
+--- a/cl-utilities.asd	2016-10-18 13:56:59.800290578 -0700
++++ b/cl-utilities.asd	2016-10-18 13:59:12.262650384 -0700
+@@ -22,12 +22,3 @@
+ 		 (:file "rotate-byte" :depends-on ("package"))
+ 		 (:file "copy-array" :depends-on ("package"))
+ 		 (:file "compose" :depends-on ("package"))))
+-
+-;; Sometimes we can accelerate byte rotation on SBCL by using the
+-;; SB-ROTATE-BYTE extension. This loads it.
+-#+sbcl
+-(eval-when (:compile-toplevel :load-toplevel :execute)
+-  (handler-case (progn
+-		  (require :sb-rotate-byte)
+-		  (pushnew :sbcl-uses-sb-rotate-byte *features*))
+-    (error () (delete :sbcl-uses-sb-rotate-byte *features*))))
+\ No newline at end of file
+diff -ur a/package.lisp b/package.lisp
+--- a/package.lisp	2016-10-18 13:56:59.802290553 -0700
++++ b/package.lisp	2016-10-18 13:59:00.913791005 -0700
+@@ -47,3 +47,10 @@
+ packages that expect that system.")
+   (:use :cl-utilities)
+   (:export #:split-sequence #:split-sequence-if #:split-sequence-if-not))
++
++#+sbcl
++(eval-when (:compile-toplevel :load-toplevel :execute)
++  (handler-case (progn
++		  (require :sb-rotate-byte)
++		  (pushnew :sbcl-uses-sb-rotate-byte *features*))
++    (error () (delete :sbcl-uses-sb-rotate-byte *features*))))

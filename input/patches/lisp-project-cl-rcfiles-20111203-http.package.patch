@@ -1,0 +1,18 @@
+diff -ur a/package.lisp b/package.lisp
+--- a/package.lisp	2016-10-18 16:33:45.895181939 -0700
++++ b/package.lisp	2016-10-18 18:13:49.323717728 -0700
+@@ -26,13 +26,12 @@
+ 
+ 
+ ;;; Code:
+-
+ (in-package :cl-user)
+ 
+ (defpackage :com.dvlsoft.rcfiles
+     (:use :cl)
+-  (:import-from :com.dvlsoft.rcfiles.asdf :+version+)
+   (:export :+version+ :*directory* *pre-directory* *post-directory*))
+ 
++(defparameter +version+ "2.0")
+ 
+ ;;; package.lisp ends here

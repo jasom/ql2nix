@@ -1,0 +1,12 @@
+diff -ur a/src/libgit2.lisp c/src/libgit2.lisp
+--- a/src/libgit2.lisp	2016-10-10 20:34:50.000000000 -0700
++++ c/src/libgit2.lisp	2016-10-10 20:44:15.000000000 -0700
+@@ -58,7 +58,7 @@
+   (minor :pointer)
+   (revision :pointer))
+ 
+-(defcfun ("git_threads_init" git-threads-init)
++(defcfun ("git_libgit2_init" git-threads-init)
+     :void
+     "Init libgit2 threading.")
+ 

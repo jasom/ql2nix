@@ -4,7 +4,7 @@ SCRIPT_DIR="$(dirname "$0")"
 exec sbcl --noinform --disable-ldb --lose-on-corruption --disable-debugger \
 --no-sysinit --no-userinit --noprint \
 --eval '(set-dispatch-macro-character #\# #\! (lambda (s c n)(declare (ignore c n)) (read-line s) (values)))' \
---eval "(defvar *script-args* '(\"$1\" \"$2\"))" \
+--eval "(defvar *script-args* '(\"$1\" \"$2\" \"${3:-0}\"))" \
 --eval "(require :asdf)" \
 --load "$0"
 |#
@@ -16,6 +16,7 @@ exec sbcl --noinform --disable-ldb --lose-on-corruption --disable-debugger \
 
 (defvar *input-directory* (first cl-user::*script-args*))
 (defvar *output-directory* (second cl-user::*script-args*))
+(defvar *skip* (or (third cl-user::*script-args*) "0"))
 
 (defvar *extra-deps* (make-hash-table :test #'equal))
 
@@ -33,6 +34,7 @@ exec sbcl --noinform --disable-ldb --lose-on-corruption --disable-debugger \
 ;(eval `(trace ,(intern "MAIN" :ql2nix)))
 (funcall (intern "MAIN" :ql2nix)
 	 (uiop:ensure-directory-pathname *input-directory*)
-	 (uiop:ensure-directory-pathname *output-directory*))
+	 (uiop:ensure-directory-pathname *output-directory*)
+         (parse-integer *skip*))
 ;(print (list-all-packages))
 (uiop:quit)

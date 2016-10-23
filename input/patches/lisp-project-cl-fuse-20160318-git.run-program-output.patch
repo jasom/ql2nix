@@ -1,0 +1,13 @@
+diff -ur a/cl-fuse.asd b/cl-fuse.asd
+--- a/cl-fuse.asd	2016-10-08 19:23:19.000000000 -0700
++++ b/cl-fuse.asd	2016-10-10 09:26:54.000000000 -0700
+@@ -24,7 +24,8 @@
+                           "--shared"
+                           "-lfuse"
+                           "-o"
+-                          ,(namestring lib))))))
++                          ,(namestring lib))
++                          :error-output t))))
+ 
+ (asdf:defsystem :cl-fuse
+   :name "cl-fuse"

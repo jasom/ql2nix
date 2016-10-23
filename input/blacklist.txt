@@ -1,174 +1,294 @@
-abort-ks-execution-example
-agenda-shell
-agenda-shell-user
-binascii-tests
-chanl.examples
-cl-sat.glucose.build
-cl-sat.minisat.build
-cl-timing
-clpython.basic
-double-metaphone
-eos-tests
-fiasco-self-tests
-fishpack-test-hstcrt
-fishpack-test-hstcsp
-fishpack-test-hstcyl
-fishpack-test-hstplr
-fishpack-test-hstssp
-fishpack-test-hwscrt
-fishpack-test-hwscsp
-fishpack-test-hwscyl
-fishpack-test-hwsplr
-fishpack-test-hwsssp
-fishpack-test-sepx4
-funds
-gbbopen
-gbbopen-core
-gbbopen-modules
-gbbopen-test
-gbbopen-tools
-gbbopen-tools-test
-gbbopen-tools-user
-gbbopen-user
-http-services
-ieee-floats-tests
-lapack-package
-lracer
-mach-par
-madeira-port-tests
-minpack-tests-hybrd
-minpack-tests-lmdif
-module-manager
-module-manager-user
-multinode
-network-streaming
-nibbles-tests
-os-interface
-parse-float-tests
-parse-number-tests
-persistent-variables.test
-polling-functions
-portable-sockets
-portable-sockets-test
-portable-threads-test
-puri-tests
-queue
-quine-mccluskey
-read-csv.test
-s-xml.examples
-s-xml.test
-sequence-iterators-test
-series-tests
-sheeple-tests
-simple-date-tests
-spartns-test
-streaming
-swank
-test-harness
-toms419-test
-toms717-tests
-trivial-garbage-tests
-trivial-utf-8-tests
-tutorial-example
-ubiquitous
-uffi-tests
-vgplot-test
-xkeyboard-test
-xlunit-tests
-anaphora-test
-arnesi.cl-ppcre-extras
-array-operations-tests
-bknr.skip-list.test
-btrie-tests
-cl-base32-tests
-cl-base64-tests
-cl-colors-tests
-cl-curlex-tests
-cl-dsl-tests
-cl-fad-test
-cl-graph-and-moptilities
-cl-hooks-test
-cl-libhoedown
-cl-liblinear
-cl-libpuzzle
-cl-ncurses
-cl-ode
-cl-pack-test
-cl-plplot
-cl-postgres-tests
-cl-protobufs-tests
-cl-rmath
-cl-slice-tests
-cl-soil
-cl-sophia
-cl-store-tests
-cl-tesseract
-cl-unification-test
-clml.blas.complex
-clml.blas.hompack
-clml.blas.real
-closure-template-test
-clx-truetype-test
-colnew-test-1
-colnew-test-2
-colnew-test-3
-com.informatimago.common-lisp.interactive
-containers-and-utilities
-containers-moptilities
-cxml-xml
-data-sift-test
-defmemo-test
-dlist-test
-flexi-streams-test
-getopt-tests
-hh-redblack-tests
-hompack-test-mainf
-hompack-test-mainp
-hompack-test-mains
-hspell
-html-entities-tests
-html-match.test
-iolib/multiplex
-iolib/os
-iolib/pathnames
-iolib/streams
-iolib/syscalls
-iolib/zstreams
-ironclad-tests
-lambda-gtk
-let-plus-tests
-lift-and-metatilities
-metacopy-test
-metacopy-with-contextl
-method-combination-utilities.tests
-montezuma-tests
-more-conditions-test
-odd-streams-test
-oe-encode-test
-openssl-1.1.0
-or-fann
-pcall-tests
-percent-encoding-test
-perfpiece
-pileup-tests
-plain-odbc
-qt
-quasiquote-2.0-tests
-quid-pro-quo-tests
-rcl
-routes-test
-simple-date-postgres-glue
-snooze-tests
-software-evolution-utility
-split-sequence-tests
-stmx.test
-utilities.binary-dump-test
-utilities.print-items-test
-utilities.print-tree-test
-variates-and-metacopy
-workout-timer
-apply-argv-tests
-architecture.service-provider-test
-aws-sign4-tests
-bencode-test
-calispel-test
+abort-ks-execution-example #Component not found abort-ks-execution-example
+binascii-tests #Component not found binascii-tests
+chanl.examples #Component not found chanl.examples
+cl-sat.glucose.build #Invokes curl during build
+cl-sat.minisat.build #Invokes git during build
+cl-timing #Component not found cl-timing
+clpython.basic #Component not found clpython.basic
+double-metaphone #Component not found double-metaphone
+eos-tests #Component not found eos-tests
+fiasco-self-tests #Component not found fiasco-self-tests
+fishpack #Tries to write to asdf directory
+gbbopen-core #Component not found gbbopen-core
+gbbopen-modules #Component not found gbbopen-modules
+gbbopen-test #Component not found gbbopen-test
+gbbopen-tools #Component not found gbbopen-tools
+gbbopen-tools-test #Component not found gbbopen-tools-test
+gbbopen-tools-user #Component not found gbbopen-tools-user
+gbbopen-user #Component not found gbbopen-user
+http-services #Component not found http-services
+ieee-floats-tests #Component not found ieee-floats-tests
+lapack-package #Component not found lapack-package
+lracer #Tries to write to asdf directory
+mach-par #Component not found mach-par
+madeira-port-tests #Component not found madeira-port-tests
+minpack #Tries to write to asdf directory
+module-manager #Component not found module-manager
+module-manager-user #Component not found module-manager-user
+multinode #Component not found multinode
+network-streaming #Component not found network-streaming
+nibbles-tests #Component not found nibbles-tests
+os-interface #Component not found os-interface
+parse-float-tests #Component not found parse-float-tests
+parse-number-tests #Component not found parse-number-tests
+persistent-variables.test #Component not found persistent-variables.test
+polling-functions #Component not found polling-functions
+portable-sockets #Component not found portable-sockets
+portable-sockets-test #Component not found portable-sockets-test
+portable-threads-test #Component not found portable-threads-test
+puri-tests #Component not found puri-tests
+queue #Component not found queue
+quine-mccluskey #Component not found quine-mccluskey
+read-csv.test #Component not found read-csv.test
+s-xml.examples #Component not found s-xml.examples
+s-xml.test #Component not found s-xml.test
+sequence-iterators-test #Component not found sequence-iterators-test
+series-tests #Component not found series-tests
+sheeple-tests #Component not found sheeple-tests
+simple-date-tests #Component not found simple-date-tests
+spartns-test #Component not found spartns-test
+streaming #Component not found streaming
+test-harness #Component not found test-harness
+toms419 #Tries to write to asdf directory
+toms717 #Tries to write to asdf directory
+trivial-garbage-tests #Component not found trivial-garbage-tests
+trivial-utf-8-tests #Component not found trivial-utf-8-tests
+tutorial-example #Component not found tutorial-example
+uffi-tests #Operation error
+vgplot-test #Component not found vgplot-test
+xkeyboard-test #Component not found xkeyboard-test
+xlunit-tests #Component not found xlunit-tests
+anaphora-test #Component not found anaphora-test
+arnesi.cl-ppcre-extras #Component not found arnesi.cl-ppcre-extras
+array-operations-tests #Component not found array-operations-tests
+bknr.skip-list.test #Component not found bknr.skip-list.test
+blas-hompack #Tries to write to asdf directory
+btrie-tests #Component not found btrie-tests
+cl-base32-tests #Component not found cl-base32-tests
+cl-base64-tests #Component not found cl-base64-tests
+cl-colors-tests #Component not found cl-colors-tests
+cl-curlex-tests #Component not found cl-curlex-tests
+cl-dsl-tests #Component not found cl-dsl-tests
+cl-fad-test #Component not found cl-fad-test
+cl-graph-and-moptilities #Component not found cl-graph-and-moptilities
+agenda-shell #Component not found agenda-shell
+agenda-shell-user #Component not found agenda-shell-user
+cl-hooks-test #Component not found cl-hooks-test
+cl-libhoedown #Depends on libexpr
+cl-liblinear #Depends on libexpr
+cl-libpuzzle #Depends on libexpr
+cl-ncurses #Invalid ELF header
+cl-ode #Depends on libexpr
+cl-pack-test #Component not found cl-pack-test
+cl-plplot #Depends on libexpr
+cl-postgres-tests #Component not found cl-postgres-tests
+cl-rmath #Depends on libexpr
+cl-slice-tests #Component not found cl-slice-tests
+cl-soil #Depends on libexpr
+cl-sophia #Depends on libexpr
+cl-store-tests #Component not found cl-store-tests
+cl-tesseract #Type error
+cl-unification-test #Type warning
+clml.blas.complex #Component not found clml.blas.complex
+clml.blas.hompack #Component not found clml.blas.hompack
+clml.blas.real #Component not found clml.blas.real
+closure-template-test #Component not found closure-template-test
+clx-truetype-test #Component not found clx-truetype-test
+colnew #Tries to write to asdf directory
+containers-and-utilities #Component not found containers-and-utilities
+containers-moptilities #Component not found containers-moptilities
+cxml-xml #Component not found cxml-xml
+data-sift-test #Component not found data-sift-test
+defmemo-test #Component not found defmemo-test
+dlist-test #Component not found dlist-test
+eazy-project #Tries to write to asdf directory
+elephant #Tries to write to asdf directory
+flexi-streams-test #Component not found flexi-streams-test
+getopt-tests #Component not found getopt-tests
+hh-redblack-tests #Component not found hh-redblack-tests
+hspell #Depends on libexpr
+html-entities-tests #Component not found html-entities-tests
+html-match.test #Component not found html-match.test
+iolib/multiplex #Need newer libfixposix
+iolib/os #Need newer libfixposix
+iolib/pathnames #Need newer libfixposix
+iolib/streams #Need newer libfixposix
+iolib/syscalls #Need newer libfixposix
+iolib/zstreams #Need newer libfixposix
+ironclad-tests #Component not found ironclad-tests
+lambda-gtk #Invalid ELF header
+let-plus-tests #Component not found let-plus-tests
+lift-and-metatilities #Component not found lift-and-metatilities
+metacopy-test #Component not found metacopy-test
+method-combination-utilities.tests #Component not found method-combination-utilities.tests
+montezuma-tests #Component not found montezuma-tests
+more-conditions-test #Component not found more-conditions-test
+myweb #Tries to write to asdf directory
+odd-streams-test #Component not found odd-streams-test
+oe-encode-test #Component not found oe-encode-test
+openssl-1.1.0 #Component not found openssl-1.1.0
+or-fann #Depends on libexpr
+pcall-tests #Component not found pcall-tests
+percent-encoding-test #Component not found percent-encoding-test
+perfpiece #Depends on libexpr
+pileup-tests #Component not found pileup-tests
+plain-odbc #Improper defconstant
+qt #qmake not supported yet
+quasiquote-2.0-tests #Component not found quasiquote-2.0-tests
+quid-pro-quo-tests #Component not found quid-pro-quo-tests
+rcl #Need custom hooks
+routes-test #Component not found routes-test
+sane #Manually blacklisted
+simple-date-postgres-glue #Component not found simple-date-postgres-glue
+snooze-tests #Component not found snooze-tests
+software-evolution-utility #Type error 2
+split-sequence-tests #Component not found split-sequence-tests
+stmx.test #Component not found stmx.test
+utilities.binary-dump-test #Component not found utilities.binary-dump-test
+utilities.print-items-test #Component not found utilities.print-items-test
+utilities.print-tree-test #Component not found utilities.print-tree-test
+variates-and-metacopy #Component not found variates-and-metacopy
+apply-argv-tests #Component not found apply-argv-tests
+architecture.service-provider-test #Component not found architecture.service-provider-test
+aws-sign4-tests #Component not found aws-sign4-tests
+bencode-test #Component not found bencode-test
+calispel-test #Component not found calispel-test
+chanl.tests #Component not found chanl.tests
+cl-6502-test #Component not found cl-6502-test
+cl-arrows-test #Component not found cl-arrows-test
+gbbopen #Accesses home directory during build
+swank #Accesses home directory during build
+ubiquitous #Accesses home directory during build
+com.informatimago.common-lisp.interactive #Accesses home directory during build
+cffi-tests #Tries to write to asdf directory
+funds #Improper defconstant
+metacopy-with-contextl # Manually disabled due to ASDF issue
+cl-fuse #Tries to write to asdf directory 2
+cl-gendoc-docs #Component not found cl-gendoc-docs
+cl-graph-and-cl-mathstats #Component not found cl-graph-and-cl-mathstats
+cl-graph-and-dynamic-classes #Component not found cl-graph-and-dynamic-classes
+cl-graph-and-metacopy #Component not found cl-graph-and-metacopy
+cl-itertools-tests #Component not found cl-itertools-tests
+cl-json.test #Component not found cl-json.test
+cl-liballegro #Depends on libexpr
+cl-libfarmhash #Depends on libexpr
+cl-libxml2-test #Component not found cl-libxml2-test
+cl-monitors #Depends on libexpr
+cl-num-utils-tests #Component not found cl-num-utils-tests
+cl-out123 #Depends on libexpr
+cl-portaudio-tests #Component not found cl-portaudio-tests
+cl-ppcre-test #Component not found cl-ppcre-test
+cl-stm.test #Component not found cl-stm.test
+cl-syslog-tests #Component not found cl-syslog-tests
+cl-template-tests #Component not found cl-template-tests
+cl-who-test #Component not found cl-who-test
+clsql-mysql #Operation error
+clsql-sqlite #Depends on libexpr
+com.informatimago.common-lisp.bank #Bad bounding icidices
+cqlcl-test #Component not found cqlcl-test
+curly.test #Component not found curly.test
+delorean-test #Component not found delorean-test
+eager-future.test #Component not found eager-future.test
+eco-test #Tries to write to asdf directory
+epigraph-test #Component not found epigraph-test
+esrap-tests #Component not found esrap-tests
+external-program-test #Component not found external-program-test
+frpc-des #Component not found frpc-des
+frpc-gss #Component not found frpc-gss
+gtk-cffi-core #Component not found gtk-cffi-core
+hh-aws-tests #Component not found hh-aws-tests
+hu.dwim.bluez #Tries to write to asdf directory
+hu.dwim.sdl #Tries to write to asdf directory
+hunchentoot-test #Component not found hunchentoot-test
+iolib #Need newer libfixposix
+iolib/sockets #Need newer libfixposix
+iolib/trivial-sockets #Need newer libfixposix
+json-responses-test #Component not found json-responses-test
+lla #Depends on libexpr
+llvm #Depends on libexpr
+magicffi-test #Component not found magicffi-test
+opticl-doc #Tries to write to asdf directory
+org.middleangle.cl-blapack #Depends on libexpr
+pzmq-compat #Component not found pzmq-compat
+pzmq-examples #Component not found pzmq-examples
+pzmq-test #Component not found pzmq-test
+ryeboy-test #Component not found ryeboy-test
+sanitize-test #Component not found sanitize-test
+serapeum-tests #Component not found serapeum-tests
+snooze-demo #Component not found snooze-demo
+squirl.demo #Component not found squirl.demo
+tcod #Depends on libexpr
+tinaa-and-cl-markdown #Component not found tinaa-and-cl-markdown
+trivia.benchmark.run #Component not found trivia.benchmark.run
+xfactory-test #Component not found xfactory-test
+zeromq.tests #Component not found zeromq.tests
+aws-sign4-example #Component not found aws-sign4-example
+burgled-batteries #Depends on libexpr
+cerberus-kdc #Component not found cerberus-kdc
+checkl-docs #Tries to write to asdf directory
+cl-async-base #Component not found cl-async-base
+cl-authorize-net-tests #Component not found cl-authorize-net-tests
+cl-data-frame-tests #Component not found cl-data-frame-tests
+cl-ewkb-tests #Component not found cl-ewkb-tests
+cl-freetype2-doc #Component not found cl-freetype2-doc
+cl-geocode #Tries to write to asdf directory
+cl-hash-table-destructuring-test #Component not found cl-hash-table-destructuring-test
+cl-indeterminism-tests #Component not found cl-indeterminism-tests
+cl-influxdb.examples #Component not found cl-influxdb.examples
+cl-mpi #Requires mpicc
+cl-neo4j.tests #Component not found cl-neo4j.tests
+cl-oauth.tests #Component not found cl-oauth.tests
+cl-openid.test #Component not found cl-openid.test
+cl-redis-test #Component not found cl-redis-test
+cl-scrobbler-tests #Component not found cl-scrobbler-tests
+cl-strings-tests #Component not found cl-strings-tests
+corona-web #Tries to write to asdf directory
+defmacro-enhance-tests #Component not found defmacro-enhance-tests
+esa-mcclim #package redefinition missing exports
+femlisp-dictionary #Component not found femlisp-dictionary
+gsll #C compiler error 1
+hyperluminal-mem-test #Component not found hyperluminal-mem-test
+media-types-tests #Component not found media-types-tests
+racer #Tries to write to asdf directory
+rock-web #Tries to write to asdf directory
+trivial-ssh #Accesses home directory during build
+twitter-mongodb-driver #Accesses home directory during build
+wuwei-examples #Component not found wuwei-examples
+yaclanapht-test #Component not found yaclanapht-test
+cl-cffi-gtk-demo-gdk #Memory fault
+cl-cffi-gtk-demo-gtk #Memory fault
+asdf-package-system # Manually blacklisted; we don't need it anyways
+workout-timer #Component not found workout-timer
+cl-charms #Component not found cl-charms
+cl-fam #Component not found cl-fam
+cl-freetype2 #Component not found cl-freetype2
+cl-fsnotify #Component not found cl-fsnotify
+cl-git #Component not found cl-git
+cl-gss #Component not found cl-gss
+cl-libuv #Component not found cl-libuv
+cl-m4 #Component not found cl-m4
+cl-rabbit #Component not found cl-rabbit
+cl-rlimit #Component not found cl-rlimit
+flac #Component not found flac
+leveldb #Component not found leveldb
+magicffi #Component not found magicffi
+osicat #Component not found osicat
+png #Component not found png
+prometheus.collectors.process #Component not found prometheus.collectors.process
+pzmq #Component not found pzmq
+static-vectors #Component not found static-vectors
+trivial-features-tests #Component not found trivial-features-tests
+trivial-signal #Component not found trivial-signal
+trivial-ssh-libssh2 #Component not found trivial-ssh-libssh2
+vorbisfile-ffi #Component not found vorbisfile-ffi
+zeromq #Component not found zeromq
+zmq #Component not found zmq
+basic-binary-ipc #Component not found basic-binary-ipc
+hu.dwim.quasi-quote #Component not found hu.dwim.quasi-quote
+hu.dwim.rdbms #Component not found hu.dwim.rdbms
+hu.dwim.reiterate #Component not found hu.dwim.reiterate
+libssh2 #Component not found libssh2
+cl-haml-test #Component not found cl-haml-test
+cl-read-macro-tokens-tests #Component not found cl-read-macro-tokens-tests
+cl-secure-read-tests #Component not found cl-secure-read-tests
+weblocks-demo #Component not found weblocks-demo

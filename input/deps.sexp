@@ -129,10 +129,10 @@
  ("clsql" "clsql-postgresql-socket" "hyperobject" "kmrcl") "umlisp"
  ("clsql" "clsql-mysql" "hyperobject" "kmrcl") "uiop" NIL
  "ugly-tiny-infix-macro" NIL "ufo-test" ("cl-fad" "prove" "prove-asdf" "ufo")
- "ufo" ("uiop") "uffi-tests" ("uffi") "uffi" NIL "ucw.manual-examples" ("ucw")
- "ucw.httpd" ("cl-ppcre" "puri" "rfc2388-binary" "ucw-core") "ucw.examples"
- ("ucw") "ucw-core.test"
- ("arnesi" "cxml" "drakma" "iterate" "stefil" "ucw-core") "ucw-core"
+ "ufo" ("uiop") "uffi-tests" ("uffi") "ucw.manual-examples" ("ucw") "ucw.httpd"
+ ("cl-ppcre" "puri" "rfc2388-binary" "ucw-core") "ucw.examples" ("ucw")
+ "ucw-core.test" ("arnesi" "cxml" "drakma" "iterate" "stefil" "ucw-core")
+ "ucw-core"
  ("arnesi" "bordeaux-threads" "cl-fad" "closer-mop" "iterate" "local-time"
   "net-telent-date" "rfc2109" "swank" "trivial-garbage" "usocket" "yaclml")
  "ucw" ("cl-ppcre" "closer-mop" "ucw-core") "ubiquitous-concurrent"
@@ -293,12 +293,11 @@
   "swank-client")
  "swank-client-test"
  ("bordeaux-threads" "hu.dwim.stefil" "swank" "swank-client") "swank-client"
- ("bordeaux-threads" "com.google.base" "swank" "usocket") "swank" NIL "surf"
- ("geom-base") "submarine" ("iterate" "mop-utils" "postmodern") "stumpwm"
- ("cl-ppcre" "clx") "stump-touchy-mode-line"
- ("defmacro-enhance" "iterate" "stumpwm") "structy-defclass" NIL
- "string-escape" NIL "string-case" NIL "streaming" NIL "stmx.test"
- ("bordeaux-threads" "fiveam" "log4cl" "stmx") "stmx"
+ ("bordeaux-threads" "com.google.base" "swank" "usocket") "surf" ("geom-base")
+ "submarine" ("iterate" "mop-utils" "postmodern") "stumpwm" ("cl-ppcre" "clx")
+ "stump-touchy-mode-line" ("defmacro-enhance" "iterate" "stumpwm")
+ "structy-defclass" NIL "string-escape" NIL "string-case" NIL "streaming" NIL
+ "stmx.test" ("bordeaux-threads" "fiveam" "log4cl" "stmx") "stmx"
  ("alexandria" "bordeaux-threads" "closer-mop" "log4cl" "trivial-garbage")
  "stem" NIL "stefil-test" ("stefil") "stefil"
  ("alexandria" "iterate" "metabang-bind" "swank") "stdutils"
@@ -651,8 +650,7 @@
  "postoffice" ("acl-compat") "postmodern-tests"
  ("eos" "postmodern" "simple-date" "simple-date-postgres-glue") "postmodern"
  ("bordeaux-threads" "cl-postgres" "closer-mop" "s-sql") "positional-lambda"
- ("map-bind") "portable-threads-test" NIL "portable-sockets-test" NIL
- "portable-sockets" NIL "pooler" NIL "polling-functions" NIL "policy-cond" NIL
+ ("map-bind") "portable-threads-test" NIL "pooler" NIL "policy-cond" NIL
  "pod-utils" NIL "png-test" ("png") "png-read" ("babel" "chipz" "iterate")
  "png" ("cffi" "cffi-grovel") "plump-tex-test" ("fiveam" "plump-tex")
  "plump-tex" ("cl-ppcre" "plump") "plump-sexp" ("plump") "plump-parser"
@@ -713,7 +711,7 @@
  "package-renaming" ("alexandria") "pack" ("alexandria" "ieee-floats")
  "osicat-tests" ("osicat" "rt") "osicat"
  ("alexandria" "cffi" "cffi-grovel" "trivial-features") "osc" NIL
- "os-interface" NIL "org.middleangle.foreign-numeric-vector" ("cffi" "iterate")
+ "org.middleangle.foreign-numeric-vector" ("cffi" "iterate")
  "org.middleangle.cl-blapack-gen"
  ("cffi" "org.middleangle.foreign-numeric-vector")
  "org.middleangle.cl-blapack-examples" ("org.middleangle.cl-blapack")
@@ -762,10 +760,10 @@
  ("alexandria" "cl-ppcre" "curry-compose-reader-macros" "metabang-bind"
   "software-evolution" "software-evolution-command-line"
   "software-evolution-utility" "split-sequence")
- "network-streaming" NIL "network-addresses-test"
- ("fiveam" "network-addresses") "network-addresses" ("cl-ppcre") "net4cl"
- ("sclf") "net.didierverna.focus.setup/flv" ("net.didierverna.focus.setup")
- "net.didierverna.focus.setup" NIL "net.didierverna.focus.flv"
+ "network-addresses-test" ("fiveam" "network-addresses") "network-addresses"
+ ("cl-ppcre") "net4cl" ("sclf") "net.didierverna.focus.setup/flv"
+ ("net.didierverna.focus.setup") "net.didierverna.focus.setup" NIL
+ "net.didierverna.focus.flv"
  ("net.didierverna.asdf-flv" "net.didierverna.focus.core"
   "net.didierverna.focus.setup")
  "net.didierverna.focus.demos.quotation" ("net.didierverna.focus.flv")
@@ -802,8 +800,8 @@
  "multival-plist-test" ("cl-test-more" "multival-plist") "multival-plist"
  ("alexandria" "cl-annot" "cl-syntax-annot" "trivial-types")
  "multiple-value-variants"
- ("enhanced-multiple-value-bind" "map-bind" "positional-lambda") "multinode"
- NIL "mtlisp" ("acl-compat") "mt19937" NIL "mssql"
+ ("enhanced-multiple-value-bind" "map-bind" "positional-lambda") "mtlisp"
+ ("acl-compat") "mt19937" NIL "mssql"
  ("cffi" "garbage-pools" "iterate" "parse-number") "mpg123-ffi" ("cffi") "mpc"
  NIL "mp3-duration-test" ("mp3-duration" "prove" "prove-asdf") "mp3-duration"
  NIL "more-conditions-test" ("fiveam" "let-plus" "more-conditions")
@@ -826,8 +824,7 @@
  "moira"
  ("alexandria" "bordeaux-threads" "osicat" "serapeum" "trivial-features"
   "trivial-garbage")
- "module-manager-user" NIL "module-manager" NIL "modularize-test-module"
- ("modularize") "modularize-interfaces"
+ "modularize-test-module" ("modularize") "modularize-interfaces"
  ("lambda-fiddle" "modularize" "trivial-arguments" "trivial-indent")
  "modularize-hooks"
  ("closer-mop" "lambda-fiddle" "modularize" "trivial-arguments") "modularize"
@@ -1452,9 +1449,8 @@
   "hu.dwim.defclass-star+hu.dwim.def" "hu.dwim.syntax-sugar")
  "hu.dwim.bluez" ("alexandria" "cffi" "cffi-libffi" "hu.dwim.asdf")
  "hu.dwim.asdf.documentation" ("hu.dwim.asdf" "hu.dwim.presentation")
- "hu.dwim.asdf" ("uiop") "http-services" NIL "http-parse-test"
- ("babel" "eos" "http-parse") "http-parse" ("babel" "cl-ppcre")
- "http-body-test"
+ "hu.dwim.asdf" ("uiop") "http-parse-test" ("babel" "eos" "http-parse")
+ "http-parse" ("babel" "cl-ppcre") "http-body-test"
  ("cl-ppcre" "flexi-streams" "http-body" "prove" "prove-asdf" "trivial-types"
   "trivial-utf-8")
  "http-body"
@@ -1598,13 +1594,11 @@
  ("alexandria" "cl-cont" "iterate") "general-accumulator" NIL "gendl"
  ("cl-lite" "gwl-graphics" "robot" "tasty" "yadd") "gdk-cffi"
  ("cl-cairo2" "g-lib-cffi" "g-object-cffi") "gcm"
- ("babel" "com.gigamonkeys.json" "drakma") "gbbopen-user" NIL
- "gbbopen-tools-user" NIL "gbbopen-tools-test" NIL "gbbopen-tools" NIL
- "gbbopen-test" NIL "gbbopen-modules" NIL "gbbopen-core" NIL "gbbopen" NIL
- "garten" NIL "garbage-pools-test" ("garbage-pools" "lift") "garbage-pools" NIL
- "gambol" NIL "g-object-cffi" ("g-lib-cffi" "gtk-cffi-utils") "g-lib-cffi"
- ("cffi-objects" "gtk-cffi-utils" "iterate") "future" ("alexandria") "funds"
- NIL "functional-geometry" ("clim-listener") "function-cache-test"
+ ("babel" "com.gigamonkeys.json" "drakma") "garten" NIL "garbage-pools-test"
+ ("garbage-pools" "lift") "garbage-pools" NIL "gambol" NIL "g-object-cffi"
+ ("g-lib-cffi" "gtk-cffi-utils") "g-lib-cffi"
+ ("cffi-objects" "gtk-cffi-utils" "iterate") "future" ("alexandria")
+ "functional-geometry" ("clim-listener") "function-cache-test"
  ("function-cache" "lisp-unit2") "function-cache-clsql"
  ("clsql" "clsql-helper" "function-cache") "function-cache"
  ("alexandria" "cl-interpol" "closer-mop" "iterate" "symbol-munger")
@@ -1778,9 +1772,9 @@
  "drakma"
  ("chipz" "chunga" "cl+ssl" "cl-base64" "cl-ppcre" "flexi-streams" "puri"
   "usocket")
- "double-metaphone" NIL "doplus-tests" ("doplus" "eos") "doplus-fset"
- ("doplus" "fset") "doplus" ("parse-declarations-1.0") "donuts"
- ("cl-ppcre" "trivial-shell") "dom" ("cl-who" "yadd") "docutils"
+ "doplus-tests" ("doplus" "eos") "doplus-fset" ("doplus" "fset") "doplus"
+ ("parse-declarations-1.0") "donuts" ("cl-ppcre" "trivial-shell") "dom"
+ ("cl-who" "yadd") "docutils"
  ("cl-ppcre" "data-format-validation" "trivial-gray-streams")
  "documentation-utils" ("trivial-indent") "documentation-template" ("cl-who")
  "docparser-test-system" ("cffi") "docparser-test" ("docparser" "fiveam")
@@ -2565,7 +2559,7 @@
  "cl-tulip-graph" NIL "cl-tokyo-cabinet-test"
  ("cl-tokyo-cabinet" "deoxybyte-io" "deoxybyte-utilities" "lift")
  "cl-tokyo-cabinet" ("cffi" "deoxybyte-systems") "cl-tld" NIL "cl-tk" ("cffi")
- "cl-timing" NIL "cl-tidy" ("cffi") "cl-tga" NIL "cl-textmagic-test"
+ "cl-tidy" ("cffi") "cl-tga" NIL "cl-textmagic-test"
  ("cl-textmagic" "prove" "prove-asdf") "cl-textmagic" ("cl-json" "dexador")
  "cl-tetris3d" ("cl-glu" "cl-opengl" "iterate" "lispbuilder-sdl")
  "cl-test-more" ("prove") "cl-tesseract" ("cffi") "cl-template-tests"
@@ -3567,8 +3561,8 @@
  "bt-semaphore-test" ("bt-semaphore" "clunit") "bt-semaphore"
  ("bordeaux-threads") "bourbaki" NIL "bordeaux-threads/test"
  ("bordeaux-threads" "fiveam") "bordeaux-threads" ("alexandria") "bordeaux-fft"
- NIL "blocks-world" NIL "blas-real" ("blas-hompack" "f2cl") "blas-package" NIL
- "blas-hompack" ("blas-package" "f2cl") "blas-complex" ("blas-real" "f2cl")
+ NIL "blocks-world" NIL "blas-real" ("blas-hompack" "f2cl") "blas-hompack"
+ ("blas-package" "f2cl") "blas-complex" ("blas-real" "f2cl")
  "blackthorn-stress-test" ("blackthorn") "blackthorn-collision-test"
  ("blackthorn") "blackthorn"
  ("alexandria" "cl-containers" "cl-fad" "cl-opengl" "cl-store"
@@ -3658,13 +3652,13 @@
  ("alexandria" "bordeaux-threads" "cl-ppcre" "drakma" "hunchentoot" "ironclad"
   "net-telent-date" "parse-number" "trivial-http" "xml-mop")
  "algebraic-data-library" ("cl-algebraic-data-type") "alexandria-tests"
- ("alexandria") "alexandria" NIL "agm" ("alexandria") "agenda-shell-user" NIL
- "agenda-shell" NIL "adw-charting-vecto" ("adw-charting" "vecto")
- "adw-charting-google" ("adw-charting" "drakma") "adw-charting" ("iterate")
- "advanced-readtable" ("named-readtables") "acm-random-test"
- ("acm-random" "hu.dwim.stefil") "acm-random" ("com.google.base" "random")
- "acl-compat" ("cl-fad" "cl-ppcre" "ironclad" "puri") "acclimation-temperature"
- NIL "acclimation" NIL "access-test" ("access" "lisp-unit2") "access"
+ ("alexandria") "alexandria" NIL "agm" ("alexandria") "adw-charting-vecto"
+ ("adw-charting" "vecto") "adw-charting-google" ("adw-charting" "drakma")
+ "adw-charting" ("iterate") "advanced-readtable" ("named-readtables")
+ "acm-random-test" ("acm-random" "hu.dwim.stefil") "acm-random"
+ ("com.google.base" "random") "acl-compat"
+ ("cl-fad" "cl-ppcre" "ironclad" "puri") "acclimation-temperature" NIL
+ "acclimation" NIL "access-test" ("access" "lisp-unit2") "access"
  ("alexandria" "anaphora" "cl-interpol" "closer-mop" "iterate")
  "abstract-classes" ("closer-mop") "abnf" ("cl-ppcre" "esrap") "able"
  ("cl-fad" "ltk" "trivial-gray-streams") "a-cl-cairo2-loader" ("cl-cairo2")

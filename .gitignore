@@ -2,3 +2,6 @@
 /output
 /*.out
 /localql
+*.fasl
+/result
+

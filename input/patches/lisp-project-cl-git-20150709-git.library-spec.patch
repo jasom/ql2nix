@@ -1,0 +1,16 @@
+diff -ur a/src/libgit2.lisp b/src/libgit2.lisp
+--- a/src/libgit2.lisp	2016-10-10 20:34:50.000000000 -0700
++++ b/src/libgit2.lisp	2016-10-10 20:41:36.000000000 -0700
+@@ -30,10 +30,10 @@
+   (:ssh 4))
+ 
+ (define-foreign-library libgit2
+-  (:linux "libgit2.so.21")
++  (:linux (:or "libgit2.so.21" (:default "libgit2")))
+   (:windows "libgit2.dll")
+   (:darwin "libgit2.0.dylib")
+-  (:default "libgit2"))
++  (t (:default "libgit2")))
+ 
+ (unless (foreign-library-loaded-p 'libgit2)
+   (use-foreign-library libgit2))
