@@ -1,5 +1,8 @@
-(defpackage ql2nix
-  (:use :cl :split-sequence :uiop))
+(uiop:define-package ql2nix
+  (:mix :cl :split-sequence :uiop :alexandria))
+
+(declaim (optimize (debug 3) (speed 0)))
+
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
   (unless (named-readtables:find-readtable :cl-interpol)
@@ -8,6 +11,8 @@
       (:dispatch-macro-char #\# #\? #'interpol::interpol-reader))))
 
 (in-package #:ql2nix)
+
+(defvar *nix-build-output*)
 (named-readtables:in-readtable :cl-interpol)
 
 (defmacro defmemoize (fn access-form args &body b)
@@ -44,6 +49,28 @@
 
 (defvar *deps-hash* nil)
 
+(defun load-depcache (input-directory)
+  (setf *deps-hash*
+	(if (probe-file (merge-pathnames* "deps.sexp" input-directory))
+	    (with-open-file (f (merge-pathnames* "deps.sexp" input-directory)
+			       :direction :input)
+	      (alexandria:plist-hash-table (read f) :test #'equal))
+	    (make-hash-table :test #'equal))))
+
+(defun save-depcache (input-directory &key replace)
+  (ignore-errors
+    (with-open-file (f (merge-pathnames* "deps.sexp" input-directory)
+		       :direction :output
+		       :if-exists (if replace :supersede :error))
+      (print (alexandria:hash-table-plist *deps-hash*) f))))
+
+(defmemoize ql-immediate-deps
+    (gethash package *deps-hash*)
+    (package)
+  (cdr (mapcar (lambda (x) (slot-value (if (listp x) (car x) x) 'ql::name))
+	       (ql::dependency-tree package))))
+
+#|
 (defun ql-immediate-deps (package)
   (multiple-value-bind (result present)
       (gethash package *deps-hash*)
@@ -52,6 +79,7 @@
 	(setf (gethash package *deps-hash*)
 	      (cdr (mapcar (lambda (x) (slot-value (if (listp x) (car x) x) 'ql::name))
 			   (ql::dependency-tree package)))))))
+|#
 
 (defun translate-system-name (system-name)
   (format nil "lisp-~A"
@@ -65,8 +93,8 @@
   (when list
     (append list '(" "))))
 
-(defun generate-nix-expr (name version system-deps
-			  foreign-deps foreign-inputs patches)
+(defun generate-nix-expr (name version system-deps foreign-deps foreign-inputs patches
+			  lisp-implementations)
   #+(or)(assert (or (not (member "cffi" system-deps :test #'equal))
 	      (not (null foreign-deps))))
   (let ((cl-interpol:*list-delimiter* ", ")
@@ -75,8 +103,9 @@
     (concatenate
      'string
      #?|
-{ buildLispPackage, stdenv, fetchurl, sbcl, ${nix-project-name}, 
+{ buildLispPackage, stdenv, fetchurl, ${nix-project-name}, 
   @{(comma-list foreign-deps)} @{(comma-list nix-system-deps)}
+  @{(comma-list lisp-implementations)}
   system ? builtins.currentSystem }:
 |
      (let ((cl-interpol:*list-delimiter* " ")
@@ -87,15 +116,16 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ sbcl @[nix-system-deps] @[foreign-inputs] ];
+      propagatedBuildInputs = [ @[nix-system-deps] @[foreign-inputs] ];
       inherit stdenv;
-      lisp_name = "sbcl-$[name]";
       systemName = "$[name]";
+      @[(when (system-nobundle-p name) (list "NoBundle = 1;"))]
       sourceProject = "\${$[nix-project-name]}";
       patches = [@[patches]];
       lisp_dependencies = "$[(format nil "~{${~A}~^ ~}" nix-system-deps)]";
       name = "$[(subseq (translate-system-name name) 5)]$[version]";
-      lisp = "\${pkgs.sbcl}/bin/sbcl --no-sysinit --no-userinit";
+      #lisp = "\${pkgs.sbcl}/bin/sbcl";
+      lisp_implementations = [ $[(format nil "~{\"${pkgs.~A}\"~^ ~}" lisp-implementations)] ];
     }
 |))))
 
@@ -165,9 +195,8 @@ in
   (slot-value (system-release system-name) 'ql-dist::archive-url))
 
 (defun read-lines (filename)
-  (with-open-file (f filename)
-    (loop for line = (read-line f nil nil)
-       while line collect line)))
+  (when (probe-file filename)
+    (read-file-lines filename)))
 
 (defun write-lines (filename lines)
   (with-open-file (f filename
@@ -180,16 +209,24 @@ in
    (mapcan (lambda (x) (system-extra-deps x :deps deps :inputs inputs))
    (release-systems release whitelist))))
 
+(defvar *nobundles* nil)
+
+(defun system-nobundle-p (system-name)
+  (unless *nobundles*
+    (setf *nobundles*
+	  (read-lines (merge-pathnames* "nobundle.txt" *information-directory*))))
+  (member system-name *nobundles* :test #'string=))
+
 (defun system-extra-deps (system-name &key deps inputs)
-  (with-open-file  (f (merge-pathnames* "extradeps.txt" *information-directory*))
-    (loop for line = (read-line f nil nil)
-       for (system dep input) = (and line (split-sequence #\Space line))
-       while system
-       when (equal system system-name)
-       if deps collect dep
-       else if inputs collect input)))
+  (loop for line in (read-lines (merge-pathnames* "extradeps.txt" *information-directory*))
+     for (system dep input) = (and line (split-sequence #\Space line))
+     while system
+     when (equal system system-name)
+     if deps collect dep
+     else if inputs collect input))
 
 (defun system-lisp-deps (system-name)
+  (remove-if (lambda (x) (member x '("asdf" "uiop") :test #'string=))
   (remove-duplicates
    (append (ql-immediate-deps system-name)
 	   (and (probe-file (merge-pathnames* "extralispdeps.txt" *information-directory*))
@@ -198,7 +235,8 @@ in
 		     for (system dep) = (and line (split-sequence #\Space line))
 		     while system
 		     when (equal system system-name)
-		     collect dep))))))
+		     collect dep))))
+   :test #'string=)))
 
 (defun system-name (system)
   (if (stringp system)
@@ -258,21 +296,6 @@ in
 			   ,(unix-namestring (merge-pathnames* "patches" indir))
 			   ,(unix-namestring outdir))))
 
-(defun load-depcache (input-directory)
-  (setf *deps-hash*
-	(if (probe-file (merge-pathnames* "deps.sexp" input-directory))
-	    (with-open-file (f (merge-pathnames* "deps.sexp" input-directory)
-			       :direction :input)
-	      (alexandria:plist-hash-table (read f) :test #'equal))
-	    (make-hash-table :test #'equal))))
-
-(defun save-depcache (input-directory &key replace)
-  (ignore-errors
-    (with-open-file (f (merge-pathnames* "deps.sexp" input-directory)
-		       :direction :output
-		       :if-exists (if replace :supersede :error))
-      (print (alexandria:hash-table-plist *deps-hash*) f))))
-
 (defun main (input-directory output-directory skip)
   (handler-bind
       ((t (lambda (c)
@@ -311,21 +334,23 @@ in
 	 (generate-build input-directory output-directory all-systems)
 	 (loop for system in systems
 	    for progress = (/ (length completed-systems) (length all-systems))
-	    for (_ error-output error-code) =
+	    for (_ *nix-build-output* error-code) =
 	      (multiple-value-list
 	       (uiop:run-program `("nix-build"
-				   "-A"
-				   ,(translate-system-name system)
+				   "--option" "use-binary-caches" "false"
+				   "-A" ,(translate-system-name system)
 				   ,(uiop:unix-namestring output-directory))
 				 :output t
 				 :error-output :string
 				 :ignore-error-status t))
-	    do (write-sequence error-output *error-output*)
-	      (format *error-output* "~%Progress: ~A~%" (float (* 100 progress)))
+	    do (write-sequence *nix-build-output* *error-output*)
+	      (format *error-output* "~&Progress: ~A (~A%)~%" (length completed-systems) (float (* 100 progress)))
 	    if (/= error-code 0)
-	    do (fixup-rules system error-output)
+	    do (fixup-rules system)
 	       (go again)
-	    else do (push system completed-systems))))))
+	    else do
+            (format *error-output* "~&Successfully completed ~A~%" system)
+            (push system completed-systems))))))
 
 
 (defun generate-default-nix-file (systems projects output-directory)
@@ -393,7 +418,23 @@ in
      (alexandria:starts-with-subseq #?"./patches/${(translate-system-name system)}${(system-version-string system)}." x))
    *patch-list*))
 
+(defun system-lisps (system input-directory &optional info)
+  (unless info
+    (setf info (make-hash-table :test #'equal))
+    (loop for lisp in '("sbcl" "clisp" "ccl")
+       do (setf (gethash lisp info)
+		(read-lines (merge-pathnames* (format nil "blacklist.~a" lisp) input-directory)))))
+  (let (lisps)
+    (loop for lisp being the hash-keys of info using (hash-value blacklist)
+       do (unless (member system
+			  blacklist
+			  :test #'string=)
+	    (push lisp lisps)))
+    (loop for dep in (system-lisp-deps system)
+       do (setf lisps (intersection lisps (system-lisps dep input-directory info))))
+    lisps))
 
+  
 (defun generate-nix-file (system-to-load input-directory output-directory)
   (with-open-file (outf (merge-pathnames* (format nil "~A.nix" (translate-system-name system-to-load)) output-directory)
 			:direction :output
@@ -405,7 +446,9 @@ in
 		      (system-lisp-deps system-to-load)
 		      (remove-duplicates (system-extra-deps system-to-load :deps t) :test #'equal)
 		      (remove-duplicates (system-extra-deps system-to-load :inputs t) :test #'equal)
-		      (system-patches system-to-load input-directory)) outf)))
+		      (system-patches system-to-load input-directory)
+		      (system-lisps system-to-load input-directory))
+   outf)))
 
 (defun ql-projects ()
   (ql::provided-releases t))
@@ -478,22 +521,24 @@ in
 
 (defun append-to-input-file (fname line)
   (let ((path (merge-pathnames* fname *information-directory*)))
-    (when (member line (read-lines path) :test #'string=)
-      (error "Line: '~A' already present in '~A', this should not happen" line fname))
-    (with-open-file (f path 
-		       :direction :output
-		       :if-exists :append)
-      (format f "~A~%" line))))
+    (if (member line (read-lines path) :test #'string=)
+	nil
+	(with-open-file (f path 
+			   :direction :output
+			   :if-does-not-exist :create
+			   :if-exists :append)
+	  (format f "~A~%" line)
+	  t))))
 
 (defun scan-group-one (regex string)
   (ignore-errors
     (elt (nth-value 1 (cl-ppcre:scan-to-strings regex string))
 	 0)))
 
-(defun library-test (string error-output)
+(defun library-test (string)
   (cl-ppcre:scan
    #?/(?m)(Unable to load any of the alternatives:\n|Unable to load foreign library \([^\)]*\).\n|fatal error:|Couldn't load foreign libraries|Couldn't load foreign library)[^\n]*${string}/ 
-		 error-output))
+		 *nix-build-output*))
 
 (defun library-replace (system old-dep old-input new-dep new-input)
   (let* ((path (merge-pathnames* "extradeps.txt" *information-directory*))
@@ -510,6 +555,7 @@ in
   (list
    "libwebkit2gtk[.\"-]" "gnome3" "gnome3.webkitgtk"
    "Python[.]h:" :blacklist :blacklist
+   "libportaudio[.\"-]" "portaudio" "portaudio"
    "libzmq[.\"-]" "zeromq" "zeromq"
    "libvorbisfile[.\"-]" "libvorbis" "libvorbis"
    "libssh2[.\"-]" "libssh2" "libssh2"
@@ -532,7 +578,7 @@ in
    "libleveldb[.\"-]" "leveldb" "leveldb"
    "libgtk-3[.\"-]" "gnome3" "gnome3.gtk"
    "libgdk-3[.\"-]" "gnome3" "gnome3.gtk"
-   "FLAC/stream_decoder[.]h:" "flac" "rabbitmq-c"
+   "FLAC/stream_decoder[.]h:" "flac" "flac"
    "libz[.\"-]" "zlib" "zlib"
    "libsqlite3[.\"-]" "sqlite" "sqlite"
    "libsqlite[.\"-]" :blacklist :blacklist
@@ -629,9 +675,9 @@ in
    "libhoedown" :blacklist :blacklist
    "libode[.\"-]" :blacklist :blacklist))
 
-(defun check-all-libs (system error-output)
+(defun check-all-libs (system)
   (loop for (libexpr dep input) on *library-info* by #'cdddr
-     if (library-test libexpr error-output)
+     if (library-test libexpr)
      if (eql dep :blacklist)
      do (format *error-output* "~%Blacklisting system due to it depending on ~A.~%" libexpr)
        (blacklist-system system "Depends on libexpr")
@@ -641,100 +687,186 @@ in
        (return t)))
 
 (defun blacklist-system (system reason)
-  (append-to-input-file "blacklist.txt" (format nil "~A #~A" system reason)))
+  (if (cl-ppcre:scan "Nix Build failed with all lisps" *nix-build-output*)
+      (append-to-input-file "blacklist.txt" (format nil "~A #~A" system reason))
+      (let
+	  ((impl (elt (nth-value 1 (cl-ppcre:scan-to-strings "Failed build for lisp ([^ \\n]*)" *nix-build-output*)) 0)))
+	(cond
+	  ((ends-with-subseq "/clisp" impl)
+	   (assert (append-to-input-file "blacklist.clisp" system)))
+	  ((or
+	    (ends-with-subseq "/lx86cl64" impl)
+	    (ends-with-subseq "/lx86cl" impl))
+	   (assert (append-to-input-file "blacklist.ccl" system)))
+	  ((ends-with-subseq "/sbcl" impl)
+	   (assert (append-to-input-file "blacklist.sbcl" system)))
+	  (t (error "Unknown implementation ~a" impl))))))
 
-(defun fixup-rules (system-name error-output)
-  (cond
-    ((check-all-libs system-name error-output))
-    ((cl-ppcre:scan "Couldn't execute \"swig\": No such file or directory" error-output)
-     (format *error-output* "~%Blacklisting package until I have a way to add custom hooks: ~A~%" system-name)
-     (library-add system-name "swig" "swig"))
-    ((cl-ppcre:scan "/usr/lib/R/" error-output)
-     (format *error-output* "~%Blacklisting package until I have a way to add custom hooks: ~A~%" system-name)
-     (blacklist-system system-name "Need custom hooks"))
-    ((cl-ppcre:scan "No qmake found" error-output)
-     (format *error-output* "~%Blacklisting package due to be being too lazy to figure out why qmake doesn't work: ~A~%" system-name)
-     (blacklist-system system-name "qmake not supported yet"))
-     ;(library-add system-name "kde4" "kde4.qt4"))
-    ((cl-ppcre:scan "fatal error: lfp.h: No such file or directory" error-output)
-     (format *error-output* "~%Blacklisting package due to Nix's libfixposix being too old: ~A~%" system-name)
-     (blacklist-system system-name "Need newer libfixposix"))
-    ((cl-ppcre:scan
-      (format nil "Component \"~a\" not found" system-name) error-output)
-     (format *error-output* "~%Blacklisting package due to 'component not found': ~A~%" system-name)
-     (blacklist-system system-name #?"Component not found $(system-name)"))
-    ((cl-ppcre:scan "curl: command not found" error-output)
-     (format *error-output* "~%Blacklisting package due to it invoking curl during build; this can be fixed by patching the build process to not fetch from the internet: ~A~%" system-name)
-     (blacklist-system system-name "Invokes curl during build"))
-    ((cl-ppcre:scan "git: command not found" error-output)
-     (format *error-output* "~%Blacklisting package due to it invoking git during build; this can be fixed by patching the build process to not fetch from the internet: ~A~%" system-name)
-     (blacklist-system system-name "Invokes git during build"))
-    ((cl-ppcre:scan "#<DEFCONSTANT-UNEQL" error-output)
-     (format *error-output* "~%Blacklisting package due to improper defconstant: ~A~%" system-name)
-     (blacklist-system system-name "Improper defconstant"))
-    ((cl-ppcre:scan "Heap exhausted, game over" error-output)
-     (format *error-output* "~%Blacklisting package due heap exhaustion: ~A~%" system-name)
-     (blacklist-system system-name "Heap exhaustion"))
-    ((cl-ppcre:scan "invalid ELF header." error-output)
-     (format *error-output* "~%Blacklisting package due to it appearing to be 32-bit only: ~A~%" system-name)
-     (blacklist-system system-name "Invalid ELF header"))
-    ((cl-ppcre:scan "#<TYPE-ERROR expected-type:" error-output)
-     (format *error-output* "~%Blacklisting package due to type error: ~A~%" system-name)
-     (blacklist-system system-name "Type error"))
-    ((cl-ppcre:scan "conflicts with its asserted type" error-output)
-     (format *error-output* "~%Blacklisting package due to type error: ~A~%" system-name)
-     (blacklist-system system-name "Type error 2"))
-    ((cl-ppcre:scan "/homeless-shelter/" error-output)
-     (format *error-output* "~%Blacklisting package due to it accessing home directory ~A~%" system-name)
-     (blacklist-system system-name "Accesses home directory during build"))
-    ((cl-ppcre:scan "conflicting with its asserted type" error-output)
-     (format *error-output* "~%Blacklisting package due to type warning: ~A~%" system-name)
-     (blacklist-system system-name "Type warning"))
-    ((let ((pkg (scan-group-one "required by #<SYSTEM \"([^\"]+)\">" error-output)))
+
+
+(defun maybe-correct (system-name)
+ (cond
+   ((check-all-libs system-name)
+    t)
+    ((let ((pkg (scan-group-one "required by #<SYSTEM \"([^\"]+)\">" *nix-build-output*)))
        (and pkg
+            (not (equalp pkg system-name))
 	    (not (member pkg (system-lisp-deps system-name) :test #'equalp))))
      (append-to-input-file
       "extralispdeps.txt"
       (format nil "~A ~A"
 	      system-name
-	      (scan-group-one "required by #<SYSTEM \"([^\"]+)\">" error-output))))
-    ((cl-ppcre:scan "#<PACKAGE-INFERRED-SYSTEM" error-output)
+	      (scan-group-one "required by #<SYSTEM \"([^\"]+)\">" *nix-build-output*))))
+    #|
+    ((or
+       (cl-ppcre:scan "#<PACKAGE-INFERRED-SYSTEM" *nix-build-output*)
+       (cl-ppcre:scan "#<ASDF/PACKAGE-INFERRED-SYSTEM" *nix-build-output*))
      (append-to-input-file
       "extralispdeps.txt"
       (format nil "~A ~A"
 	      system-name
 	      (elt (nth-value 1 (cl-ppcre:scan-to-strings
 				 "Component \"([^\"]+)\" not found"
-				 error-output))
+				 *nix-build-output*))
 		   0))))
-    ((cl-ppcre:scan "error opening ..\"/nix/store/" error-output)
-     (blacklist-system system-name "Tries to write to asdf directory"))
-    ((cl-ppcre:scan "OPERATION-ERROR" error-output)
-     (blacklist-system system-name "Operation error"))
-    ((cl-ppcre:scan "COMMAND  = .*swig" error-output)
-     (library-add system-name "swig" "swig"))
-    ((cl-ppcre:scan "ld: cannot open output file /nix/store/.* Permission denied" error-output)
-     (blacklist-system system-name "Tries to write to asdf directory 2"))
-    ((cl-ppcre:scan "please check mpicc." error-output)
-     (blacklist-system system-name "Requires mpicc"))
-    ((cl-ppcre:scan "Bad bounding indices .* for SEQUENCE" error-output)
-     (blacklist-system system-name "Bad bounding icidices"))
-    ((cl-ppcre:scan "does not currently work with GSL version 2.x" error-output)
+    |#
+    ((and
+       (cl-ppcre:scan "Component \"([^\"]+)\" not found" *nix-build-output*)
+       (let ((name (elt (nth-value 1 (cl-ppcre:scan-to-strings
+                                       "Component \"([^\"]+)\" not found"
+                                       *nix-build-output*))
+                        0)))
+         (unless (equalp system-name name)
+           (append-to-input-file
+             "extralispdeps.txt"
+             (format nil "~A ~A"
+                     system-name
+                     (string-downcase name))))))
+     t)
+    ((cl-ppcre:scan "does not currently work with GSL version 2.x" *nix-build-output*)
      (library-replace system-name "gsl" "gsl" "gsl_1" "gsl_1"))
-    ((cl-ppcre:scan "also exports the following symbols:" error-output)
+    ((and
+       (cl-ppcre:scan "Component ([^ ]+) not found" *nix-build-output*)
+       (let ((groups (nth-value 1 (cl-ppcre:scan-to-strings "Component ([^: ]*:([^ ]*)|\"([^\"]+)\") not found" *nix-build-output*))))
+
+         (unless (equalp
+                   (or (elt groups 1) (elt groups 2))
+                   system-name)
+          (append-to-input-file
+            "extralispdeps.txt"
+            (let ((groups (nth-value 1 (cl-ppcre:scan-to-strings "Component ([^: ]*:([^ ]*)|\"([^\"]+)\") not found" *nix-build-output*))))
+              (format nil "~A ~A"
+                      system-name
+                      (string-downcase
+                        (or (elt groups 1) (elt groups 2)))))) )))
+     t)
+    (t nil)))
+
+(defun fixup-rules (system-name)
+  (let* ((end-line (search "Failed build for lisp "
+			   *nix-build-output*))
+	 (end (and end-line (position #\Newline *nix-build-output* :start end-line)))
+	 (start (search "Starting build for lisp "
+			*nix-build-output*
+			:end2 end
+			:from-end t)))
+    (format *error-output* "~&~%F-R: ~A ~A ~A~%~%" end-line end start)
+    (unless (search "Nix Build failed with all lisps"
+		    *nix-build-output*)
+      (setf *nix-build-output*
+	    (subseq *nix-build-output* start (1+ end))))
+  (format *error-output* "OUTPUT:~%~A" *nix-build-output*)
+  
+  (cond
+    ((maybe-correct system-name))
+    ((cl-ppcre:scan "Couldn't execute \"swig\": No such file or directory" *nix-build-output*)
+     (library-add system-name "swig" "swig"))
+    ((cl-ppcre:scan "/usr/lib/R/" *nix-build-output*)
+     (format *error-output* "~%Blacklisting package until I have a way to add custom hooks: ~A~%" system-name)
+     (blacklist-system system-name "Need custom hooks"))
+    ((cl-ppcre:scan "No qmake found" *nix-build-output*)
+     (format *error-output* "~%Blacklisting package due to be being too lazy to figure out why qmake doesn't work: ~A~%" system-name)
+     (blacklist-system system-name "qmake not supported yet"))
+					;(library-add system-name "kde4" "kde4.qt4"))
+    ((cl-ppcre:scan "fatal error: lfp.h: No such file or directory" *nix-build-output*)
+     (format *error-output* "~%Blacklisting package due to Nix's libfixposix being too old: ~A~%" system-name)
+     (blacklist-system system-name "Need newer libfixposix"))
+    ((cl-ppcre:scan "curl: command not found" *nix-build-output*)
+     (format *error-output* "~%Blacklisting package due to it invoking curl during build; this can be fixed by patching the build process to not fetch from the internet: ~A~%" system-name)
+     (blacklist-system system-name "Invokes curl during build"))
+    ((cl-ppcre:scan "git: command not found" *nix-build-output*)
+     (format *error-output* "~%Blacklisting package due to it invoking git during build; this can be fixed by patching the build process to not fetch from the internet: ~A~%" system-name)
+     (blacklist-system system-name "Invokes git during build"))
+    ((cl-ppcre:scan "#<DEFCONSTANT-UNEQL" *nix-build-output*)
+     (format *error-output* "~%Blacklisting package due to improper defconstant: ~A~%" system-name)
+     (blacklist-system system-name "Improper defconstant"))
+    ((cl-ppcre:scan "Heap exhausted, game over" *nix-build-output*)
+     (format *error-output* "~%Blacklisting package due heap exhaustion: ~A~%" system-name)
+     (blacklist-system system-name "Heap exhaustion"))
+    ((cl-ppcre:scan "invalid ELF header." *nix-build-output*)
+     (format *error-output* "~%Blacklisting package due to it appearing to be 32-bit only: ~A~%" system-name)
+     (blacklist-system system-name "Invalid ELF header"))
+    ((cl-ppcre:scan "#<TYPE-ERROR expected-type:" *nix-build-output*)
+     (format *error-output* "~%Blacklisting package due to type error: ~A~%" system-name)
+     (blacklist-system system-name "Type error"))
+    ((cl-ppcre:scan "conflicts with its asserted type" *nix-build-output*)
+     (format *error-output* "~%Blacklisting package due to type error: ~A~%" system-name)
+     (blacklist-system system-name "Type error 2"))
+    ((cl-ppcre:scan "/homeless-shelter/" *nix-build-output*)
+     (format *error-output* "~%Blacklisting package due to it accessing home directory ~A~%" system-name)
+     (blacklist-system system-name "Accesses home directory during build"))
+    ((cl-ppcre:scan "conflicting with its asserted type" *nix-build-output*)
+     (format *error-output* "~%Blacklisting package due to type warning: ~A~%" system-name)
+     (blacklist-system system-name "Type warning"))
+    ((or
+      (cl-ppcre:scan "Permission denied : #P\"/nix/store/" *nix-build-output*)
+      (cl-ppcre:scan "error opening ..\"/nix/store/" *nix-build-output*))
+     (blacklist-system system-name "Tries to write to asdf directory"))
+    ((cl-ppcre:scan "OPERATION-ERROR" *nix-build-output*)
+     (blacklist-system system-name "Operation error"))
+    ((cl-ppcre:scan "COMMAND  = .*swig" *nix-build-output*)
+     (library-add system-name "swig" "swig"))
+    ((cl-ppcre:scan "ld: cannot open output file /nix/store/.* Permission denied" *nix-build-output*)
+     (blacklist-system system-name "Tries to write to asdf directory 2"))
+    ((cl-ppcre:scan "please check mpicc." *nix-build-output*)
+     (blacklist-system system-name "Requires mpicc"))
+    ((cl-ppcre:scan "Bad bounding indices .* for SEQUENCE" *nix-build-output*)
+     (blacklist-system system-name "Bad bounding icidices"))
+    ((cl-ppcre:scan "does not currently work with GSL version 2.x" *nix-build-output*)
+     (library-replace system-name "gsl" "gsl" "gsl_1" "gsl_1"))
+    ((cl-ppcre:scan "also exports the following symbols:" *nix-build-output*)
      (blacklist-system system-name "package redefinition missing exports"))
-    ((cl-ppcre:scan "error: .* has no member named" error-output)
+    ((cl-ppcre:scan "error: .* has no member named" *nix-build-output*)
      (blacklist-system system-name "C compiler error 1"))
-    ((cl-ppcre:scan "Unhandled memory fault at " error-output)
+    ((cl-ppcre:scan "Unhandled memory fault at " *nix-build-output*)
      (blacklist-system system-name "Memory fault"))
-    ((cl-ppcre:scan "Component ([^ ]+) not found" error-output)
-     (append-to-input-file
-      "extralispdeps.txt"
-      (let ((groups (nth-value 1 (cl-ppcre:scan-to-strings "Component ([^: ]*:([^ ]*)|\"([^\"]+)\") not found" error-output))))
-	(format nil "~A ~A"
-		system-name
-		(string-downcase
-		 (or (elt groups 1) (elt groups 2)))))))
-    (t (format *error-output* "~%Unable to fixup system ~A~%" system-name)
-       (uiop:quit 1))))
+    ((cl-ppcre:scan "Sorry, your dialect of Lisp is not yet supported." *nix-build-output*)
+     (blacklist-system system-name "Sorry, your dialect of Lisp is not yet supported."))
+    ((cl-ppcre:scan ": variable .* has no value" *nix-build-output*)
+     (blacklist-system system-name "Variable has no value"))
+    ((cl-ppcre:scan "NO-APPLICABLE-METHOD: When calling|There is no applicable method for the generic function:" *nix-build-output*)
+     (blacklist-system system-name "No applicable method"))
+    ((cl-ppcre:scan "The macro ~S may not be called with ~S arguments: ~S" *nix-build-output*)
+     (blacklist-system system-name "macro parameter list mismatch"))
+    ((cl-ppcre:scan "PACKAGE.*is locked" *nix-build-output*)
+     (blacklist-system system-name "Package is locked"))
+    ((cl-ppcre:scan "FUNCALL: undefined function" *nix-build-output*)
+     (blacklist-system system-name "FUNCALL: undefined function"))
+    ((cl-ppcre:scan "~S has ~D, but ~S has ~D optional parameter~:P" *nix-build-output*)
+     (blacklist-system system-name "parameter list mismatch"))
+    ((cl-ppcre:scan
+      (format nil "Component \"~a\" not found" system-name) *nix-build-output*)
+     (blacklist-system system-name #?"Component not found $(system-name)"))
+    ((cl-ppcre:scan "Bound is not \\*, a FLOAT or a list of a FLOAT" *nix-build-output*)
+     (blacklist-system system-name "Type mismatch"))
+    ((cl-ppcre:scan "Component \"([^\"]+)\" not found" *nix-build-output*)
+     (cl-ppcre:register-groups-bind (component)
+	 ("Component \"([^\"]+)\" not found" *nix-build-output*)
+       (blacklist-system system-name #?'Component "$(component)" not found')))
+    ((not (cl-ppcre:scan "Nix Build failed with all lisps" *nix-build-output*))
+     (blacklist-system system-name "Failed on some, but not all lisps"))
+    (t
+      (format *error-output* "~%Unable to fixup system ~A:~%~A~%" system-name *nix-build-output*)
+       (uiop:quit 1)))))
        
+

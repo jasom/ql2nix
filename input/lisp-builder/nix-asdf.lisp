@@ -58,8 +58,17 @@
  (getenv "NIX_ASDF_OUTPUT_TRANSLATIONS"))
 |#
 
+(defun verbose-copy-file (source dest)
+  (let ((source (ensure-absolute-pathname source *default-pathname-defaults*))
+	(dest  (ensure-absolute-pathname dest  *default-pathname-defaults*)))
+    (format *error-output* "Copying from ~A to ~A~%" source dest)
+    (ensure-directories-exist dest)
+    (copy-file source dest)))
+  
+
 (defun make-bundle% (system-name bundle-dir)
   #+sbcl(setf SB-IMPL::*DEFAULT-EXTERNAL-FORMAT* :utf-8)
+  #+clisp(setf custom:*default-file-encoding* (ext:make-encoding :charset 'charset:utf-8 :line-terminator :unix))
   (asdf:operate 'asdf:deliver-asd-op system-name)
   (let ((files (append
 		(asdf:output-files 'asdf:deliver-asd-op system-name)
@@ -69,13 +78,12 @@
 							:type (pathname-type file))
 					 (ensure-directory-pathname (parse-unix-namestring bundle-dir)))
        do
-	 (format *error-output* "Copying to ~A~%" dest)
-	 (ensure-directories-exist dest)
-	 (copy-file file dest))
-    (uiop:copy-file (asdf:system-source-file system-name)
-		    (uiop:merge-pathnames* 
-		     "originalasd.txt"
-		     (ensure-directory-pathname (parse-unix-namestring bundle-dir))))))
+	 (verbose-copy-file file dest))
+    (verbose-copy-file
+     (asdf:system-source-file system-name)
+     (uiop:merge-pathnames* 
+      "originalasd.txt"
+      (ensure-directory-pathname (parse-unix-namestring bundle-dir))))))
 		     
 
 (defun make-bundle (system-name bundle-dir)
@@ -93,6 +101,7 @@
 
 (defun test-bundle (system-name)
   #+sbcl(setf SB-IMPL::*DEFAULT-EXTERNAL-FORMAT* :utf-8)
+  #+clisp(setf custom:*default-file-encoding* (ext:make-encoding :charset 'charset:utf-8 :line-terminator :unix))
   (handler-case 
       (progn
 	(asdf:load-system system-name)

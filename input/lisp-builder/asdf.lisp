@@ -10968,10 +10968,11 @@ for all the linkable object files associated with the system or its dependencies
         (format s ";;; Built for ~A ~A on a ~A/~A ~A~%"
                 (lisp-implementation-type)
                 (lisp-implementation-version)
-                (software-type)
+                #+(or)(software-type)
+		#-(or)""
                 (machine-type)
                 (software-version))
-        (let ((*package* (find-package :asdf-user)))
+        (let ((*package* (find-package :cl)))
           (pprint `(defsystem ,name
                      :class prebuilt-system
                      :version ,version

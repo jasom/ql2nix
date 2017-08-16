@@ -1,0 +1,11 @@
+diff -urN a/3d-vectors.asd b/3d-vectors.asd
+--- a/3d-vectors.asd	2016-10-24 12:05:54.305123351 -0700
++++ b/3d-vectors.asd	2016-10-24 12:08:30.553180659 -0700
+@@ -4,7 +4,6 @@
+  Author: Nicolas Hafner <shinmera@tymoon.eu>
+ |#
+ 
+-(in-package #:cl-user)
+ (asdf:defsystem 3d-vectors
+   :version "2.1.0"
+   :license "Artistic"

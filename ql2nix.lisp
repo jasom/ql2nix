@@ -29,6 +29,8 @@ exec sbcl --noinform --disable-ldb --lose-on-corruption --disable-debugger \
     (funcall (intern "INSTALL" "QUICKLISP-QUICKSTART") :path (merge-pathnames* "localql/" (pathname-directory-pathname (script-pathname))))))
 
 ;(asdf:clear-source-registry)
+(eval-when (:compile-toplevel :load-toplevel :execute)
+ (sb-ext:restrict-compiler-policy 'debug 3))
 (asdf:load-asd (merge-pathnames "ql2nix.asd" (script-pathname)))
 (ql:quickload "ql2nix" :silent t)
 ;(eval `(trace ,(intern "MAIN" :ql2nix)))
