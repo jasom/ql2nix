@@ -28,6 +28,8 @@ exec sbcl --noinform --disable-ldb --lose-on-corruption --disable-debugger \
     (load (merge-pathnames* "quicklisp.lisp" (script-pathname)))
     (funcall (intern "INSTALL" "QUICKLISP-QUICKSTART") :path (merge-pathnames* "localql/" (pathname-directory-pathname (script-pathname))))))
 
+;(ql:update-dist "quicklisp")
+
 ;(asdf:clear-source-registry)
 (eval-when (:compile-toplevel :load-toplevel :execute)
  (sb-ext:restrict-compiler-policy 'debug 3))

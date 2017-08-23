@@ -1,0 +1,12 @@
+diff -ur a/cl-gbm.lisp b/cl-gbm.lisp
+--- a/cl-gbm.lisp	2017-08-22 13:30:48.096989577 -0700
++++ b/cl-gbm.lisp	2017-08-22 13:31:59.104993858 -0700
+@@ -1,7 +1,7 @@
+ (in-package :gbm)
+ 
+ (define-foreign-library libgbm
+-  (:unix (:or "/usr/lib64/libgbm.so.1" "/usr/lib64/libgbm.so.0" "/usr/lib64/libgbm.so" "/usr/lib/x86_64-linux-gnu/libgbm.so"))
++  (:unix (:or "libgbm.so" "/usr/lib64/libgbm.so.1" "/usr/lib64/libgbm.so.0" "/usr/lib64/libgbm.so" "/usr/lib/x86_64-linux-gnu/libgbm.so"))
+   (t (:default "libgbm")))
+ 
+ (use-foreign-library libgbm)
