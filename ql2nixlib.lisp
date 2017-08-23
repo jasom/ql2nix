@@ -3,7 +3,6 @@
 
 (declaim (optimize (debug 3) (speed 0)))
 
-
 (eval-when (:compile-toplevel :load-toplevel :execute)
   (unless (named-readtables:find-readtable :cl-interpol)
     (named-readtables:defreadtable :cl-interpol
@@ -12,639 +11,13 @@
 
 (in-package #:ql2nix)
 
-(defvar *nix-build-output*)
 (named-readtables:in-readtable :cl-interpol)
 
-(defmacro defmemoize (fn access-form args &body b)
-  (alexandria:with-gensyms (result present)
-    `(defun ,fn ,args
-       (multiple-value-bind (,result ,present) ,access-form
-	 (if ,present ,result
-	     (setf ,access-form (progn ,@b)))))))
-
+(defvar *nix-build-output*)
 (defvar *information-directory* nil)
-
-(defun compute-all-deps (system)
-  (let* ((strategy (ql::compute-load-strategy system))
-	 (ql-systems (slot-value strategy 'ql::quicklisp-systems))
-	 (asdf-systems (slot-value strategy 'ql::asdf-systems))
-	 (system-names))
-    (loop for item = (pop asdf-systems)
-       while item
-       do (pushnew (slot-value item 'asdf/system::name) system-names :test #'equal)
-       ;; TODO
-	 (assert (null (slot-value item 'asdf/system::defsystem-depends-on)))
-	 (loop for dep in (slot-value item 'asdf/system::depends-on)
-	    for strategy = (ql::compute-load-strategy dep)
-	    do
-	      (setf ql-systems
-		    (append (slot-value strategy 'ql::quicklisp-systems)
-			    ql-systems)
-		    asdf-systems
-		    (append (slot-value strategy 'ql::asdf-systems)
-			    asdf-systems))))
-    (loop for item in ql-systems
-	 do (pushnew (slot-value item 'ql::name) system-names))
-    (remove system system-names :test #'equal)))
-
-(defvar *deps-hash* nil)
-
-(defun load-depcache (input-directory)
-  (setf *deps-hash*
-	(if (probe-file (merge-pathnames* "deps.sexp" input-directory))
-	    (with-open-file (f (merge-pathnames* "deps.sexp" input-directory)
-			       :direction :input)
-	      (alexandria:plist-hash-table (read f) :test #'equal))
-	    (make-hash-table :test #'equal))))
-
-(defun save-depcache (input-directory &key replace)
-  (ignore-errors
-    (with-open-file (f (merge-pathnames* "deps.sexp" input-directory)
-		       :direction :output
-		       :if-exists (if replace :supersede :error))
-      (print (alexandria:hash-table-plist *deps-hash*) f))))
-
-(defmemoize ql-immediate-deps
-    (gethash package *deps-hash*)
-    (package)
-  (cdr (mapcar (lambda (x) (slot-value (if (listp x) (car x) x) 'ql::name))
-	       (ql::dependency-tree package))))
-
-#|
-(defun ql-immediate-deps (package)
-  (multiple-value-bind (result present)
-      (gethash package *deps-hash*)
-    (if present
-	result
-	(setf (gethash package *deps-hash*)
-	      (cdr (mapcar (lambda (x) (slot-value (if (listp x) (car x) x) 'ql::name))
-			   (ql::dependency-tree package)))))))
-|#
-
-(defun translate-system-name (system-name)
-  (format nil "lisp-~A"
-	  (substitute-if-not #\- #'alphanumericp (string-downcase system-name))))
-
-(defun translate-project-name (project-name)
-  (format nil "lisp-project-~A"
-	  (substitute-if-not #\- #'alphanumericp (string-downcase project-name))))
-
-(defun comma-list (list)
-  (when list
-    (append list '(" "))))
-
-(defstruct system-info
-  (name "")
-  (version "")
-  (lisp-deps "")
-  (foreign-deps "")
-  (foreign-inputs "")
-  (patches "")
-  (release "")
-  (lisp-implementations nil))
-
-(defun generate-system-info (name completed-systems input-directory)
-  (assert (stringp name))
-  (let* ((lisp-deps (system-lisp-deps name))
-         (lisp-deps
-           (loop for dep in lisp-deps
-                 collect (gethash dep completed-systems))))
-    (unless (member nil lisp-deps)
-      (make-system-info
-        :name name
-        :version (system-version-string name)
-        :lisp-deps lisp-deps
-        :foreign-deps (remove-duplicates (system-extra-deps name :deps t) :test #'equal)
-        :foreign-inputs (remove-duplicates (system-extra-deps name :inputs t) :test #'equal)
-        :patches (system-patches name input-directory)
-        :release (system-release name)
-        :lisp-implementations (system-lisps name input-directory completed-systems)))))
-
-
-
-(defun generate-nix-expr (name version system-deps foreign-deps foreign-inputs patches
-			  lisp-implementations)
-  #+(or)(assert (or (not (member "cffi" system-deps :test #'equal))
-	      (not (null foreign-deps))))
-  (let ((cl-interpol:*list-delimiter* ", ")
-	(nix-system-deps (map 'list
-                              (compose #'translate-system-name #'system-info-name)
-                              system-deps))
-	(nix-project-name (translate-project-name (release-name (system-release name)))))
-    (concatenate
-     'string
-     #?|
-{ buildLispPackage, stdenv, fetchurl, ${nix-project-name}, 
-  @{(comma-list foreign-deps)} @{(comma-list nix-system-deps)}
-  @{(comma-list lisp-implementations)}
-  system ? builtins.currentSystem }:
-|
-     (let ((cl-interpol:*list-delimiter* " ")
-	   (cl-interpol:*inner-delimiters* '((#\[ #\]))))
-       #?|
-let
-  pkgs = import <nixpkgs> { inherit system; };
-  #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
-in
-  buildLispPackage {
-      propagatedBuildInputs = [ @[nix-system-deps] @[foreign-inputs] ];
-      inherit stdenv;
-      systemName = "$[name]";
-      @[(when (system-nobundle-p name) (list "NoBundle = 1;"))]
-      sourceProject = "\${$[nix-project-name]}";
-      patches = [@[patches]];
-      lisp_dependencies = "$[(format nil "~{${~A}~^ ~}" nix-system-deps)]";
-      name = "$[(subseq (translate-system-name name) 5)]$[version]";
-      #lisp = "\${pkgs.sbcl}/bin/sbcl";
-      lisp_implementations = [ $[(format nil "~{\"${pkgs.~A}\"~^ ~}" lisp-implementations)] ];
-    }
-|))))
-
-(defun generate-release-nix-file (release input-directory output-directory)
-  (with-open-file (outf (merge-pathnames* (format nil "~A.nix" (translate-project-name (release-name release))) output-directory)
-			:direction :output
-			:if-exists :supersede)
-    ;(princ (pathname outf) *error-output*)
-  (princ
-   (generate-release-nix-expr (release-name release)
-			      (release-version-string release)
-			      (release-archive-url release)
-			      (release-archive-md5 release)
-			      (release-patches release input-directory))
-   outf)))
-
-(defun generate-release-nix-expr (name version url md5 patches)
-  (let ((cl-interpol:*list-delimiter* " ")
-	(cl-interpol:*inner-delimiters* '((#\[ #\]))))
-    #?|
-{ buildLispProject, stdenv, fetchurl, system ? builtins.currentSystem }:
-let
-  pkgs = import <nixpkgs> { inherit system; };
-in
-  buildLispProject {
-      inherit stdenv;
-      patches = [@[patches]];
-      name = "$[(subseq (translate-system-name name) 5)]$[version]";
-      src = pkgs.fetchurl {
-        url = "$[url]";
-        sha256 = "$[md5]";
-      };
-    }
-|))
-
-
-(defun release-version-string (release)
-  (with-slots ((project-name ql-dist::project-name)
-	       (prefix ql-dist::prefix))
-      release
-    (subseq prefix (length project-name))))
-
-(defun release-archive-md5 (release)
-  (slot-value release 'ql-dist::archive-md5))
-
-(defun release-archive-url (release)
-  (slot-value release 'ql-dist::archive-url))
-
-(defun release-name (release)
-  (slot-value release 'ql-dist::project-name))
-
-(defparameter *system-release-hash* (make-hash-table :test #'equal))
-
-(defmemoize system-release (gethash system-name *system-release-hash*) (system-name)
-  (ql-dist:release (ql::find-system system-name)))
-
-(defun system-version-string (system-name)
-  (with-slots ((project-name ql-dist::project-name)
-	       (prefix ql-dist::prefix))
-      (system-release system-name)
-    (subseq prefix (length project-name))))
-
-(defun system-archive-md5 (system-name)
-  (slot-value (system-release system-name) 'ql-dist::archive-md5))
-
-(defun system-archive-url (system-name)
-  (slot-value (system-release system-name) 'ql-dist::archive-url))
-
-(defun read-lines (filename)
-  (when (probe-file filename)
-    (read-file-lines filename)))
-
-(defun write-lines (filename lines)
-  (with-open-file (f filename
-		     :direction :output
-		     :if-exists :supersede)
-    (format f "~{~A~%~}" lines)))
-
-(defun release-extra-deps (release whitelist &key deps inputs)
-  (remove-duplicates
-   (mapcan (lambda (x) (system-extra-deps x :deps deps :inputs inputs))
-   (release-systems release whitelist))))
-
+(defvar *deps-hash* (make-hash-table :test #'equal))
 (defvar *nobundles* nil)
-
-(defun system-nobundle-p (system-name)
-  (unless *nobundles*
-    (setf *nobundles*
-	  (read-lines (merge-pathnames* "nobundle.txt" *information-directory*))))
-  (member system-name *nobundles* :test #'string=))
-
-(defun system-extra-deps (system-name &key deps inputs)
-  (loop for line in (read-lines (merge-pathnames* "extradeps.txt" *information-directory*))
-     for (system dep input) = (and line (split-sequence #\Space line))
-     while system
-     when (equal system system-name)
-     if deps collect dep
-     else if inputs collect input))
-
-(defun system-lisp-deps (system-name)
-  (remove-if (lambda (x) (member x '("asdf" "uiop") :test #'string=))
-  (remove-duplicates
-   (append (ql-immediate-deps system-name)
-	   (and (probe-file (merge-pathnames* "extralispdeps.txt" *information-directory*))
-		(with-open-file  (f (merge-pathnames* "extralispdeps.txt" *information-directory*))
-		  (loop for line = (read-line f nil nil)
-		     for (system dep) = (and line (split-sequence #\Space line))
-		     while system
-		     when (equal system system-name)
-		     collect dep))))
-   :test #'string=)))
-
-(defun system-name (system)
-  (if (stringp system)
-      system
-      (slot-value system 'ql::name)))
-
-(defun blacklisted-system-p (system blacklist)
-  (or (member system blacklist :test #'string=)
-      (intersection (system-lisp-deps system) blacklist :test #'string=)))
-  
-(defun all-deps-in (system resolved)
-  (not (set-difference 
-	(system-lisp-deps system) resolved
-	:test #'string=)))
-
-(defun sort-ql-systems (initial-systems blacklist)
-  (loop
-     with result and last-completed-systems
-     for systems = (copy-list initial-systems)
-     then (loop
-	     for system in systems
-	     if (blacklisted-system-p system blacklist)
-	       do (pushnew system blacklist :test #'string=)
-	     else if (all-deps-in system result)
-	       do (push system result)
-	     else collect system)
-     do (format t "~&~a systems resolved, ~a to go~%" (length result) (length systems))
-     when (equal last-completed-systems systems)
-     do
-       (when systems
-	 (format t "~%Unable to resolve dependencies for: ~{~%   ~A~}~%" systems))
-       (return (nreverse result))
-     do
-       (setf last-completed-systems systems)))
-
-(defun all-releases (systems)
-  (loop with result
-       for system being the hash-values of systems
-       when (system-info-release system)
-       do (pushnew (system-info-release system) result :key #'release-name :test #'string=)
-       else do (format *error-output* "~&Can't find release for system: ~A~%" system)
-       finally (return result)))
-
-(defun generate-build (input-directory output-directory systems completed-systems)
-  (let ((releases
-          (union
-            (all-releases systems)
-            (all-releases completed-systems)
-            :test #'equal
-            :key #'release-name)))
-    ;;(print releases *error-output*)
-    (generate-default-nix-file systems completed-systems releases output-directory)
-    (loop for system being each hash-value of systems
-       do ;(format t "~&~A~%" system)
-	 (generate-nix-file system input-directory output-directory))
-    (loop for system being each hash-value of completed-systems
-          do ;(format t "~&~A~%" system)
-          (generate-nix-file system input-directory output-directory))
-    (loop
-       for release in releases
-       do (generate-release-nix-file release input-directory output-directory))))
-
-(defun setup-output (indir outdir)
-  (uiop:run-program `("rm" "-rf" ,(unix-namestring outdir)))
-  (uiop:run-program `("mkdir" "-p" ,(unix-namestring outdir)))
-  (uiop:run-program `("cp" "-a"
-			   ,(unix-namestring (merge-pathnames* "lisp-builder" indir))
-			   ,(unix-namestring (merge-pathnames* "patches" indir))
-			   ,(unix-namestring outdir))))
-
-(defun main (input-directory output-directory skip)
-  (handler-bind
-      ((t (lambda (c)
-	    (terpri *error-output*)
-	    (princ c *error-output*)
-	    (terpri *error-output*)
-	    (dissect:present c)
-	    (uiop:quit 1))))
-  (main2 input-directory output-directory skip)))
-
-
-(defun main2 (input-directory output-directory skip)
-  ;(trace fixup-rules)
-  (load-depcache input-directory)
-  (setf *kernel* (make-kernel 16))
-  (let* ((completed-systems (make-hash-table :test #'equal))
-          (channel (make-channel)))
-    (tagbody
-     again
-       (setup-output input-directory output-directory)
-       (let*  ((*information-directory* input-directory)
-	       (blacklisted-systems
-                 (map 'list
-                      (lambda (x) (car (split-sequence #\Space x)))
-                      (read-lines (merge-pathnames* "blacklist.txt" input-directory))))
-               made-progress
-               ;; TODO faster way to resolve blacklisted systems?
-               #-(or)(all-systems
-                       (set-difference
-                         (map 'list #'system-name
-                              (ql:system-apropos-list ""))
-                         blacklisted-systems
-                         :test #'string=))
-	       #+(or)(all-systems (sort-ql-systems
-			 (map 'list #'system-name
-			      (ql:system-apropos-list ""))
-			 blacklisted-systems))
-	       (systems-to-build
-                 (make-hash-table :test #'equal)))
-         (save-depcache input-directory)
-         (loop for name in all-systems
-               for system = (and (not (gethash name completed-systems))
-                                 (generate-system-info name completed-systems input-directory))
-               when system do (setf (gethash name systems-to-build) system))
-         (format *error-output* "Systems to build: ~% ~A"
-                (alexandria:hash-table-keys  systems-to-build))
-         (generate-build input-directory output-directory systems-to-build completed-systems)
-         (if (alexandria:hash-table-keys  systems-to-build)
-           (let ((submitted-tasks
-                   (loop for system being each hash-key of systems-to-build
-                         sum 1
-                         do (setf made-progress t)
-                         (submit-task channel
-                                      (lambda (system)
-                                        (multiple-value-bind (result output)
-                                          (build-one-system system output-directory)
-                                          (list system result output))) system))))
-             (loop repeat submitted-tasks
-                   for (system result *nix-build-output*) = (receive-result channel)
-                   for progress = (/ (hash-table-count completed-systems) (length all-systems))
-                   do (write-sequence *nix-build-output* *error-output*)
-                   (format *error-output* "~&Progress: ~A (~A%)~%" (hash-table-count completed-systems) (float (* 100 progress)))
-                   unless result
-                   do (fixup-rules system)
-                   else do
-                   (format *error-output* "~&Successfully completed ~A~%" system)
-                   (setf (gethash system completed-systems)
-                         (gethash system systems-to-build)))
-             (go again))
-           (format *error-output* "~&Finished; unbuilt systems:~% ~A"
-                   (set-difference all-systems
-                                   (alexandria:hash-table-keys completed-systems)
-                                   :test #'equal
-                                   )))))))
-
-(defun build-one-system (system output-directory)
-  (multiple-value-bind (_ nix-build-output error-code)
-    (uiop:run-program `("nix-build"
-                        ;"--option" "use-binary-caches" "false"
-                        "-A" ,(translate-system-name system)
-                        ,(uiop:unix-namestring output-directory))
-                      :output t
-                      :error-output :string
-                      :ignore-error-status t)
-    (values (= error-code 0)
-            nix-build-output)))
-
-(defun generate-default-nix-file (systems completed-systems projects output-directory)
-  (with-open-file (outf (merge-pathnames* "default.nix"  output-directory)
-			:direction :output
-			:if-exists :supersede)
-    (write-sequence
-    (let ((cl-interpol:*list-delimiter* #?"\n")
-	  (translated-names (map 'list #'translate-system-name
-                                 (append (alexandria:hash-table-keys systems)
-                                         (alexandria:hash-table-keys completed-systems))))
-	  (translated-project-names (map 'list
-					 (lambda (x) (translate-project-name
-						      (release-name x)))
-					 projects)))
-      #?|
-{ system ? builtins.currentSystem }:
-
-let
-  pkgs = import <nixpkgs> { inherit system; };
-  helpers = {
-       buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
-       buildLispProject = pkgs.callPackage ./lisp-builder/project.nix pkgs.sbcl;
-  };
-
-  callPackage = pkgs.lib.callPackageWith (pkgs // helpers // self);
-
-  self = {
-  inherit pkgs;
-    @((map 'list (lambda (x) #?"$(x) = callPackage ./$(x).nix { };") translated-names))
-    @((map 'list (lambda (x) #?"$(x) = callPackage ./$(x).nix { };") translated-project-names))
-
-  };
-in
-  self
-|) outf)))
-
 (defvar *patch-list* nil)
-
-(defun release-patches (release input-directory)
-  (unless *patch-list*
-    (setf *patch-list*
-	  (split-sequence
-	   #\Nul
-	   (uiop:run-program
-	    `("find" "." "-name" "*.patch" "-print0")
-	    :directory input-directory
-	    :output :string)))
-    (format *error-output* "patch-list: ~a~%" *patch-list*))
-  (remove-if-not
-   (lambda (x)
-     (alexandria:starts-with-subseq #?"./patches/${(translate-project-name (release-name release))}${(release-version-string release)}." x))
-   *patch-list*))
-
-(defun system-patches (system input-directory)
-  (unless *patch-list*
-    (setf *patch-list*
-	  (split-sequence
-	   #\Nul
-	   (uiop:run-program
-	    `("find" "." "-name" "*.patch" "-print0")
-	    :directory input-directory
-	    :output :string)))
-    (format *error-output* "patch-list: ~a~%" *patch-list*))
-  (remove-if-not
-   (lambda (x)
-     (alexandria:starts-with-subseq #?"./patches/${(translate-system-name system)}${(system-version-string system)}." x))
-   *patch-list*))
-
-(defun system-lisps (system input-directory completed-systems)
-  (let ((lisps
-          (loop for lisp in '("sbcl" "clisp" "ccl")
-                unless (member system 
-                               (read-lines (merge-pathnames* (format nil "blacklist.~a" lisp) input-directory))
-                               :test #'equal)
-                collect lisp)))
-    (when lisps
-      (loop for dep in (system-lisp-deps system)
-            unless (equal dep system)
-            do (setf lisps (intersection lisps
-                                         (system-info-lisp-implementations
-                                           (gethash dep completed-systems))
-                                         :test #'equal))))
-    lisps))
-
-#+(or)(defun system-lisps (system input-directory &optional info)
-  (unless info
-    (setf info (make-hash-table :test #'equal))
-    (loop for lisp in '("sbcl" "clisp" "ccl")
-       do (setf (gethash lisp info)
-		(read-lines (merge-pathnames* (format nil "blacklist.~a" lisp) input-directory)))))
-  (let (lisps)
-    (loop for lisp being the hash-keys of info using (hash-value blacklist)
-       do (unless (member system
-			  blacklist
-			  :test #'string=)
-            ;;(push system (gethash lisp info)) ;; circular dependencies
-	    (push lisp lisps)))
-    (when lisps
-      (loop for dep in (system-lisp-deps system)
-            unless (equal dep system)
-            do (setf lisps (intersection lisps (system-lisps dep input-directory info)))))
-    lisps))
-
-;(trace system-lisps)
-  
-(defun generate-nix-file (system-to-load input-directory output-directory)
-  (with-open-file (outf (merge-pathnames* (format nil "~A.nix" (translate-system-name (system-info-name system-to-load))) output-directory)
-			:direction :output
-			:if-exists :supersede)
-    ;(princ (pathname outf) *error-output*)
-  (princ
-   (generate-nix-expr (system-info-name system-to-load)
-                      (system-info-version system-to-load)
-                      (system-info-lisp-deps system-to-load)
-                      (system-info-foreign-deps system-to-load)
-                      (system-info-foreign-inputs system-to-load)
-                      (system-info-patches system-to-load)
-                      (system-info-lisp-implementations system-to-load))
-   outf)))
-
-(defun ql-projects ()
-  (ql::provided-releases t))
-
-#+#:debug(defun release-systems (project whitelist)
-  (let ((result (%release-systems project whitelist)))
-    (format t "~&RELEASE-SYSTEMS: '~A' => ~{~A, ~^~}~%" project result)
-    result))
-
-(defun release-systems (project whitelist)
-  (loop for system in whitelist
-     when (string= (release-name (system-release system))
-		   (release-name project))
-       collect system))
-
-(defun blacklisted-release-p (release systems)
-  (null (release-systems release systems)))
-
-(defun all-release-deps-in (release set systems)
-  (not (set-difference (release-deps release systems) set :test #'string= :key #'release-name)))
-
-(defun release-deps (project whitelist)
-  (remove (release-name project)
-	  (remove-duplicates
-	   (loop
-	      for system in (release-systems project whitelist)
-	      nconc (loop for dep in (system-lisp-deps system)
-		       collect (system-release dep))))
-	  :key #'release-name :test #'string=))
-
-(defun sort-releases (system-blacklist)
-  (let ((systems (sort-ql-systems
-		  (map 'list #'system-name
-		       (ql:system-apropos-list ""))
-		  system-blacklist)))
-    (loop
-       with result and last-completed-releases and blacklist and tests-removed
-       for releases = (ql-projects)
-       then (loop
-	       for release in releases
-	       if (blacklisted-release-p release systems)
-	       do (pushnew release blacklist)
-	       else if (all-release-deps-in release result systems)
-	       do (push release result)
-	       else collect release)
-       do (format t "~&~a releases resolved, ~a to go~%" (length result) (length releases))
-       when (equal last-completed-releases releases)
-       do
-	 (if tests-removed
-	     (progn
-	       (when releases
-		 (format t "~%Unable to resolve dependencies for: ~{~%   ~A~}~%"
-			 (map 'list
-			      #'release-name
-			      releases)))
-	       (return (nreverse result)))
-	     (setf systems (remove-test-systems releases systems)
-		   tests-removed t))
-       do
-	 (setf last-completed-releases releases))))
-
-(defun remove-test-systems (releases whitelist)
-  (loop
-     with new-whitelist = (copy-list whitelist)
-     for release in releases
-     do (loop for system in (release-systems release new-whitelist)
-	   when (search "test" system)
-	     do (setf new-whitelist (delete system new-whitelist :test #'string=)))
-     finally (return new-whitelist)))
-
-(defun append-to-input-file (fname line)
-  (let ((path (merge-pathnames* fname *information-directory*)))
-    (if (member line (read-lines path) :test #'string=)
-	nil
-	(with-open-file (f path 
-			   :direction :output
-			   :if-does-not-exist :create
-			   :if-exists :append)
-	  (format f "~A~%" line)
-	  t))))
-
-(defun scan-group-one (regex string)
-  (ignore-errors
-    (elt (nth-value 1 (cl-ppcre:scan-to-strings regex string))
-	 0)))
-
-(defun library-test (string)
-  (cl-ppcre:scan
-   #?/(?m)(Unable to load any of the alternatives:\n|Unable to load foreign library \([^\)]*\).\n|fatal error:|Couldn't load foreign libraries|Couldn't load foreign library)[^\n]*${string}/ 
-		 *nix-build-output*))
-
-(defun library-replace (system old-dep old-input new-dep new-input)
-  (let* ((path (merge-pathnames* "extradeps.txt" *information-directory*))
-	 (lines (read-lines path)))
-    (write-lines path (remove #?"(system) $(old-dep) $(old-input)" lines))
-    (library-add system new-dep new-input)))
-
-(defun library-add (system dep input)
-  (append-to-input-file
-   "extradeps.txt"
-   #?"$(system) $(dep) $(input)"))
-
 (defvar *library-info*
   (list
    "libsoloud[.\"-]" :blacklist :blacklist
@@ -779,6 +152,455 @@ in
    "libhoedown" :blacklist :blacklist
    "libode[.\"-]" :blacklist :blacklist))
 
+(defmacro defmemoize (fn access-form args &body b)
+  (alexandria:with-gensyms (result present)
+    `(defun ,fn ,args
+       (multiple-value-bind (,result ,present) ,access-form
+	 (if ,present ,result
+	     (setf ,access-form (progn ,@b)))))))
+
+(defmemoize ql-immediate-deps
+    (gethash package *deps-hash*)
+    (package)
+  (cdr (mapcar (lambda (x) (slot-value (if (listp x) (car x) x) 'ql::name))
+	       (ql::dependency-tree package))))
+
+(defun translate-system-name (system-name)
+  (format nil "lisp-~A"
+	  (substitute-if-not #\- #'alphanumericp (string-downcase system-name))))
+
+(defun translate-project-name (project-name)
+  (format nil "lisp-project-~A"
+	  (substitute-if-not #\- #'alphanumericp (string-downcase project-name))))
+
+(defun comma-list (list)
+  (when list
+    (append list '(" "))))
+
+(defstruct system-info
+  (name "")
+  (version "")
+  (lisp-deps "")
+  (foreign-deps "")
+  (foreign-inputs "")
+  (patches "")
+  (release "")
+  (lisp-implementations nil))
+
+(defun generate-system-info (name completed-systems input-directory)
+  (assert (stringp name))
+  (let* ((lisp-deps (system-lisp-deps name))
+         (lisp-deps
+           (loop for dep in lisp-deps
+                 collect (gethash dep completed-systems))))
+    (unless (member nil lisp-deps)
+      (make-system-info
+        :name name
+        :version (system-version-string name)
+        :lisp-deps lisp-deps
+        :foreign-deps (remove-duplicates (system-foreign-deps name :deps t) :test #'equal)
+        :foreign-inputs (remove-duplicates (system-foreign-deps name :inputs t) :test #'equal)
+        :patches (system-patches name input-directory)
+        :release (system-release name)
+        :lisp-implementations (system-lisps name input-directory completed-systems)))))
+
+
+
+(defun generate-nix-expr (name version system-deps foreign-deps foreign-inputs patches
+			  lisp-implementations)
+  #+(or)(assert (or (not (member "cffi" system-deps :test #'equal))
+	      (not (null foreign-deps))))
+  (let ((cl-interpol:*list-delimiter* ", ")
+	(nix-system-deps (map 'list
+                              (compose #'translate-system-name #'system-info-name)
+                              system-deps))
+	(nix-project-name (translate-project-name (release-name (system-release name)))))
+    (concatenate
+     'string
+     #?|
+{ buildLispPackage, stdenv, fetchurl, ${nix-project-name}, 
+  @{(comma-list foreign-deps)} @{(comma-list nix-system-deps)}
+  @{(comma-list lisp-implementations)}
+  system ? builtins.currentSystem }:
+|
+     (let ((cl-interpol:*list-delimiter* " ")
+	   (cl-interpol:*inner-delimiters* '((#\[ #\]))))
+       #?|
+let
+  pkgs = import <nixpkgs> { inherit system; };
+  #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
+in
+  buildLispPackage {
+      propagatedBuildInputs = [ @[nix-system-deps] @[foreign-inputs] ];
+      inherit stdenv;
+      systemName = "$[name]";
+      @[(when (system-nobundle-p name) (list "NoBundle = 1;"))]
+      sourceProject = "\${$[nix-project-name]}";
+      patches = [@[patches]];
+      lisp_dependencies = "$[(format nil "~{${~A}~^ ~}" nix-system-deps)]";
+      name = "$[(subseq (translate-system-name name) 5)]$[version]";
+      #lisp = "\${pkgs.sbcl}/bin/sbcl";
+      lisp_implementations = [ $[(format nil "~{\"${pkgs.~A}\"~^ ~}" lisp-implementations)] ];
+    }
+|))))
+
+(defun generate-release-nix-file (release input-directory output-directory)
+  (with-open-file (outf (merge-pathnames* (format nil "~A.nix" (translate-project-name (release-name release))) output-directory)
+			:direction :output
+			:if-exists :supersede)
+    ;(princ (pathname outf) *error-output*)
+  (princ
+   (generate-release-nix-expr (release-name release)
+			      (release-version-string release)
+			      (release-archive-url release)
+			      (release-archive-md5 release)
+			      (release-patches release input-directory))
+   outf)))
+
+(defun generate-release-nix-expr (name version url md5 patches)
+  (let ((cl-interpol:*list-delimiter* " ")
+	(cl-interpol:*inner-delimiters* '((#\[ #\]))))
+    #?|
+{ buildLispProject, stdenv, fetchurl, system ? builtins.currentSystem }:
+let
+  pkgs = import <nixpkgs> { inherit system; };
+in
+  buildLispProject {
+      inherit stdenv;
+      patches = [@[patches]];
+      name = "$[(subseq (translate-system-name name) 5)]$[version]";
+      src = pkgs.fetchurl {
+        url = "$[url]";
+        sha256 = "$[md5]";
+      };
+    }
+|))
+
+
+(defun release-version-string (release)
+  (with-slots ((project-name ql-dist::project-name)
+	       (prefix ql-dist::prefix))
+      release
+    (subseq prefix (length project-name))))
+
+(defun release-archive-md5 (release)
+  (slot-value release 'ql-dist::archive-md5))
+
+(defun release-archive-url (release)
+  (slot-value release 'ql-dist::archive-url))
+
+(defun release-name (release)
+  (slot-value release 'ql-dist::project-name))
+
+(defparameter *system-release-hash* (make-hash-table :test #'equal))
+
+(defmemoize system-release (gethash system-name *system-release-hash*) (system-name)
+  (ql-dist:release (ql::find-system system-name)))
+
+(defun system-version-string (system-name)
+  (with-slots ((project-name ql-dist::project-name)
+	       (prefix ql-dist::prefix))
+      (system-release system-name)
+    (subseq prefix (length project-name))))
+
+(defun system-archive-md5 (system-name)
+  (slot-value (system-release system-name) 'ql-dist::archive-md5))
+
+(defun system-archive-url (system-name)
+  (slot-value (system-release system-name) 'ql-dist::archive-url))
+
+(defun read-lines (filename)
+  (when (probe-file filename)
+    (read-file-lines filename)))
+
+(defun write-lines (filename lines)
+  (with-open-file (f filename
+		     :direction :output
+		     :if-exists :supersede)
+    (format f "~{~A~%~}" lines)))
+
+
+(defun system-nobundle-p (system-name)
+  (unless *nobundles*
+    (setf *nobundles*
+	  (read-lines (merge-pathnames* "nobundle.txt" *information-directory*))))
+  (member system-name *nobundles* :test #'string=))
+
+(defun system-foreign-deps (system-name &key deps inputs)
+  (loop for line in (read-lines (merge-pathnames* "extradeps.txt" *information-directory*))
+     for (system dep input) = (and line (split-sequence #\Space line))
+     while system
+     when (equal system system-name)
+     if deps collect dep
+     else if inputs collect input))
+
+(defun system-lisp-deps (system-name)
+  (remove-if (lambda (x) (member x '("asdf" "uiop") :test #'string=))
+  (remove-duplicates
+   (append (ql-immediate-deps system-name)
+	   (and (probe-file (merge-pathnames* "extralispdeps.txt" *information-directory*))
+		(with-open-file  (f (merge-pathnames* "extralispdeps.txt" *information-directory*))
+		  (loop for line = (read-line f nil nil)
+		     for (system dep) = (and line (split-sequence #\Space line))
+		     while system
+		     when (equal system system-name)
+		     collect dep))))
+   :test #'string=)))
+
+(defun system-name (system)
+  (if (stringp system)
+      system
+      (slot-value system 'ql::name)))
+
+(defun blacklisted-system-p (system blacklist)
+  (or (member system blacklist :test #'string=)
+      (intersection (system-lisp-deps system) blacklist :test #'string=)))
+  
+(defun all-releases (systems)
+  (loop with result
+       for system being the hash-values of systems
+       when (system-info-release system)
+       do (pushnew (system-info-release system) result :key #'release-name :test #'string=)
+       else do (format *error-output* "~&Can't find release for system: ~A~%" system)
+       finally (return result)))
+
+(defun generate-build (input-directory output-directory systems completed-systems)
+  (let ((releases
+          (union
+            (all-releases systems)
+            (all-releases completed-systems)
+            :test #'equal
+            :key #'release-name)))
+    ;;(print releases *error-output*)
+    (generate-default-nix-file systems completed-systems releases output-directory)
+    (loop for system being each hash-value of systems
+       do ;(format t "~&~A~%" system)
+	 (generate-nix-file system output-directory))
+    (loop for system being each hash-value of completed-systems
+          do ;(format t "~&~A~%" system)
+          (generate-nix-file system output-directory))
+    (loop
+       for release in releases
+       do (generate-release-nix-file release input-directory output-directory))))
+
+(defun setup-output (indir outdir)
+  (uiop:run-program `("rm" "-rf" ,(unix-namestring outdir)))
+  (uiop:ensure-all-directories-exist (list outdir))
+  (uiop:run-program `("cp" "-a"
+			   ,(unix-namestring (merge-pathnames* "lisp-builder" indir))
+			   ,(unix-namestring (merge-pathnames* "patches" indir))
+			   ,(unix-namestring outdir))))
+
+(defun main (input-directory output-directory skip)
+  (handler-bind
+      ((t (lambda (c)
+	    (terpri *error-output*)
+	    (princ c *error-output*)
+	    (terpri *error-output*)
+	    (dissect:present c)
+	    (uiop:quit 1))))
+  (main2 input-directory output-directory skip)))
+
+
+(defun main2 (input-directory output-directory skip)
+  (declare (ignore skip))
+  (setf *kernel* (make-kernel 16))
+  (let* ((completed-systems (make-hash-table :test #'equal))
+	 (channel (make-channel))
+	 (*information-directory* input-directory))
+    (loop
+       for blacklisted-systems = (map 'list
+				      (lambda (x) (car (split-sequence #\Space x)))
+				      (read-lines (merge-pathnames* "blacklist.txt" input-directory)))
+       for all-systems = (set-difference
+                          (map 'list #'system-name (ql:system-apropos-list ""))
+                          blacklisted-systems
+                          :test #'string=)
+       for systems-to-build = (make-hash-table :test #'equal)
+       do
+         (loop for name in all-systems
+	    for system = (and (not (gethash name completed-systems))
+			      (generate-system-info name completed-systems input-directory))
+	    when system do (setf (gethash name systems-to-build) system))
+         (format *error-output* "Systems to build: ~% ~A"
+		 (alexandria:hash-table-keys  systems-to-build))
+         (setup-output input-directory output-directory)
+         (generate-build input-directory output-directory systems-to-build completed-systems)
+       until (zerop (hash-table-count systems-to-build))
+       do (let ((submitted-tasks
+		 (loop for system being each hash-key of systems-to-build
+		    sum 1
+		    do
+		      (submit-task channel
+				   'build-one-system system output-directory))))
+	    (loop repeat submitted-tasks
+	       for (system result *nix-build-output*) = (receive-result channel)
+	       for progress = (/ (hash-table-count completed-systems) (length all-systems))
+	       do
+		 (format *error-output* "~A~%Progress: ~A (~A%)~%"
+			 *nix-build-output*
+			 (hash-table-count completed-systems)
+			 (float (* 100 progress)))
+	       unless result
+	       do (fixup-rules system)
+	       else do
+		 (format *error-output* "~&Successfully completed ~A~%" system)
+		 (setf (gethash system completed-systems)
+		       (gethash system systems-to-build)))))
+    (format *error-output* "~&Finished; unbuilt systems:~% ~A"
+            (set-difference (map 'list #'system-name (ql:system-apropos-list ""))
+                            (alexandria:hash-table-keys completed-systems)
+                            :test #'equal))))
+
+(defun build-one-system (system-name output-directory)
+  (multiple-value-bind (_ nix-build-output error-code)
+      (uiop:run-program `("nix-build"
+			  ;;"--option" "use-binary-caches" "false"
+			  "-A" ,(translate-system-name system-name)
+			  ,(uiop:unix-namestring output-directory))
+			:output t
+			:error-output :string
+			:ignore-error-status t)
+    (declare (ignore _))
+    (list
+     system-name
+     (= error-code 0)
+     nix-build-output)))
+
+(defun generate-default-nix-file (systems completed-systems projects output-directory)
+  (with-open-file (outf (merge-pathnames* "default.nix"  output-directory)
+			:direction :output
+			:if-exists :supersede)
+    (write-sequence
+    (let ((cl-interpol:*list-delimiter* #?"\n")
+	  (translated-names (map 'list #'translate-system-name
+                                 (append (alexandria:hash-table-keys systems)
+                                         (alexandria:hash-table-keys completed-systems))))
+	  (translated-project-names (map 'list
+					 (lambda (x) (translate-project-name
+						      (release-name x)))
+					 projects)))
+      #?|
+{ system ? builtins.currentSystem }:
+
+let
+  pkgs = import <nixpkgs> { inherit system; };
+  helpers = {
+       buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
+       buildLispProject = pkgs.callPackage ./lisp-builder/project.nix pkgs.sbcl;
+  };
+
+  callPackage = pkgs.lib.callPackageWith (pkgs // helpers // self);
+
+  self = {
+  inherit pkgs;
+    @((map 'list (lambda (x) #?"$(x) = callPackage ./$(x).nix { };") translated-names))
+    @((map 'list (lambda (x) #?"$(x) = callPackage ./$(x).nix { };") translated-project-names))
+
+  };
+in
+  self
+|) outf)))
+
+
+(defun release-patches (release input-directory)
+  (unless *patch-list*
+    (setf *patch-list*
+	  (split-sequence
+	   #\Nul
+	   (uiop:run-program
+	    `("find" "." "-name" "*.patch" "-print0")
+	    :directory input-directory
+	    :output :string)))
+    (format *error-output* "patch-list: ~a~%" *patch-list*))
+  (remove-if-not
+   (lambda (x)
+     (alexandria:starts-with-subseq #?"./patches/${(translate-project-name (release-name release))}${(release-version-string release)}." x))
+   *patch-list*))
+
+(defun system-patches (system input-directory)
+  (unless *patch-list*
+    (setf *patch-list*
+	  (split-sequence
+	   #\Nul
+	   (uiop:run-program
+	    `("find" "." "-name" "*.patch" "-print0")
+	    :directory input-directory
+	    :output :string)))
+    (format *error-output* "patch-list: ~a~%" *patch-list*))
+  (remove-if-not
+   (lambda (x)
+     (alexandria:starts-with-subseq #?"./patches/${(translate-system-name system)}${(system-version-string system)}." x))
+   *patch-list*))
+
+(defun system-lisps (system input-directory completed-systems)
+  (let ((lisps
+          (loop for lisp in '("sbcl" "clisp" "ccl")
+                unless (member system 
+                               (read-lines (merge-pathnames* (format nil "blacklist.~a" lisp) input-directory))
+                               :test #'equal)
+                collect lisp)))
+    (when lisps
+      (loop for dep in (system-lisp-deps system)
+            unless (equal dep system)
+            do (setf lisps (intersection lisps
+                                         (system-info-lisp-implementations
+                                           (gethash dep completed-systems))
+                                         :test #'equal))))
+    lisps))
+
+(defun generate-nix-file (system-to-load output-directory)
+  (with-open-file (outf (merge-pathnames* (format nil "~A.nix" (translate-system-name (system-info-name system-to-load))) output-directory)
+			:direction :output
+			:if-exists :supersede)
+    ;(princ (pathname outf) *error-output*)
+  (princ
+   (generate-nix-expr (system-info-name system-to-load)
+                      (system-info-version system-to-load)
+                      (system-info-lisp-deps system-to-load)
+                      (system-info-foreign-deps system-to-load)
+                      (system-info-foreign-inputs system-to-load)
+                      (system-info-patches system-to-load)
+                      (system-info-lisp-implementations system-to-load))
+   outf)))
+
+(defun ql-projects ()
+  (ql::provided-releases t))
+
+(defun append-to-input-file (fname line)
+  (let ((path (merge-pathnames* fname *information-directory*)))
+    (if (member line (read-lines path) :test #'string=)
+	nil
+	(with-open-file (f path 
+			   :direction :output
+			   :if-does-not-exist :create
+			   :if-exists :append)
+	  (format f "~A~%" line)
+	  t))))
+
+(defun scan-group-one (regex string)
+  (ignore-errors
+    (elt (nth-value 1 (cl-ppcre:scan-to-strings regex string))
+	 0)))
+
+(defun library-test (string)
+  (cl-ppcre:scan
+   #?/(?m)(Unable to load any of the alternatives:\n|Unable to load foreign library \([^\)]*\).\n|fatal error:|Couldn't load foreign libraries|Couldn't load foreign library)[^\n]*${string}/ 
+		 *nix-build-output*))
+
+(defun library-replace (system old-dep old-input new-dep new-input)
+  (let* ((path (merge-pathnames* "extradeps.txt" *information-directory*))
+	 (lines (read-lines path)))
+    (write-lines path (remove #?"(system) $(old-dep) $(old-input)" lines))
+    (library-add system new-dep new-input)))
+
+(defun library-add (system dep input)
+  (append-to-input-file
+   "extradeps.txt"
+   #?"$(system) $(dep) $(input)"))
+
+
+
 (defun check-all-libs (system)
   (loop for (libexpr dep input) on *library-info* by #'cdddr
      if (library-test libexpr)
@@ -807,8 +629,6 @@ in
 	  ((ends-with-subseq "/sbcl" impl)
 	   (assert (append-to-input-file "blacklist.sbcl" system)))
 	  (t (error "Unknown implementation ~a" impl))))))
-
-
 
 (defun maybe-correct (system-name)
  (cond
@@ -978,5 +798,3 @@ in
     (t
       (format *error-output* "~%Unable to fixup system ~A:~%~A~%" system-name *nix-build-output*)
        (uiop:quit 1)))))
-       
-
