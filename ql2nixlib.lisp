@@ -404,7 +404,7 @@ in
 
 (defun main2 (input-directory output-directory skip)
   (declare (ignore skip))
-  (setf *kernel* (make-kernel 16))
+  (setf *kernel* (make-kernel 8))
   (let* ((completed-systems (make-hash-table :test #'equal))
 	 (channel (make-channel))
 	 (*information-directory* input-directory))
@@ -667,19 +667,20 @@ in
     ((cl-ppcre:scan "does not currently work with GSL version 2.x" *nix-build-output*)
      (library-replace system-name "gsl" "gsl" "gsl_1" "gsl_1"))
     ((and
-       (cl-ppcre:scan "Component ([^ ]+) not found" *nix-build-output*)
-       (let ((groups (nth-value 1 (cl-ppcre:scan-to-strings "Component ([^: ]*:([^ ]*)|\"([^\"]+)\") not found" *nix-build-output*))))
-
-         (unless (equalp
-                   (or (elt groups 1) (elt groups 2))
-                   system-name)
-          (append-to-input-file
-            "extralispdeps.txt"
-            (let ((groups (nth-value 1 (cl-ppcre:scan-to-strings "Component ([^: ]*:([^ ]*)|\"([^\"]+)\") not found" *nix-build-output*))))
-              (format nil "~A ~A"
-                      system-name
-                      (string-downcase
-                        (or (elt groups 1) (elt groups 2)))))) )))
+       (multiple-value-bind (match groups)
+         (cl-ppcre:scan-to-strings "Component ([^: ]*:([^ ]*)|\"([^\"]+)\"|([^ ]+)) not found" *nix-build-output*)
+         (when match
+           (format *error-output* "~^~%GROUPS: ~A~%" groups))
+         (unless (or (not match)
+                     (equalp
+                       (or (elt groups 1) (elt groups 2) (elt groups 3))
+                       system-name))
+           (append-to-input-file
+             "extralispdeps.txt"
+             (format nil "~A ~A"
+                     system-name
+                     (string-downcase
+                       (or (elt groups 1) (elt groups 2) (elt groups 3))))))))
      t)
     (t nil)))
 
