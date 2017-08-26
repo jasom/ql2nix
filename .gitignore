@@ -4,4 +4,10 @@
 /localql
 *.fasl
 /result
-
+*~
+*.swp
+/input/extradeps.txt
+/input/extralispdeps.txt
+/input/blacklist.clisp
+/input/blacklist.sbcl
+/input/blacklist.ccl

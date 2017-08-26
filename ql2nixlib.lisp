@@ -668,7 +668,7 @@ in
      (library-replace system-name "gsl" "gsl" "gsl_1" "gsl_1"))
     ((and
        (multiple-value-bind (match groups)
-         (cl-ppcre:scan-to-strings "Component ([^: ]*:([^ ]*)|\"([^\"]+)\"|([^ ]+)) not found" *nix-build-output*)
+         (cl-ppcre:scan-to-strings "Component ([^: ]*::?([^ ]*)|\"([^\"]+)\"|([^ ]+)) not found" *nix-build-output*)
          (when match
            (format *error-output* "~^~%GROUPS: ~A~%" groups))
          (unless (or (not match)
@@ -744,6 +744,7 @@ in
      (format *error-output* "~%Blacklisting package due to type warning: ~A~%" system-name)
      (blacklist-system system-name "Type warning"))
     ((or
+      (cl-ppcre:scan "Can't create directory /nix/store/" *nix-build-output*)
       (cl-ppcre:scan "Permission denied : #P\"/nix/store/" *nix-build-output*)
       (cl-ppcre:scan "error opening ..\"/nix/store/" *nix-build-output*))
      (blacklist-system system-name "Tries to write to asdf directory"))

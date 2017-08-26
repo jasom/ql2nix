@@ -13,4 +13,11 @@ cl-cffi-gtk-demo-gtk #manual blacklist
 trivia.benchmark/run #manual blacklist (takes too long on clisp)
 clem-benchmark # manual blacklist (takes too long on clisp)
 mcclim-fonts/truetype # manual blacklist (finding fonts needs fixing)
+mcclim-render/render # manual blackist (finding fonts needs fixing)
+mcclim-render/backend # manual blacklist (finding fonts needs fixing)
+mcclim-render/cl-vectors # manual blacklist (finding fonts needs fixing)
+mcclim-render/core # manual blacklist (finding fonts needs fixing)
+mcclim-render/opticl # manual blacklist (finding fonts needs fixing)
+mcclim-render/two-dim-array # manual blacklist (finding fonts needs fixing)
+mcclim-render # manual blacklist (finding fonts needs fixing)
 gsll #manual blacklist
