@@ -1,6 +1,7 @@
 #!/bin/sh
 #|
 SCRIPT_DIR="$(dirname "$0")"
+sh ./prepareql.sh
 exec sbcl --noinform --disable-ldb --lose-on-corruption --disable-debugger \
 --no-sysinit --no-userinit --noprint \
 --eval '(set-dispatch-macro-character #\# #\! (lambda (s c n)(declare (ignore c n)) (read-line s) (values)))' \
@@ -20,17 +21,11 @@ exec sbcl --noinform --disable-ldb --lose-on-corruption --disable-debugger \
 
 (defvar *extra-deps* (make-hash-table :test #'equal))
 
+(load (merge-pathnames* "localql/setup.lisp" (script-pathname)))
 (asdf:initialize-source-registry '(:source-registry :ignore-inherited-configuration))
-(if (probe-file (merge-pathnames* "localql/setup.lisp" (script-pathname)))
-  (load (merge-pathnames* "localql/setup.lisp" (script-pathname)))
-  (let ((*standard-output* *error-output*)
-        (*trace-output* *error-output*))
-    (load (merge-pathnames* "quicklisp.lisp" (script-pathname)))
-    (funcall (intern "INSTALL" "QUICKLISP-QUICKSTART") :path (merge-pathnames* "localql/" (pathname-directory-pathname (script-pathname))))))
 
-;(ql:update-dist "quicklisp")
 
-;(asdf:clear-source-registry)
+
 (eval-when (:compile-toplevel :load-toplevel :execute)
  (sb-ext:restrict-compiler-policy 'debug 3))
 (asdf:load-asd (merge-pathnames "ql2nix.asd" (script-pathname)))
@@ -40,5 +35,4 @@ exec sbcl --noinform --disable-ldb --lose-on-corruption --disable-debugger \
 	 (uiop:ensure-directory-pathname *input-directory*)
 	 (uiop:ensure-directory-pathname *output-directory*)
          (parse-integer *skip*))
-;(print (list-all-packages))
 (uiop:quit)
