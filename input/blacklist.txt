@@ -21,3 +21,6 @@ mcclim-render/opticl # manual blacklist (finding fonts needs fixing)
 mcclim-render/two-dim-array # manual blacklist (finding fonts needs fixing)
 mcclim-render # manual blacklist (finding fonts needs fixing)
 gsll #manual blacklist
+magicffi #manual blacklist
+clache-test #manual blacklist
+configuration.options-and-service-provider/test #manual blacklist

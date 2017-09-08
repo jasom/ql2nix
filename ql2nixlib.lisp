@@ -20,12 +20,18 @@
 (defvar *patch-list* nil)
 (defvar *library-info*
   (list
+   "libOpenCL[.\"-]" :blacklist :blacklist
+   "lbp[.]h" "libfixposix" "libfixposix"
+   "libxkbcommon[.\"-]" "libxkbcommon" "libxkbcommon"
+   "libevent_core[.\"-]" "libevent" "libevent"
+   "mpg123[.\"-]" "mpg123" "mpg123"
+   "libasound[.\"-]" "alsaLib" "alsaLib"
    "libsoloud[.\"-]" :blacklist :blacklist
    "libXcomposite[.\"-]" "xorg" "xorg.libXcomposite"
    "k8055[.\"-]" :blacklist :blacklist
    "libpixman[.\"-]" "xorg" "xorg.pixman"
    "libwayland-server[.\"-]" "wayland" "wayland"
-   "libclBLAS[.\"-]" "clblas-cuda" "clblas-cuda"
+   "libclBLAS[.\"-]" :blacklist :blacklist
    "libgbm[.\"-]" "mesa" "mesa"
    "libdrm[.\"-]" "libdrm" "libdrm"
    "libEGL[.\"-]" "mesa" "mesa"
@@ -64,9 +70,9 @@
    "librsvg[.\"-]" "librsvg" "librsvg"
    "amqp[.]h:" "rabbitmq-c" "rabbitmq-c"
    "libout123[.\"-]" :blacklist :blacklist
-   "libOpenCL[.\"-]" "ocl-icd" "ocl-icd"
    "libmonitors[.\"-]" :blacklist :blacklist
    "libxml2[.\"-]" "libxml2" "libxml2"
+   "libuv[.\"-]" "libuv" "libuv"
    "uv[.]h:" "libuv" "libuv"
    "libfarmhash[.\"-]" :blacklist :blacklist
    "liballegro_dialog[.\"-]" :blacklist :blacklist
@@ -664,6 +670,8 @@ in
                      system-name
                      (string-downcase name))))))
      t)
+    ((cl-ppcre:scan "Unable to determine Python include directory" *nix-build-output*)
+        (blacklist-system system-name "Python include not workign yet"))
     ((cl-ppcre:scan "does not currently work with GSL version 2.x" *nix-build-output*)
      (library-replace system-name "gsl" "gsl" "gsl_1" "gsl_1"))
     ((and
@@ -713,9 +721,9 @@ in
      (format *error-output* "~%Blacklisting package due to be being too lazy to figure out why qmake doesn't work: ~A~%" system-name)
      (blacklist-system system-name "qmake not supported yet"))
 					;(library-add system-name "kde4" "kde4.qt4"))
-    ((cl-ppcre:scan "fatal error: lfp.h: No such file or directory" *nix-build-output*)
-     (format *error-output* "~%Blacklisting package due to Nix's libfixposix being too old: ~A~%" system-name)
-     (blacklist-system system-name "Need newer libfixposix"))
+    ;;((cl-ppcre:scan "fatal error: lfp.h: No such file or directory" *nix-build-output*)
+     ;;(format *error-output* "~%Blacklisting package due to Nix's libfixposix being too old: ~A~%" system-name)
+     ;;(blacklist-system system-name "Need newer libfixposix"))
     ((cl-ppcre:scan "curl: command not found" *nix-build-output*)
      (format *error-output* "~%Blacklisting package due to it invoking curl during build; this can be fixed by patching the build process to not fetch from the internet: ~A~%" system-name)
      (blacklist-system system-name "Invokes curl during build"))

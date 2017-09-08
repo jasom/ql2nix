@@ -1,0 +1,12 @@
+diff -ur a/cl-xkb.lisp b/cl-xkb.lisp
+--- a/cl-xkb.lisp	2017-09-06 03:31:13.329229467 -0700
++++ b/cl-xkb.lisp	2017-09-06 03:32:01.232916693 -0700
+@@ -2,7 +2,7 @@
+ (in-package :xkb)
+ 
+ (define-foreign-library xkb
+-  (:unix (:or "/usr/lib64/libxkbcommon.so.0" "/usr/lib64/libxkbcommon.so" "/usr/lib/x86_64-linux-gnu/libxkbcommon.so"))
++  (:unix (:or "libxkbcommon.so" "/usr/lib64/libxkbcommon.so.0" "/usr/lib64/libxkbcommon.so" "/usr/lib/x86_64-linux-gnu/libxkbcommon.so"))
+   (t (:default "libxkbcommon")))
+ 
+ (use-foreign-library xkb)
