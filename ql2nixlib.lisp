@@ -419,19 +419,19 @@ in
 				      (lambda (x) (car (split-sequence #\Space x)))
 				      (read-lines (merge-pathnames* "blacklist.txt" input-directory)))
        for all-systems = (set-difference
-                          (map 'list #'system-name (ql:system-apropos-list ""))
-                          blacklisted-systems
-                          :test #'string=)
+			  (map 'list #'system-name (ql:system-apropos-list ""))
+			  blacklisted-systems
+			  :test #'string=)
        for systems-to-build = (make-hash-table :test #'equal)
        do
-         (loop for name in all-systems
+	 (loop for name in all-systems
 	    for system = (and (not (gethash name completed-systems))
 			      (generate-system-info name completed-systems input-directory))
 	    when system do (setf (gethash name systems-to-build) system))
-         (format *error-output* "Systems to build: ~% ~A"
+	 (format *error-output* "Systems to build: ~% ~A"
 		 (alexandria:hash-table-keys  systems-to-build))
-         (setup-output input-directory output-directory)
-         (generate-build input-directory output-directory systems-to-build completed-systems)
+	 (setup-output input-directory output-directory)
+	 (generate-build input-directory output-directory systems-to-build completed-systems)
        until (zerop (hash-table-count systems-to-build))
        do (let ((submitted-tasks
 		 (loop for system being each hash-key of systems-to-build
@@ -440,13 +440,16 @@ in
 		      (submit-task channel
 				   'build-one-system system output-directory))))
 	    (loop repeat submitted-tasks
+	       for count from 1
 	       for (system result *nix-build-output*) = (receive-result channel)
 	       for progress = (/ (hash-table-count completed-systems) (length all-systems))
 	       do
-		 (format *error-output* "~A~%Progress: ~A (~A%)~%"
+		 (format *error-output* "~A~%Progress: ~A (~A%) Pass: ~a/~a~%"
 			 *nix-build-output*
 			 (hash-table-count completed-systems)
-			 (float (* 100 progress)))
+			 (float (* 100 progress))
+			 count
+			 submitted-tasks)
 	       unless result
 	       do (fixup-rules system)
 	       else do
@@ -454,24 +457,25 @@ in
 		 (setf (gethash system completed-systems)
 		       (gethash system systems-to-build)))))
     (format *error-output* "~&Finished; unbuilt systems:~% ~A"
-            (set-difference (map 'list #'system-name (ql:system-apropos-list ""))
-                            (alexandria:hash-table-keys completed-systems)
-                            :test #'equal))))
+	    (set-difference (map 'list #'system-name (ql:system-apropos-list ""))
+			    (alexandria:hash-table-keys completed-systems)
+			    :test #'equal))))
 
 (defun build-one-system (system-name output-directory)
-  (multiple-value-bind (_ nix-build-output error-code)
-      (uiop:run-program `("nix-build"
-			  ;;"--option" "use-binary-caches" "false"
-			  "-A" ,(translate-system-name system-name)
-			  ,(uiop:unix-namestring output-directory))
-			:output t
-			:error-output :string
-			:ignore-error-status t)
-    (declare (ignore _))
-    (list
-     system-name
-     (= error-code 0)
-     nix-build-output)))
+  (let ((cmd "cd \"$1\" && nix-build '<nixpkgs>' --arg overlays \"[(import ./default.nix)]\" -A \"$2\""))
+    (multiple-value-bind (_ nix-build-output error-code)
+	(uiop:run-program `("sh" "-c" ,cmd
+				 "--"
+				 ,(native-namestring output-directory)
+				,(translate-system-name system-name))
+			  :output t
+			  :error-output :string
+			  :ignore-error-status t)
+      (declare (ignore _))
+      (list
+       system-name
+       (= error-code 0)
+       nix-build-output))))
 
 (defun generate-default-nix-file (systems completed-systems projects output-directory)
   (with-open-file (outf (merge-pathnames* "default.nix"  output-directory)
@@ -487,19 +491,19 @@ in
 						      (release-name x)))
 					 projects)))
       #?|
-{ system ? builtins.currentSystem }:
+self: super:
 
 let
-  pkgs = import <nixpkgs> { inherit system; };
   helpers = {
-       buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
-       buildLispProject = pkgs.callPackage ./lisp-builder/project.nix pkgs.sbcl;
+       buildLispPackage = super.callPackage ./lisp-builder/default.nix super.sbcl;
+       buildLispProject = super.callPackage ./lisp-builder/project.nix super.sbcl;
   };
 
-  callPackage = pkgs.lib.callPackageWith (pkgs // helpers // self);
+  callPackage = super.lib.callPackageWith (super // helpers // self);
+
 
   self = {
-  inherit pkgs;
+  inherit super;
     @((map 'list (lambda (x) #?"$(x) = callPackage ./$(x).nix { };") translated-names))
     @((map 'list (lambda (x) #?"$(x) = callPackage ./$(x).nix { };") translated-project-names))
 
@@ -589,7 +593,7 @@ in
     (elt (nth-value 1 (cl-ppcre:scan-to-strings regex string))
 	 0)))
 
-(defun library-test (string)
+(defun library-test  (string)
   (cl-ppcre:scan
    #?/(?m)(Unable to load any of the alternatives:\n|Unable to load foreign library \([^\)]*\).\n|fatal error:|Couldn't load foreign libraries|Couldn't load foreign library)[^\n]*${string}/ 
 		 *nix-build-output*))
