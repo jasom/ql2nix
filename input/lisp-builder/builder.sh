@@ -41,19 +41,22 @@ buildTimeOutputTranslations() {
     #          (t "%s/.cache/**/*.*"))' "$NIX_BUILD_TOP"
 }
 
+dependencyIncludes() {
+   for dependency in $lisp_dependencies; do
+       srpath="$(echo "$dependency/common-lisp/source-registry/$(basename $lisp)-"*.conf)"
+        printf ' (:include "%s")\n' "$srpath"
+    done
+}
+
 sourceProjectInputTranslations() {
     printf '(:source-registry\n(:tree "%s")\n' "$sourceProject/common-lisp/source/"
-    for dependency in $lisp_dependencies; do
-        printf ' (:include "%s/common-lisp/source-registry/%s.conf")\n' "$dependency" "$(basename $lisp)"
-    done
+    dependencyIncludes
     printf ' :ignore-inherited-configuration)'
 }
 
 bundleInputTranslations() {
     printf '(:source-registry\n(:tree "%s")\n' "$bundleOut"
-    for dependency in $lisp_dependencies; do
-        printf ' (:include "%s/common-lisp/source-registry/%s.conf")\n' "$dependency" "$(basename $lisp)"
-    done
+    dependencyIncludes
     printf ' :ignore-inherited-configuration)'
 }
     
@@ -78,8 +81,8 @@ generateBundle() {
 		      $lisp $NIX_LISP_EARLY_OPTS $NIX_LISP_LOAD_FILE "$asdf_path" $NIX_LISP_LOAD_FILE "$nix_asdf" \
 		      $NIX_LISP_EXEC_CODE "(nix-asdf:make-bundle \"$systemName\" \"$bundleOut\")"
     if ! test -e $bundleOut/*.asd; then return 1; fi
-    bundleInputTranslations > "$out/common-lisp/source-registry/$(basename $lisp).conf"
-    awk 'tolower($0) ~ /defsystem / { exit 0} {print }' $bundleOut/originalasd.txt >> prependme.txt || return 1
+    bundleInputTranslations > "$out/common-lisp/source-registry/$bin_name.conf"
+    awk 'tolower($0) ~ /defsystem / { exit 0} {print }' "$bundleOut/originalasd.txt" >> prependme.txt || return 1
     cat prependme.txt $bundleOut/*.asd > bundle.asd
     cp bundle.asd $bundleOut/*.asd
     testBuild
@@ -128,7 +131,7 @@ generateRunScript() {
 
     cat <<EOF > "$out/bin/$bin_name"
 #!/bin/sh
-CL_SOURCE_REGISTRY='$(printf '(:source-registry (:include "%s/common-lisp/source-registry/%s.conf"):ignore-inherited-configuration)' "$out" "$(basename $lisp)")' \
+CL_SOURCE_REGISTRY='$(printf '(:source-registry (:include "%s/common-lisp/source-registry/%s.conf"):ignore-inherited-configuration)' "$out" "$bin_name")' \
 LD_LIBRARY_PATH='$NIX_LD_LIBRARY_PATH' \
 $lisp $NIX_LISP_EARLY_OPTS $NIX_LISP_LOAD_FILE $asdf_path $NIX_LISP_FINAL_PARAMETERS "\$@"
 EOF
@@ -143,19 +146,24 @@ chmod +x "$out/bin/$bin_name"
 
 generateSourceProject() {
 	echo "Unable to build bundle for: $systemName" >&2
-	sourceProjectInputTranslations > "$out/common-lisp/source-registry/$(basename $lisp).conf"
+	sourceProjectInputTranslations > "$out/common-lisp/source-registry/$bin_name.conf"
 	testBuild
+}
+
+# systemToBin LISP SYSTEM_NAME
+systemToBin() {
+  printf '%s-%s' "$(basename "$1")" "$2" | tr -c '[:alnum:]\n' '-'
 }
 
 buildForLisp() {
     lisp="$1"
-    bin_name="$(basename "$lisp")-$(echo "$systemName"| tr -c '[:alnum:]\n' '-')"
+    bin_name="$(systemToBin "$lisp" "$systemName")"
     bundleOut="$out/common-lisp/$(basename "$lisp")-bundle"
     mkdir -p $bundleOut
     setupEnvForLisp "$lisp"
 
     generateRunScript
-    generateBundle > "$bundleOut/bundleoutput" 2>&1 || generateSourceProject
+    generateBundle >/dev/null 2>&1 || generateSourceProject
 }
     
 buildPhase() {
@@ -195,6 +203,7 @@ buildPhase() {
 testBuild() {
     echo "Testing bundle for $systemName:" >&2
     
+    rm -f "$bundleOut/originalasd.txt"
     mkdir -p "$NIX_BUILD_TOP/fakehome"
     DISPLAY=:0 HOME="$NIX_BUILD_TOP/fakehome" "$out/bin/$bin_name" $NIX_LISP_LOAD_FILE "$nix_asdf" $NIX_LISP_EXEC_CODE "(nix-asdf:test-bundle \"$systemName\")"
 }
