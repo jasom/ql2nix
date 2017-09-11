@@ -172,11 +172,11 @@
 	       (ql::dependency-tree package))))
 
 (defun translate-system-name (system-name)
-  (format nil "lisp-~A"
+  (format nil "lisp_~A"
 	  (substitute-if-not #\- #'alphanumericp (string-downcase system-name))))
 
 (defun translate-project-name (project-name)
-  (format nil "lisp-project-~A"
+  (format nil "lisp-project_~A"
 	  (substitute-if-not #\- #'alphanumericp (string-downcase project-name))))
 
 (defun comma-list (list)
@@ -244,7 +244,7 @@ in
       sourceProject = "\${$[nix-project-name]}";
       patches = [@[patches]];
       lisp_dependencies = "$[(format nil "~{${~A}~^ ~}" nix-system-deps)]";
-      name = "$[(subseq (translate-system-name name) 5)]$[version]";
+      name = "$[(translate-system-name name)]$[version]";
       #lisp = "\${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ $[(format nil "~{\"${pkgs.~A}\"~^ ~}" lisp-implementations)] ];
     }
@@ -274,7 +274,7 @@ in
   buildLispProject {
       inherit stdenv;
       patches = [@[patches]];
-      name = "$[(subseq (translate-system-name name) 5)]$[version]";
+      name = "$[(translate-project-name name)]$[version]";
       src = pkgs.fetchurl {
         url = "$[url]";
         sha256 = "$[md5]";
@@ -410,7 +410,7 @@ in
 
 (defun main2 (input-directory output-directory skip)
   (declare (ignore skip))
-  (setf *kernel* (make-kernel 8))
+  (setf *kernel* (make-kernel 16))
   (let* ((completed-systems (make-hash-table :test #'equal))
 	 (channel (make-channel))
 	 (*information-directory* input-directory))
