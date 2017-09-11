@@ -1,0 +1,40 @@
+Ql2Nix
+======
+
+Semi-automatically convert quicklisp packages to nix expressions
+
+Quickstart
+----------
+To just use this, clone the _overlay_ branch, then symlink the directory into '$HOME/.config/nixpkgs/overlays/
+
+Then, all lisp systems should be avaliable as +lisp\_system-name+ where all
+non-alphanumerics in the system name have been replaced with dashes.  For
+example +foo/bar+ would be +lisp_foo-bar+.
+
+Contributing
+------------
+
+Fixing blacklisted systems
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+The code for generating the overlay is on the _master_ branch.  It still needs
+a bit of cleanup.  Run with +./ql2nix.lisp+ If there is a missing system that
+you want, check input/blacklist.txt after running.  Either that project (single
+download from quicklisp), or one of its deep dependencies should be listed
+there, along with a comment for *why* it was blacklisted.  A patch can be added
+in input/patches with the format
++lisp-project_project-name-project-version.short-description.patch+ if you
+figure out how to fix it.
+
+If it fails due to a missing dependency, you can change the giant COND statement
+in ql2nixlib.lisp to detect the missing dependency from the error output, there
+are hundreds of examples for you to crib off of, or just ask jasom on IRC (#lisp
+on freenode).
+
+Other tasks
+~~~~~~~~~~~
+If anybody knows how to get a list of loaded foreign-libraries, let me know, I
+can then switch from loading FASLs to memory images (ccl, and possibly other
+implementations do not reaload foreign libraries on image restart, but uiop
+and cffi let us do this portably once we have a list)
+
+Finding and fixing anything really brain-dead is also useful.
