@@ -1,0 +1,9 @@
+diff -ur a/cl-hash-util.asd b/cl-hash-util.asd
+--- a/cl-hash-util.asd	2016-10-17 16:23:37.065878975 -0700
++++ b/cl-hash-util.asd	2016-10-17 16:24:20.681355124 -0700
+@@ -4,4 +4,4 @@
+   :version "0.1.7"
+   :description "A simple and natural wrapper around Common Lisp's hash functionality."
+   :components ((:file "hash-util")
+-               (:file "more-hash-util")))
++               (:file "more-hash-util" :depends-on ("hash-util"))))

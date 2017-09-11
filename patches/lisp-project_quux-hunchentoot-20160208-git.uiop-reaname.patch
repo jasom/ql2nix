@@ -1,0 +1,9 @@
+diff -ru a/pkgdcl.lisp b/pkgdcl.lisp
+--- a/pkgdcl.lisp	2017-08-16 11:18:00.601256023 -0700
++++ b/pkgdcl.lisp	2017-08-16 11:18:25.170257504 -0700
+@@ -1,4 +1,4 @@
+-(asdf/package:define-package quux-hunchentoot
++(uiop/package:define-package quux-hunchentoot
+   (:use :common-lisp
+    :hunchentoot
+    :alexandria

@@ -1,0 +1,20 @@
+diff -ur a/cl-performance-tuning-helper-test.lisp b/cl-performance-tuning-helper-test.lisp
+--- a/cl-performance-tuning-helper-test.lisp	2016-10-18 13:49:33.015818884 -0700
++++ b/cl-performance-tuning-helper-test.lisp	2016-10-18 13:50:12.885325701 -0700
+@@ -1,5 +1,5 @@
+ (eval-when (:load-toplevel :compile-toplevel :execute)
+-  (in-package #:cl-performance-tuning-helper-asd) )
++  (in-package #:cl-user) )
+ 
+ (defpackage :cl-performance-tuning-helper-test
+   (:use :cl :pth :rt)
+diff -ur a/cl-performance-tuning-helper.lisp b/cl-performance-tuning-helper.lisp
+--- a/cl-performance-tuning-helper.lisp	2016-10-18 13:49:33.016818872 -0700
++++ b/cl-performance-tuning-helper.lisp	2016-10-18 13:50:22.615205339 -0700
+@@ -1,5 +1,5 @@
+ (eval-when (:load-toplevel :compile-toplevel :execute)
+-  (in-package #:cl-performance-tuning-helper-asd) )
++  (in-package #:cl-user) )
+ 
+ (defpackage :cl-performance-tuning-helper
+   (:nicknames :pth)

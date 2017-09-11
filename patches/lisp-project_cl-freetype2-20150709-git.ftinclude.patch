@@ -1,0 +1,15 @@
+diff -ur a/src/ffi/grovel/grovel-freetype.h b/src/ffi/grovel/grovel-freetype.h
+--- a/src/ffi/grovel/grovel-freetype.h	2016-10-07 12:57:09.000000000 -0700
++++ b/src/ffi/grovel/grovel-freetype.h	2016-10-07 12:57:42.000000000 -0700
+@@ -2,7 +2,7 @@
+ #include <ft2build.h>
+ #include FT_FREETYPE_H
+ 
+-#include <ftsystem.h>
+-#include <fttypes.h>
+-#include <ftlist.h>
+-#include <ftimage.h>
++#include <freetype/ftsystem.h>
++#include <freetype/fttypes.h>
++#include <freetype/ftlist.h>
++#include <freetype/ftimage.h>

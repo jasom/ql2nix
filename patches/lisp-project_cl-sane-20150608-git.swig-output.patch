@@ -1,0 +1,11 @@
+diff -ur a/sane.asd b/sane.asd
+--- a/sane.asd	2016-10-06 17:32:53.000000000 -0700
++++ b/sane.asd	2016-10-06 17:36:00.000000000 -0700
+@@ -13,6 +13,7 @@
+                        (namestring (merge-pathnames
+                                     (make-pathname :type "i")
+                                     (component-pathname s))))
++                 :error-output :output
+                  :wait t)))
+ 
+ (defsystem sane

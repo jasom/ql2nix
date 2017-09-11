@@ -1,0 +1,55 @@
+diff -urN a/jwacs.asd b/jwacs.asd
+--- a/jwacs.asd	2016-10-19 12:00:00.513874529 -0700
++++ b/jwacs.asd	2016-10-19 12:02:10.377231017 -0700
+@@ -50,7 +50,8 @@
+   :license "MIT License <http://www.opensource.org/licenses/mit-license.php>"
+   :description "Javascript With Advanced Continuation Support"
+   :serial t
+-  :components ((:module "external"
++  :components ((:file "nix-fixups")
++               (:module "external"
+                         :components
+                         ((:file "yacc")))
+                ;;TODO Should these three non-Lisp files go into a separate module?
+diff -urN a/nix-fixups.lisp b/nix-fixups.lisp
+--- a/nix-fixups.lisp	1969-12-31 16:00:00.000000000 -0800
++++ b/nix-fixups.lisp	2016-10-19 12:02:13.104196508 -0700
+@@ -0,0 +1,38 @@
++(defpackage :jwacs-system
++  (:use :cl :asdf)
++  (:nicknames :jw-system)
++  (:export
++   #:*version*
++   #:*executable-name*))
++(in-package :jwacs-system)
++
++;;;; ======= Build parameters ======================================================================
++
++(defparameter *executable-name*
++  #+win32 "jwacs.exe"
++  #-win32 "jwacs"
++  "The name of the executable to create when dumping a binary")
++
++;;;; ======= Compilation configuration =============================================================
++(defparameter *muffle-conflicts* t
++  "When T, yacc warnings about Shift/Reduce and Reduce/Reduce conflicts will be muffled.
++   When NIL, all such conflicts will be reported.
++   When non-NIL, non-T, a single summary warning will be reported when conflicts exist.
++
++   This value should be set to NIL or non-T during grammar
++   development/debugging (so that we find out about the conflicts), but T
++   at all other times (so that SBCL won't drop into the debugger when
++   we're trying to load parse-javascript.lisp).")
++
++;;;; ======= Custom ASDF file types ================================================================
++(defclass js-file (static-file) ())
++(defmethod source-file-type ((c js-file) (s module)) "js")
++(defmethod operation-done-p ((o load-op) (c js-file))  
++  t)
++(defmethod operation-done-p ((o compile-op) (c js-file))
++  t)
++
++(defmethod operation-done-p ((o load-op) (c html-file))  
++  t)
++(defmethod operation-done-p ((o compile-op) (c html-file))
++  t)

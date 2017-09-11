@@ -1,0 +1,13 @@
+diff -ur a/packages.lisp b/packages.lisp
+--- a/packages.lisp	2016-10-18 18:24:09.111570358 -0700
++++ b/packages.lisp	2016-10-18 18:42:08.688061536 -0700
+@@ -26,6 +26,9 @@
+ ;;; WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ ;;; NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ ;;; SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++#+:sbcl
++(eval-when (:compile-toplevel :load-toplevel :execute)
++(require :sb-introspect))
+ 
+ (in-package :cl-user)
+ 

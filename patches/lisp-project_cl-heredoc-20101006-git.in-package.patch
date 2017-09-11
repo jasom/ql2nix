@@ -1,0 +1,12 @@
+diff -ur a/src/package.lisp b/src/package.lisp
+--- a/src/package.lisp	2016-10-18 09:36:41.679834657 -0700
++++ b/src/package.lisp	2016-10-18 09:39:09.550022034 -0700
+@@ -14,7 +14,7 @@
+ ;;;; You should have received a copy of the GNU General Public License
+ ;;;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ 
+-(in-package :cl-heredoc-system)
++(in-package :cl)
+ 
+ (defpackage :cl-heredoc
+   (:use :cl)
