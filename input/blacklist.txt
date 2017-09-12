@@ -23,4 +23,6 @@ mcclim-render # manual blacklist (finding fonts needs fixing)
 gsll #manual blacklist
 magicffi #manual blacklist
 clache-test #manual blacklist
+maiden # manual blacklist (class not found error?)
+trivial-wish # manual blacklist hangs while building
 configuration.options-and-service-provider/test #manual blacklist
