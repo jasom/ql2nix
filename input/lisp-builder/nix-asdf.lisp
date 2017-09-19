@@ -85,33 +85,43 @@
       "originalasd.txt"
       (ensure-directory-pathname (parse-unix-namestring bundle-dir))))))
 		     
+(defmacro run-wrapped (&body b)
+  `(handler-case
+       (progn
+	 #+sbcl(setf SB-IMPL::*DEFAULT-EXTERNAL-FORMAT* :utf-8)
+	 #+clisp(setf custom:*default-file-encoding* (ext:make-encoding :charset 'charset:utf-8 :line-terminator :unix))
+	 ,@b)
+     (asdf/find-system:missing-component (condition)
+       (ignore-errors
+	 (let ((*print-readably* nil))
+	   (terpri *error-output*)
+	   (format *error-output* "Missing component: ~A"
+		   (asdf:coerce-name (asdf/find-system:missing-requires condition)))
+	   (terpri *error-output*)))
+       (quit 1 t))
+     (asdf:missing-dependency (condition)
+       (ignore-errors
+	 (let ((*print-readably* nil))
+	   (terpri *error-output*)
+	   (format *error-output* "Unmet Dependency: ~A by ~A"
+		   (asdf:coerce-name (asdf/find-component:missing-requires condition))
+		   (asdf:coerce-name (asdf/find-component:missing-required-by condition)))
+	   (terpri *error-output*)))
+       (quit 1 t))
+     (error (condition)
+       (let ((*print-readably* nil))
+	 (terpri *error-output*)
+	 (print condition *error-output*)
+	 (princ condition *error-output*)
+	 (describe condition *error-output*)
+	 (terpri *error-output*))
+       (quit 1 t))))
 
 (defun make-bundle (system-name bundle-dir)
-  (handler-case
-      (make-bundle% system-name bundle-dir)
-    (error (condition)
-      (let ((*print-readably* nil))
-	(terpri *error-output*)
-	(print condition *error-output*)
-	(princ condition *error-output*)
-	(describe condition *error-output*)
-	(terpri *error-output*))
-      (quit 1 t)))
+  (run-wrapped (make-bundle% system-name bundle-dir))
   (uiop:quit 0))
 
 (defun test-bundle (system-name)
-  #+sbcl(setf SB-IMPL::*DEFAULT-EXTERNAL-FORMAT* :utf-8)
-  #+clisp(setf custom:*default-file-encoding* (ext:make-encoding :charset 'charset:utf-8 :line-terminator :unix))
-  (handler-case 
-      (progn
+  (run-wrapped
 	(asdf:load-system system-name)
-	(uiop:quit 0 t))
-    (error (condition)
-      (let ((*print-readably* nil))
-	(terpri *error-output*)
-
-	(print condition *error-output*)
-	(princ condition *error-output*)
-	(describe condition *error-output*)
-	(terpri *error-output*))
-      (uiop:quit 1 t))))
+	(uiop:quit 0 t)))

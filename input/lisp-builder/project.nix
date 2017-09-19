@@ -10,7 +10,7 @@ stdenv.mkDerivation (
   attrs
   //
   {
-    name = "lisp-project-" + attrs.name;
+    name = attrs.name;
     builder = ./project-builder.sh;
   }
 )

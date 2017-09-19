@@ -20,6 +20,7 @@
 (defvar *patch-list* nil)
 (defvar *library-info*
   (list
+   "libps[.\"-]" :blacklist :blacklist
    "libOpenCL[.\"-]" :blacklist :blacklist
    "lbp[.]h" "libfixposix" "libfixposix"
    "libxkbcommon[.\"-]" "libxkbcommon" "libxkbcommon"
@@ -340,10 +341,31 @@ in
      if deps collect dep
      else if inputs collect input))
 
+(defvar *system-lisp-deps* nil)
+
 (defun system-lisp-deps (system-name)
+  (unless *system-lisp-deps*
+    (handler-case
+	(setf *system-lisp-deps*
+	      (car (conspack:decode-file (merge-pathnames* "extralispdeps.conspack" *information-directory*))))
+      (file-error () (setf *system-lisp-deps* (make-hash-table :test #'equal)))))
+  (gethash system-name *system-lisp-deps*))
+
+(defun append-lisp-dep (system-name dep-name)
+  (push dep-name (gethash system-name *system-lisp-deps*)))
+
+
+(defun flush-lisp-depcache (input-directory)
+ (conspack:encode-to-file *system-lisp-deps*
+		  (merge-pathnames* "extralispdeps.conspack" input-directory)))
+
+(defun ql2nix-cleanup (input-directory)
+  (flush-lisp-depcache input-directory))
+
+#|
   (remove-if (lambda (x) (member x '("asdf" "uiop") :test #'string=))
   (remove-duplicates
-   (append (ql-immediate-deps system-name)
+   (append #+(or)(ql-immediate-deps system-name)
 	   (and (probe-file (merge-pathnames* "extralispdeps.txt" *information-directory*))
 		(with-open-file  (f (merge-pathnames* "extralispdeps.txt" *information-directory*))
 		  (loop for line = (read-line f nil nil)
@@ -352,6 +374,7 @@ in
 		     when (equal system system-name)
 		     collect dep))))
    :test #'string=)))
+|#
 
 (defun system-name (system)
   (if (stringp system)
@@ -398,19 +421,38 @@ in
 			   ,(unix-namestring outdir))))
 
 (defun main (input-directory output-directory skip)
-  (handler-bind
-      ((t (lambda (c)
-	    (terpri *error-output*)
-	    (princ c *error-output*)
-	    (terpri *error-output*)
-	    (dissect:present c)
-	    (uiop:quit 1))))
-  (main2 input-directory output-directory skip)))
+  (let ((input-directory (uiop/pathname:ensure-directory-pathname input-directory)))
+    (uiop:quit
+     (catch 'ql2nix-exit
+       (handler-bind
+	   ((t (lambda (c)
+		 (terpri *error-output*)
+		 (princ c *error-output*)
+		 (terpri *error-output*)
+		 (dissect:present c *error-output*)
+		 (terpri *error-output*)
+		 (throw 'ql2nix-exit 1))))
 
+	 (unwind-protect
+	      (main2 input-directory output-directory skip)
+	   (ql2nix-cleanup input-directory))))
+     t)))
+
+(defun all-systems ()
+  (remove-if
+   (lambda (x)
+     (and
+      ;; Some non-test systems depend on test systems :(
+      (not (member x '("clack-test" "unit-test") :test #'equal))
+      (or
+       (alexandria:ends-with-subseq "test" x)
+       (alexandria:ends-with-subseq "tests" x))))
+   (ql:system-apropos-list "")
+   :key #'system-name))
 
 (defun main2 (input-directory output-directory skip)
   (declare (ignore skip))
-  (setf *kernel* (make-kernel 16))
+  (setf *kernel* (make-kernel 8))
   (let* ((completed-systems (make-hash-table :test #'equal))
 	 (channel (make-channel))
 	 (*information-directory* input-directory))
@@ -419,7 +461,7 @@ in
 				      (lambda (x) (car (split-sequence #\Space x)))
 				      (read-lines (merge-pathnames* "blacklist.txt" input-directory)))
        for all-systems = (set-difference
-			  (map 'list #'system-name (ql:system-apropos-list ""))
+			  (map 'list #'system-name (all-systems))
 			  blacklisted-systems
 			  :test #'string=)
        for systems-to-build = (make-hash-table :test #'equal)
@@ -456,11 +498,16 @@ in
 		 (format *error-output* "~&Successfully completed ~A~%" system)
 		 (setf (gethash system completed-systems)
 		       (gethash system systems-to-build)))))
-    (format *error-output* "~&Finished; unbuilt systems:~% ~A"
-	    (set-difference (map 'list #'system-name (ql:system-apropos-list ""))
-			    (alexandria:hash-table-keys completed-systems)
-			    :test #'equal))))
-
+    (format *error-output* "~&Finished; unbuilt systems:~%")
+    (loop for item in
+	 (set-difference (map 'list #'system-name (all-systems))
+			 (alexandria:hash-table-keys completed-systems)
+			 :test #'equal)
+       do (format *error-output* "System: ~A~%~{    ~A~%~}"
+		  item
+		  (loop for dep in (system-lisp-deps item)
+		     unless (gethash dep completed-systems)
+		     collect dep)))))
 (defun build-one-system (system-name output-directory)
   (let ((cmd "cd \"$1\" && nix-build '<nixpkgs>' --arg overlays \"[(import ./default.nix)]\" -A \"$2\""))
     (multiple-value-bind (_ nix-build-output error-code)
@@ -525,7 +572,12 @@ in
     (format *error-output* "patch-list: ~a~%" *patch-list*))
   (remove-if-not
    (lambda (x)
-     (alexandria:starts-with-subseq #?"./patches/${(translate-project-name (release-name release))}${(release-version-string release)}." x))
+     (when
+	 (alexandria:starts-with-subseq #?"./patches/${(translate-project-name (release-name release))}-" x)
+       (if
+	(alexandria:starts-with-subseq #?"./patches/${(translate-project-name (release-name release))}${(release-version-string release)}." x)
+	t
+	(format *error-output* "Patch does not match version: ~A~%" x))))
    *patch-list*))
 
 (defun system-patches (system input-directory)
@@ -605,9 +657,15 @@ in
     (library-add system new-dep new-input)))
 
 (defun library-add (system dep input)
+  (format *error-output* "Existing deps ~S~%" (system-foreign-deps system :deps t))
+  (when (member dep (system-foreign-deps system :deps t) :test #'equal)
+    (format *error-output* "attempting to add duplicate foreign-dependency ~A to ~A~%" dep system)
+    (throw 'ql2nix-exit 1))
   (append-to-input-file
    "extradeps.txt"
    #?"$(system) $(dep) $(input)"))
+
+(trace library-add)
 
 
 
@@ -616,7 +674,7 @@ in
      if (library-test libexpr)
      if (eql dep :blacklist)
      do (format *error-output* "~%Blacklisting system due to it depending on ~A.~%" libexpr)
-       (blacklist-system system "Depends on libexpr")
+       (blacklist-system system #?"Depends on $(libexpr)")
        (return t)
      else
      do (library-add system dep input)
@@ -644,59 +702,74 @@ in
  (cond
    ((check-all-libs system-name)
     t)
-    ((let ((pkg (scan-group-one "required by #<SYSTEM \"([^\"]+)\">" *nix-build-output*)))
-       (and pkg
-            (not (equalp pkg system-name))
-	    (not (member pkg (system-lisp-deps system-name) :test #'equalp))))
-     (append-to-input-file
-      "extralispdeps.txt"
-      (format nil "~A ~A"
-	      system-name
-	      (scan-group-one "required by #<SYSTEM \"([^\"]+)\">" *nix-build-output*))))
-    ((let ((pkg (scan-group-one "Component #?:([^ ]+) not found" *nix-build-output*)))
-       (when 
-         (and pkg
-              (not (equalp pkg system-name))
-              (not (member pkg (system-lisp-deps system-name) :test #'equalp)))
-         (append-to-input-file "extralispdeps.txt"
-                              (format nil "~A ~A"  system-name (string-downcase pkg)))))
-     t)
-    ((and
+   ((cl-ppcre:register-groups-bind (dep by)
+	("Unmet Dependency: ([^ ]*) by ([^ ]*)" *nix-build-output*)
+      (cond
+	((and				; First check if we have an unkown dep in "by"
+	  (not (equalp by system-name))
+	  (not (member by (system-lisp-deps system-name) :test #'equalp)))
+	 (append-lisp-dep system-name by))
+	((equalp dep system-name)
+	 (blacklist-system system-name "System unable to find itself!"))
+	((member dep (system-lisp-deps system-name) :test #'equalp)
+	 (blacklist-system system-name "Unable to find ~A even after it's in dependencies!"
+			   dep))
+	(t
+	 (append-lisp-dep system-name dep)))
+      t)
+    t)
+((cl-ppcre:register-groups-bind (dep)
+	("Missing component: (.*)" *nix-build-output*)
+      (cond
+	((equalp dep system-name)
+	 (blacklist-system system-name "System unable to find itself!"))
+	((member dep (system-lisp-deps system-name) :test #'equalp)
+	 (blacklist-system system-name "Unable to find ~A even after it's in dependencies!"
+			   dep))
+	(t
+	 (append-lisp-dep system-name dep)))
+      t)
+    t)
+   #|
+     ((let ((pkg (scan-group-one "Component #?:([^ ]+) not found" *nix-build-output*)))
+	(format *error-output* "~&Pkg: ~A~%" pkg)
+	(when 
+	    (and pkg
+		 (not (equalp pkg system-name))
+		 (not (member pkg (system-lisp-deps system-name) :test #'equalp)))
+	  (append-lisp-dep system-name (string-downcase pkg))))
+      t)
+     ((and
        (cl-ppcre:scan "Component \"([^\"]+)\" not found" *nix-build-output*)
        (let ((name (elt (nth-value 1 (cl-ppcre:scan-to-strings
-                                       "Component \"([^\"]+)\" not found"
-                                       *nix-build-output*))
+				      "Component \"([^\"]+)\" not found"
+				      *nix-build-output*))
                         0)))
          (unless (equalp system-name name)
-           (append-to-input-file
-             "extralispdeps.txt"
-             (format nil "~A ~A"
-                     system-name
-                     (string-downcase name))))))
-     t)
-    ((cl-ppcre:scan "Unable to determine Python include directory" *nix-build-output*)
-        (blacklist-system system-name "Python include not workign yet"))
-    ((cl-ppcre:scan "does not currently work with GSL version 2.x" *nix-build-output*)
-     (library-replace system-name "gsl" "gsl" "gsl_1" "gsl_1"))
-    ((and
+	   (append-lisp-dep system-name (string-downcase name)))))
+      t)
+   |#
+     ((cl-ppcre:scan "Unable to determine Python include directory" *nix-build-output*)
+      (blacklist-system system-name "Python include not working yet"))
+     ((cl-ppcre:scan "does not currently work with GSL version 2.x" *nix-build-output*)
+      (library-replace system-name "gsl" "gsl" "gsl_1" "gsl_1"))
+     ((and
        (multiple-value-bind (match groups)
-         (cl-ppcre:scan-to-strings "Component ([^: ]*::?([^ ]*)|\"([^\"]+)\"|([^ ]+)) not found" *nix-build-output*)
+	   (cl-ppcre:scan-to-strings "Component ([^: ]*::?([^ ]*)|\"([^\"]+)\"|([^ ]+)) not found" *nix-build-output*)
          (when match
            (format *error-output* "~^~%GROUPS: ~A~%" groups))
          (unless (or (not match)
                      (equalp
-                       (or (elt groups 1) (elt groups 2) (elt groups 3))
-                       system-name))
-           (append-to-input-file
-             "extralispdeps.txt"
-             (format nil "~A ~A"
-                     system-name
-                     (string-downcase
-                       (or (elt groups 1) (elt groups 2) (elt groups 3))))))))
-     t)
-    (t nil)))
+		      (or (elt groups 1) (elt groups 2) (elt groups 3))
+		      system-name))
+	   (append-lisp-dep system-name
+			    (string-downcase
+			     (or (elt groups 1) (elt groups 2) (elt groups 3)))))))
+      t)
+     (t nil)))
 
 (defun fixup-rules (system-name)
+  (format *error-output* "Fixing up ~A~%" system-name)
   (let* ((end-line (search "Failed build for lisp "
 			   *nix-build-output*))
 	 (end (and end-line (position #\Newline *nix-build-output* :start end-line)))
@@ -725,12 +798,14 @@ in
      (format *error-output* "~%Blacklisting package due to be being too lazy to figure out why qmake doesn't work: ~A~%" system-name)
      (blacklist-system system-name "qmake not supported yet"))
 					;(library-add system-name "kde4" "kde4.qt4"))
-    ;;((cl-ppcre:scan "fatal error: lfp.h: No such file or directory" *nix-build-output*)
-     ;;(format *error-output* "~%Blacklisting package due to Nix's libfixposix being too old: ~A~%" system-name)
-     ;;(blacklist-system system-name "Need newer libfixposix"))
+    ((cl-ppcre:scan "fatal error: lfp.h: No such file or directory" *nix-build-output*)
+     (library-add system-name "libfixposix" "libfixposix"))
     ((cl-ppcre:scan "curl: command not found" *nix-build-output*)
      (format *error-output* "~%Blacklisting package due to it invoking curl during build; this can be fixed by patching the build process to not fetch from the internet: ~A~%" system-name)
      (blacklist-system system-name "Invokes curl during build"))
+    ((cl-ppcre:scan "fc-match failed with code" *nix-build-output*)
+     (library-add system-name "fontconfig" "fontconfig")
+     (library-add system-name "dejavu_fonts" "dejavu_fonts"))
     ((cl-ppcre:scan "git: command not found" *nix-build-output*)
      (format *error-output* "~%Blacklisting package due to it invoking git during build; this can be fixed by patching the build process to not fetch from the internet: ~A~%" system-name)
      (blacklist-system system-name "Invokes git during build"))
@@ -772,8 +847,10 @@ in
      (blacklist-system system-name "Bad bounding icidices"))
     ((cl-ppcre:scan "does not currently work with GSL version 2.x" *nix-build-output*)
      (library-replace system-name "gsl" "gsl" "gsl_1" "gsl_1"))
+    #|
     ((cl-ppcre:scan "also exports the following symbols:" *nix-build-output*)
      (blacklist-system system-name "package redefinition missing exports"))
+    |#
     ((cl-ppcre:scan "error: .* has no member named" *nix-build-output*)
      (blacklist-system system-name "C compiler error 1"))
     ((cl-ppcre:scan "Unhandled memory fault at " *nix-build-output*)
@@ -797,6 +874,8 @@ in
      (blacklist-system system-name #?"Component not found $(system-name)"))
     ((cl-ppcre:scan "Bound is not \\*, a FLOAT or a list of a FLOAT" *nix-build-output*)
      (blacklist-system system-name "Type mismatch"))
+    ((cl-ppcre:scan "There is no class named" *nix-build-output*)
+     (blacklist-system system-name "Missing class"))
     ((cl-ppcre:scan "Component \"([^\"]+)\" not found" *nix-build-output*)
      (cl-ppcre:register-groups-bind (component)
 	 ("Component \"([^\"]+)\" not found" *nix-build-output*)
@@ -811,4 +890,4 @@ in
      (blacklist-system system-name "Failed on some, but not all lisps"))
     (t
       (format *error-output* "~%Unable to fixup system ~A:~%~A~%" system-name *nix-build-output*)
-       (uiop:quit 1)))))
+       (throw 'ql2nix-exit 1)))))

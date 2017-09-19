@@ -1,28 +1,34 @@
-swank #manual blacklist
 sane #manual blacklist
 gbbopen #manual blacklist
 weblocks-demo #manual blacklist
 infix #manual blacklist (femlisp)
 femlisp #manual blacklist (femlisp)
 femlisp-basic #manual blacklist (femlisp)
+femlisp-parallel #manual blacklist (femlisp)
+femlisp-matlisp #manual blacklist (femlisp)
+femlisp-dictionary #manual blacklist (femlisp)
 cl-cpu-affinity #manual blacklist (femlisp)
+net.scipolis.graphs # manual blacklist (femlisp)
+ddo #manual blacklist (femlisp)
 hu.dwim.quasi-quote #manual blacklist
 hu.dwim.syntax-sugar/lambda-with-bang-args #manual blacklist
 cl-cffi-gtk-demo-gdk #manual blacklist
 cl-cffi-gtk-demo-gtk #manual blacklist
 trivia.benchmark/run #manual blacklist (takes too long on clisp)
 clem-benchmark # manual blacklist (takes too long on clisp)
-mcclim-fonts/truetype # manual blacklist (finding fonts needs fixing)
-mcclim-render/render # manual blackist (finding fonts needs fixing)
-mcclim-render/backend # manual blacklist (finding fonts needs fixing)
-mcclim-render/cl-vectors # manual blacklist (finding fonts needs fixing)
-mcclim-render/core # manual blacklist (finding fonts needs fixing)
-mcclim-render/opticl # manual blacklist (finding fonts needs fixing)
-mcclim-render/two-dim-array # manual blacklist (finding fonts needs fixing)
-mcclim-render # manual blacklist (finding fonts needs fixing)
-gsll #manual blacklist
 magicffi #manual blacklist
-clache-test #manual blacklist
 maiden # manual blacklist (class not found error?)
 trivial-wish # manual blacklist hangs while building
 configuration.options-and-service-provider/test #manual blacklist
+racer # manual blacklist
+antik # manual blacklist
+cl-ana.makeres-branch # manual blacklist until gsll works on sbcl
+cl-ana.makeres # manual blacklist until gsll works on sbcl
+cl-ana.makeres-macro # manual blacklist until gsll works on sbcl
+cl-ana.makeres-graphviz # manual blacklist until gsll works on sbcl
+cl-ana.makeres-table # manual blacklist until gsll works on sbcl
+cl-ana.makeres-block # manual blacklist until gsll works on sbcl
+cl-ana.makeres-progress # manual blacklist until gsll works on sbcl
+cl-ana.makeres-utils # manual blacklist until gsll works on sbcl
+cl-ana # manual blacklist until gsll works on sbcl
+quicklisp-slime-helper # manual blacklist no quicklisp means no QL-slime helper
