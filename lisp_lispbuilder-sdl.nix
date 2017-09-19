@@ -1,7 +1,7 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_lispbuilder, 
-   lisp_cffi, lisp_lispbuilder-sdl-assets, lisp_lispbuilder-sdl-base, lisp_trivial-garbage,  
-  sbcl, ccl,  
+  SDL,   lisp_cffi,  
+  ccl, sbcl,  
   system ? builtins.currentSystem }:
 
 let
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_cffi lisp_lispbuilder-sdl-assets lisp_lispbuilder-sdl-base lisp_trivial-garbage  ];
+      propagatedBuildInputs = [ lisp_cffi SDL ];
       inherit stdenv;
       systemName = "lispbuilder-sdl";
       
       sourceProject = "${lisp-project_lispbuilder}";
       patches = [];
-      lisp_dependencies = "${lisp_cffi} ${lisp_lispbuilder-sdl-assets} ${lisp_lispbuilder-sdl-base} ${lisp_trivial-garbage}";
+      lisp_dependencies = "${lisp_cffi}";
       name = "lisp_lispbuilder-sdl-20170403-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
-      lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.ccl}" ];
+      lisp_implementations = [ "${pkgs.ccl}" "${pkgs.sbcl}" ];
     }

@@ -1,7 +1,7 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_cl-openal, 
-   lisp_cffi, lisp_cl-alc, lisp_cl-alut, lisp_cl-openal,  
-  sbcl, clisp, ccl,  
+  openal, freealut,   lisp_cffi,  
+  ccl, clisp, sbcl,  
   system ? builtins.currentSystem }:
 
 let
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_cffi lisp_cl-alc lisp_cl-alut lisp_cl-openal  ];
+      propagatedBuildInputs = [ lisp_cffi openal freealut ];
       inherit stdenv;
       systemName = "cl-openal-examples";
       
       sourceProject = "${lisp-project_cl-openal}";
       patches = [];
-      lisp_dependencies = "${lisp_cffi} ${lisp_cl-alc} ${lisp_cl-alut} ${lisp_cl-openal}";
+      lisp_dependencies = "${lisp_cffi}";
       name = "lisp_cl-openal-examples-20150302-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
-      lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.clisp}" "${pkgs.ccl}" ];
+      lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
     }

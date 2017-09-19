@@ -1,7 +1,7 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_snark, 
-   lisp_snark-implementation,  
-  ccl, clisp, sbcl,  
+   
+  sbcl, clisp, ccl,  
   system ? builtins.currentSystem }:
 
 let
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_snark-implementation  ];
+      propagatedBuildInputs = [   ];
       inherit stdenv;
       systemName = "snark";
       
       sourceProject = "${lisp-project_snark}";
       patches = [];
-      lisp_dependencies = "${lisp_snark-implementation}";
+      lisp_dependencies = "";
       name = "lisp_snark-20160421-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
-      lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
+      lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.clisp}" "${pkgs.ccl}" ];
     }

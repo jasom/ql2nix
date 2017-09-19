@@ -1,7 +1,7 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_workout-timer, 
-   lisp_cffi-toolchain, lisp_workout-timer,  
-  sbcl, ccl,  
+   lisp_command-line-arguments, lisp_local-time, lisp_mixalot-vorbis, lisp_mixalot, lisp_cffi-toolchain,  
+  ccl, sbcl,  
   system ? builtins.currentSystem }:
 
 let
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_cffi-toolchain lisp_workout-timer  ];
+      propagatedBuildInputs = [ lisp_command-line-arguments lisp_local-time lisp_mixalot-vorbis lisp_mixalot lisp_cffi-toolchain  ];
       inherit stdenv;
       systemName = "workout-timer/static";
       
       sourceProject = "${lisp-project_workout-timer}";
       patches = [];
-      lisp_dependencies = "${lisp_cffi-toolchain} ${lisp_workout-timer}";
-      name = "lisp_workout-timer-static-20170403-git";
+      lisp_dependencies = "${lisp_command-line-arguments} ${lisp_local-time} ${lisp_mixalot-vorbis} ${lisp_mixalot} ${lisp_cffi-toolchain}";
+      name = "lisp_workout-timer-static-20170830-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
-      lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.ccl}" ];
+      lisp_implementations = [ "${pkgs.ccl}" "${pkgs.sbcl}" ];
     }

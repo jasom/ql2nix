@@ -1,7 +1,7 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_cl-autowrap, 
-  libffi,   lisp_cl-autowrap, lisp_cl-plus-c,  
-  sbcl, ccl,  
+  libffi,   lisp_defpackage-plus, lisp_cl-ppcre, lisp_cl-json, lisp_cffi, lisp_alexandria,  
+  ccl, sbcl,  
   system ? builtins.currentSystem }:
 
 let
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_cl-autowrap lisp_cl-plus-c libffi ];
+      propagatedBuildInputs = [ lisp_defpackage-plus lisp_cl-ppcre lisp_cl-json lisp_cffi lisp_alexandria libffi ];
       inherit stdenv;
       systemName = "cl-autowrap/libffi";
       
       sourceProject = "${lisp-project_cl-autowrap}";
       patches = [];
-      lisp_dependencies = "${lisp_cl-autowrap} ${lisp_cl-plus-c}";
-      name = "lisp_cl-autowrap-libffi-20170725-git";
+      lisp_dependencies = "${lisp_defpackage-plus} ${lisp_cl-ppcre} ${lisp_cl-json} ${lisp_cffi} ${lisp_alexandria}";
+      name = "lisp_cl-autowrap-libffi-20170830-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
-      lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.ccl}" ];
+      lisp_implementations = [ "${pkgs.ccl}" "${pkgs.sbcl}" ];
     }

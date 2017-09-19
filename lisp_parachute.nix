@@ -1,6 +1,6 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_parachute, 
-   lisp_documentation-utils, lisp_form-fiddle,  
+   lisp_form-fiddle, lisp_documentation-utils,  
   sbcl, clisp,  
   system ? builtins.currentSystem }:
 
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_documentation-utils lisp_form-fiddle  ];
+      propagatedBuildInputs = [ lisp_form-fiddle lisp_documentation-utils  ];
       inherit stdenv;
       systemName = "parachute";
       
       sourceProject = "${lisp-project_parachute}";
       patches = [];
-      lisp_dependencies = "${lisp_documentation-utils} ${lisp_form-fiddle}";
-      name = "lisp_parachute-20170630-git";
+      lisp_dependencies = "${lisp_form-fiddle} ${lisp_documentation-utils}";
+      name = "lisp_parachute-20170830-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.clisp}" ];
     }

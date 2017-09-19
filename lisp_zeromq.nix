@@ -1,7 +1,7 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_cl-zmq, 
-  zeromq,   lisp_cffi, lisp_cffi-grovel, lisp_trivial-garbage,  
-  ccl, sbcl,  
+  zeromq,   lisp_trivial-garbage, lisp_cffi-grovel,  
+  sbcl, ccl,  
   system ? builtins.currentSystem }:
 
 let
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_cffi lisp_cffi-grovel lisp_trivial-garbage zeromq ];
+      propagatedBuildInputs = [ lisp_trivial-garbage lisp_cffi-grovel zeromq ];
       inherit stdenv;
       systemName = "zeromq";
       
       sourceProject = "${lisp-project_cl-zmq}";
       patches = [];
-      lisp_dependencies = "${lisp_cffi} ${lisp_cffi-grovel} ${lisp_trivial-garbage}";
+      lisp_dependencies = "${lisp_trivial-garbage} ${lisp_cffi-grovel}";
       name = "lisp_zeromq-20160318-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
-      lisp_implementations = [ "${pkgs.ccl}" "${pkgs.sbcl}" ];
+      lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.ccl}" ];
     }

@@ -1,6 +1,6 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_mixalot, 
-   lisp_cffi, lisp_flac, lisp_mixalot,  
+  flac,   lisp_cffi-grovel, lisp_bordeaux-threads, lisp_cffi,  
   ccl, sbcl,  
   system ? builtins.currentSystem }:
 
@@ -9,13 +9,13 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_cffi lisp_flac lisp_mixalot  ];
+      propagatedBuildInputs = [ lisp_cffi-grovel lisp_bordeaux-threads lisp_cffi flac ];
       inherit stdenv;
       systemName = "mixalot-flac";
       
       sourceProject = "${lisp-project_mixalot}";
       patches = [];
-      lisp_dependencies = "${lisp_cffi} ${lisp_flac} ${lisp_mixalot}";
+      lisp_dependencies = "${lisp_cffi-grovel} ${lisp_bordeaux-threads} ${lisp_cffi}";
       name = "lisp_mixalot-flac-20151218-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ "${pkgs.ccl}" "${pkgs.sbcl}" ];

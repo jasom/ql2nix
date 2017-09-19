@@ -16,7 +16,7 @@ in
       sourceProject = "${lisp-project_trivial-benchmark}";
       patches = [];
       lisp_dependencies = "${lisp_alexandria}";
-      name = "lisp_trivial-benchmark-20170630-git";
+      name = "lisp_trivial-benchmark-20170830-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
     }

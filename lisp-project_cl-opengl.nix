@@ -6,9 +6,9 @@ in
   buildLispProject {
       inherit stdenv;
       patches = [];
-      name = "lisp-project_cl-opengl-20170725-git";
+      name = "lisp-project_cl-opengl-20170830-git";
       src = pkgs.fetchurl {
-        url = "http://beta.quicklisp.org/archive/cl-opengl/2017-07-25/cl-opengl-20170725-git.tgz";
-        sha256 = "5e1b69e602d67f3080d342685deb3b785ed77ad74135381ae6ebfc3478c8a906";
+        url = "http://beta.quicklisp.org/archive/cl-opengl/2017-08-30/cl-opengl-20170830-git.tgz";
+        sha256 = "d44098c566afb7fa2f1a14a9db1fd320bf7e556b06e7b70b15773e76170bf05e";
       };
     }

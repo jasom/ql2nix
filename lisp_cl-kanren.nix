@@ -16,7 +16,7 @@ in
       sourceProject = "${lisp-project_cl-kanren}";
       patches = [];
       lisp_dependencies = "${lisp_alexandria}";
-      name = "lisp_cl-kanren-20170725-git";
+      name = "lisp_cl-kanren-20170830-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
     }

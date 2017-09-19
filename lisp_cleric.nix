@@ -1,7 +1,7 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_cleric, 
-   lisp_alexandria, lisp_com-gigamonkeys-binary-data, lisp_epmd, lisp_erlang-term, lisp_md5, lisp_usocket,  
-  sbcl, clisp, ccl,  
+   lisp_md5, lisp_erlang-term, lisp_epmd,  
+  ccl, clisp, sbcl,  
   system ? builtins.currentSystem }:
 
 let
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_alexandria lisp_com-gigamonkeys-binary-data lisp_epmd lisp_erlang-term lisp_md5 lisp_usocket  ];
+      propagatedBuildInputs = [ lisp_md5 lisp_erlang-term lisp_epmd  ];
       inherit stdenv;
       systemName = "cleric";
       
       sourceProject = "${lisp-project_cleric}";
       patches = [];
-      lisp_dependencies = "${lisp_alexandria} ${lisp_com-gigamonkeys-binary-data} ${lisp_epmd} ${lisp_erlang-term} ${lisp_md5} ${lisp_usocket}";
+      lisp_dependencies = "${lisp_md5} ${lisp_erlang-term} ${lisp_epmd}";
       name = "lisp_cleric-20141106-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
-      lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.clisp}" "${pkgs.ccl}" ];
+      lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
     }

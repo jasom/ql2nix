@@ -1,6 +1,6 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_calispel, 
-   lisp_bordeaux-threads, lisp_jpl-queues, lisp_jpl-util,  
+   lisp_jpl-queues,  
   ccl, clisp, sbcl,  
   system ? builtins.currentSystem }:
 
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_bordeaux-threads lisp_jpl-queues lisp_jpl-util  ];
+      propagatedBuildInputs = [ lisp_jpl-queues  ];
       inherit stdenv;
       systemName = "calispel";
       
       sourceProject = "${lisp-project_calispel}";
       patches = [];
-      lisp_dependencies = "${lisp_bordeaux-threads} ${lisp_jpl-queues} ${lisp_jpl-util}";
-      name = "lisp_calispel-20151031-git";
+      lisp_dependencies = "${lisp_jpl-queues}";
+      name = "lisp_calispel-20170830-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
     }

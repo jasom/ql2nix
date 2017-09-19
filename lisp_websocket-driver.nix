@@ -1,7 +1,7 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_websocket-driver, 
-   lisp_websocket-driver-client, lisp_websocket-driver-server,  
-  sbcl, ccl,  
+   lisp_quri, lisp_fast-http, lisp_cl-ssl, lisp_usocket, lisp_clack-socket, lisp_bordeaux-threads, lisp_split-sequence, lisp_cl-base64, lisp_ironclad, lisp_event-emitter, lisp_fast-websocket,  
+  ccl, sbcl,  
   system ? builtins.currentSystem }:
 
 let
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_websocket-driver-client lisp_websocket-driver-server  ];
+      propagatedBuildInputs = [ lisp_quri lisp_fast-http lisp_cl-ssl lisp_usocket lisp_clack-socket lisp_bordeaux-threads lisp_split-sequence lisp_cl-base64 lisp_ironclad lisp_event-emitter lisp_fast-websocket  ];
       inherit stdenv;
       systemName = "websocket-driver";
       
       sourceProject = "${lisp-project_websocket-driver}";
       patches = [];
-      lisp_dependencies = "${lisp_websocket-driver-client} ${lisp_websocket-driver-server}";
-      name = "lisp_websocket-driver-20170725-git";
+      lisp_dependencies = "${lisp_quri} ${lisp_fast-http} ${lisp_cl-ssl} ${lisp_usocket} ${lisp_clack-socket} ${lisp_bordeaux-threads} ${lisp_split-sequence} ${lisp_cl-base64} ${lisp_ironclad} ${lisp_event-emitter} ${lisp_fast-websocket}";
+      name = "lisp_websocket-driver-20170830-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
-      lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.ccl}" ];
+      lisp_implementations = [ "${pkgs.ccl}" "${pkgs.sbcl}" ];
     }

@@ -1,7 +1,7 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_clsql, 
-   lisp_clsql, lisp_cffi-uffi-compat,  
-  sbcl, ccl,  
+   lisp_cffi-uffi-compat,  
+  ccl, sbcl,  
   system ? builtins.currentSystem }:
 
 let
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_clsql lisp_cffi-uffi-compat  ];
+      propagatedBuildInputs = [ lisp_cffi-uffi-compat  ];
       inherit stdenv;
       systemName = "clsql-cffi";
       
       sourceProject = "${lisp-project_clsql}";
       patches = [];
-      lisp_dependencies = "${lisp_clsql} ${lisp_cffi-uffi-compat}";
+      lisp_dependencies = "${lisp_cffi-uffi-compat}";
       name = "lisp_clsql-cffi-20160208-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
-      lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.ccl}" ];
+      lisp_implementations = [ "${pkgs.ccl}" "${pkgs.sbcl}" ];
     }

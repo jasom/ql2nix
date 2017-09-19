@@ -6,9 +6,9 @@ in
   buildLispProject {
       inherit stdenv;
       patches = [];
-      name = "lisp-project_ubiquitous-20170630-git";
+      name = "lisp-project_ubiquitous-20170830-git";
       src = pkgs.fetchurl {
-        url = "http://beta.quicklisp.org/archive/ubiquitous/2017-06-30/ubiquitous-20170630-git.tgz";
-        sha256 = "b3177ffb51ac9ca503c53e31084a8f960a95874126ab3e36054cefcab3894bbc";
+        url = "http://beta.quicklisp.org/archive/ubiquitous/2017-08-30/ubiquitous-20170830-git.tgz";
+        sha256 = "0d2fa911fc390e3f637aee8df54af1021432907fe5cd6bea55dfee7cbdaf0488";
       };
     }

@@ -1,6 +1,6 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_cl-virtualbox, 
-   lisp_alexandria, lisp_cl-ppcre, lisp_usocket,  
+   lisp_usocket, lisp_alexandria, lisp_cl-ppcre,  
   ccl, clisp, sbcl,  
   system ? builtins.currentSystem }:
 
@@ -9,13 +9,13 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_alexandria lisp_cl-ppcre lisp_usocket  ];
+      propagatedBuildInputs = [ lisp_usocket lisp_alexandria lisp_cl-ppcre  ];
       inherit stdenv;
       systemName = "cl-virtualbox";
       
       sourceProject = "${lisp-project_cl-virtualbox}";
       patches = [];
-      lisp_dependencies = "${lisp_alexandria} ${lisp_cl-ppcre} ${lisp_usocket}";
+      lisp_dependencies = "${lisp_usocket} ${lisp_alexandria} ${lisp_cl-ppcre}";
       name = "lisp_cl-virtualbox-20150113-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];

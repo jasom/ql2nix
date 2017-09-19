@@ -1,7 +1,7 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_chirp, 
-   lisp_chirp-core, lisp_drakma,  
-  sbcl, ccl,  
+   lisp_drakma, lisp_babel, lisp_cl-ppcre, lisp_cl-base64, lisp_local-time, lisp_flexi-streams, lisp_uuid, lisp_split-sequence, lisp_yason,  
+  ccl, sbcl,  
   system ? builtins.currentSystem }:
 
 let
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_chirp-core lisp_drakma  ];
+      propagatedBuildInputs = [ lisp_drakma lisp_babel lisp_cl-ppcre lisp_cl-base64 lisp_local-time lisp_flexi-streams lisp_uuid lisp_split-sequence lisp_yason  ];
       inherit stdenv;
       systemName = "chirp-drakma";
       
       sourceProject = "${lisp-project_chirp}";
       patches = [];
-      lisp_dependencies = "${lisp_chirp-core} ${lisp_drakma}";
-      name = "lisp_chirp-drakma-20170630-git";
+      lisp_dependencies = "${lisp_drakma} ${lisp_babel} ${lisp_cl-ppcre} ${lisp_cl-base64} ${lisp_local-time} ${lisp_flexi-streams} ${lisp_uuid} ${lisp_split-sequence} ${lisp_yason}";
+      name = "lisp_chirp-drakma-20170830-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
-      lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.ccl}" ];
+      lisp_implementations = [ "${pkgs.ccl}" "${pkgs.sbcl}" ];
     }

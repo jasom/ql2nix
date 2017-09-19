@@ -1,7 +1,7 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_hu-dwim-computed-class, 
-   lisp_hu-dwim-asdf, lisp_hu-dwim-def-hu-dwim-common, lisp_hu-dwim-defclass-star-hu-dwim-def, lisp_hu-dwim-syntax-sugar, lisp_hu-dwim-util,  
-  sbcl,  
+   lisp_hu-dwim-util-mop, lisp_hu-dwim-defclass-star-hu-dwim-def, lisp_hu-dwim-syntax-sugar, lisp_hu-dwim-def-hu-dwim-common, lisp_hu-dwim-asdf,  
+  ccl, sbcl,  
   system ? builtins.currentSystem }:
 
 let
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_hu-dwim-asdf lisp_hu-dwim-def-hu-dwim-common lisp_hu-dwim-defclass-star-hu-dwim-def lisp_hu-dwim-syntax-sugar lisp_hu-dwim-util  ];
+      propagatedBuildInputs = [ lisp_hu-dwim-util-mop lisp_hu-dwim-defclass-star-hu-dwim-def lisp_hu-dwim-syntax-sugar lisp_hu-dwim-def-hu-dwim-common lisp_hu-dwim-asdf  ];
       inherit stdenv;
       systemName = "hu.dwim.computed-class";
       
       sourceProject = "${lisp-project_hu-dwim-computed-class}";
       patches = [];
-      lisp_dependencies = "${lisp_hu-dwim-asdf} ${lisp_hu-dwim-def-hu-dwim-common} ${lisp_hu-dwim-defclass-star-hu-dwim-def} ${lisp_hu-dwim-syntax-sugar} ${lisp_hu-dwim-util}";
+      lisp_dependencies = "${lisp_hu-dwim-util-mop} ${lisp_hu-dwim-defclass-star-hu-dwim-def} ${lisp_hu-dwim-syntax-sugar} ${lisp_hu-dwim-def-hu-dwim-common} ${lisp_hu-dwim-asdf}";
       name = "lisp_hu-dwim-computed-class-20161204-darcs";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
-      lisp_implementations = [ "${pkgs.sbcl}" ];
+      lisp_implementations = [ "${pkgs.ccl}" "${pkgs.sbcl}" ];
     }

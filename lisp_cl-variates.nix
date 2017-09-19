@@ -1,7 +1,7 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_cl-variates, 
-   lisp_asdf-system-connections,  
-  ccl, clisp, sbcl,  
+   
+  sbcl, clisp, ccl,  
   system ? builtins.currentSystem }:
 
 let
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_asdf-system-connections  ];
+      propagatedBuildInputs = [   ];
       inherit stdenv;
       systemName = "cl-variates";
       
       sourceProject = "${lisp-project_cl-variates}";
       patches = [];
-      lisp_dependencies = "${lisp_asdf-system-connections}";
+      lisp_dependencies = "";
       name = "lisp_cl-variates-20140211-darcs";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
-      lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
+      lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.clisp}" "${pkgs.ccl}" ];
     }

@@ -5,10 +5,10 @@ let
 in
   buildLispProject {
       inherit stdenv;
-      patches = [./patches/lisp-project_quux-hunchentoot-20160208-git.uiop-reaname.patch];
-      name = "lisp-project_quux-hunchentoot-20160208-git";
+      patches = [];
+      name = "lisp-project_quux-hunchentoot-20170830-git";
       src = pkgs.fetchurl {
-        url = "http://beta.quicklisp.org/archive/quux-hunchentoot/2016-02-08/quux-hunchentoot-20160208-git.tgz";
-        sha256 = "faeb3504a11718378c613fa81d8ef70542add5ee8b6e0baf9e7e883125928771";
+        url = "http://beta.quicklisp.org/archive/quux-hunchentoot/2017-08-30/quux-hunchentoot-20170830-git.tgz";
+        sha256 = "22d5695f2bf815ed8b8c0fe6b5574a17007a9c30b1817bbd07d3db89280a2427";
       };
     }

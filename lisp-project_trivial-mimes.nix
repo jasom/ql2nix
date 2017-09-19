@@ -6,9 +6,9 @@ in
   buildLispProject {
       inherit stdenv;
       patches = [];
-      name = "lisp-project_trivial-mimes-20170630-git";
+      name = "lisp-project_trivial-mimes-20170830-git";
       src = pkgs.fetchurl {
-        url = "http://beta.quicklisp.org/archive/trivial-mimes/2017-06-30/trivial-mimes-20170630-git.tgz";
-        sha256 = "7d6792257602615c86afd81a75d2c8abcbccdaa2ebac85a5cb6c3a7bf831a666";
+        url = "http://beta.quicklisp.org/archive/trivial-mimes/2017-08-30/trivial-mimes-20170830-git.tgz";
+        sha256 = "931c23540b0dcfb0273a9812a8e1fb2aadeee97269ef8f65fedfd8a353da0446";
       };
     }

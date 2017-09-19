@@ -1,7 +1,7 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_clouchdb, 
-   lisp_closer-mop, lisp_drakma, lisp_flexi-streams, lisp_parenscript, lisp_s-base64,  
-  ccl, clisp, sbcl,  
+   lisp_s-base64, lisp_parenscript, lisp_drakma, lisp_closer-mop,  
+  sbcl, clisp, ccl,  
   system ? builtins.currentSystem }:
 
 let
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_closer-mop lisp_drakma lisp_flexi-streams lisp_parenscript lisp_s-base64  ];
+      propagatedBuildInputs = [ lisp_s-base64 lisp_parenscript lisp_drakma lisp_closer-mop  ];
       inherit stdenv;
       systemName = "clouchdb";
       
       sourceProject = "${lisp-project_clouchdb}";
       patches = [];
-      lisp_dependencies = "${lisp_closer-mop} ${lisp_drakma} ${lisp_flexi-streams} ${lisp_parenscript} ${lisp_s-base64}";
+      lisp_dependencies = "${lisp_s-base64} ${lisp_parenscript} ${lisp_drakma} ${lisp_closer-mop}";
       name = "lisp_clouchdb_0.0.16";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
-      lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
+      lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.clisp}" "${pkgs.ccl}" ];
     }

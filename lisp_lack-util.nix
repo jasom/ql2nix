@@ -16,7 +16,7 @@ in
       sourceProject = "${lisp-project_lack}";
       patches = [];
       lisp_dependencies = "${lisp_ironclad}";
-      name = "lisp_lack-util-20170725-git";
+      name = "lisp_lack-util-20170830-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
     }

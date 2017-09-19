@@ -1,7 +1,7 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_integral-rest, 
-   lisp_alexandria, lisp_cl-inflector, lisp_closer-mop, lisp_integral, lisp_jonathan, lisp_map-set, lisp_ningle,  
-  ccl, sbcl,  
+   lisp_cl-inflector, lisp_ningle, lisp_integral, lisp_alexandria,  
+  sbcl, ccl,  
   system ? builtins.currentSystem }:
 
 let
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_alexandria lisp_cl-inflector lisp_closer-mop lisp_integral lisp_jonathan lisp_map-set lisp_ningle  ];
+      propagatedBuildInputs = [ lisp_cl-inflector lisp_ningle lisp_integral lisp_alexandria  ];
       inherit stdenv;
       systemName = "integral-rest";
       
       sourceProject = "${lisp-project_integral-rest}";
       patches = [];
-      lisp_dependencies = "${lisp_alexandria} ${lisp_cl-inflector} ${lisp_closer-mop} ${lisp_integral} ${lisp_jonathan} ${lisp_map-set} ${lisp_ningle}";
+      lisp_dependencies = "${lisp_cl-inflector} ${lisp_ningle} ${lisp_integral} ${lisp_alexandria}";
       name = "lisp_integral-rest-20150923-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
-      lisp_implementations = [ "${pkgs.ccl}" "${pkgs.sbcl}" ];
+      lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.ccl}" ];
     }

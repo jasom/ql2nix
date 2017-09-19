@@ -16,7 +16,7 @@ in
       sourceProject = "${lisp-project_ubiquitous}";
       patches = [];
       lisp_dependencies = "${lisp_bordeaux-threads}";
-      name = "lisp_ubiquitous-concurrent-20170630-git";
+      name = "lisp_ubiquitous-concurrent-20170830-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ "${pkgs.ccl}" "${pkgs.sbcl}" ];
     }

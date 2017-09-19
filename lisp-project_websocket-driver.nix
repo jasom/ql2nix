@@ -6,9 +6,9 @@ in
   buildLispProject {
       inherit stdenv;
       patches = [];
-      name = "lisp-project_websocket-driver-20170725-git";
+      name = "lisp-project_websocket-driver-20170830-git";
       src = pkgs.fetchurl {
-        url = "http://beta.quicklisp.org/archive/websocket-driver/2017-07-25/websocket-driver-20170725-git.tgz";
-        sha256 = "67b2de27da35ea89df2c8fdb52f58ae483ea4cae347d557289f3645624fdefe9";
+        url = "http://beta.quicklisp.org/archive/websocket-driver/2017-08-30/websocket-driver-20170830-git.tgz";
+        sha256 = "c197d97e1bd94da9fdc63720e0dda21b2884b839029595d9b2e36e2b3b3a3034";
       };
     }

@@ -16,7 +16,7 @@ in
       sourceProject = "${lisp-project_dissect}";
       patches = [];
       lisp_dependencies = "${lisp_cl-ppcre}";
-      name = "lisp_dissect-20170630-git";
+      name = "lisp_dissect-20170830-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
     }

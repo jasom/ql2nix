@@ -1,7 +1,7 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_cl-devil, 
-  libdevil,   lisp_alexandria, lisp_cffi,  
-  sbcl, clisp, ccl,  
+  libdevil,   lisp_cffi,  
+  ccl, clisp, sbcl,  
   system ? builtins.currentSystem }:
 
 let
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_alexandria lisp_cffi libdevil ];
+      propagatedBuildInputs = [ lisp_cffi libdevil ];
       inherit stdenv;
       systemName = "cl-devil";
       
       sourceProject = "${lisp-project_cl-devil}";
       patches = [];
-      lisp_dependencies = "${lisp_alexandria} ${lisp_cffi}";
+      lisp_dependencies = "${lisp_cffi}";
       name = "lisp_cl-devil-20150302-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
-      lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.clisp}" "${pkgs.ccl}" ];
+      lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
     }

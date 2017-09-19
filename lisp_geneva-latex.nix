@@ -1,6 +1,6 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_geneva, 
-   lisp_geneva, lisp_geneva-tex, lisp_named-readtables, lisp_texp,  
+   lisp_file-types, lisp_texp, lisp_named-readtables, lisp_split-sequence,  
   sbcl, clisp, ccl,  
   system ? builtins.currentSystem }:
 
@@ -9,13 +9,13 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_geneva lisp_geneva-tex lisp_named-readtables lisp_texp  ];
+      propagatedBuildInputs = [ lisp_file-types lisp_texp lisp_named-readtables lisp_split-sequence  ];
       inherit stdenv;
       systemName = "geneva-latex";
       
       sourceProject = "${lisp-project_geneva}";
       patches = [];
-      lisp_dependencies = "${lisp_geneva} ${lisp_geneva-tex} ${lisp_named-readtables} ${lisp_texp}";
+      lisp_dependencies = "${lisp_file-types} ${lisp_texp} ${lisp_named-readtables} ${lisp_split-sequence}";
       name = "lisp_geneva-latex-20161204-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.clisp}" "${pkgs.ccl}" ];

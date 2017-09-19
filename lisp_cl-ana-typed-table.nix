@@ -1,7 +1,7 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_cl-ana, 
-   lisp_alexandria, lisp_cl-ana-list-utils, lisp_cl-ana-string-utils, lisp_cl-ana-symbol-utils, lisp_cl-ana-table, lisp_cl-ana-typespec,  
-  sbcl, clisp, ccl,  
+   lisp_cffi, lisp_split-sequence, lisp_alexandria,  
+  ccl, clisp, sbcl,  
   system ? builtins.currentSystem }:
 
 let
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_alexandria lisp_cl-ana-list-utils lisp_cl-ana-string-utils lisp_cl-ana-symbol-utils lisp_cl-ana-table lisp_cl-ana-typespec  ];
+      propagatedBuildInputs = [ lisp_cffi lisp_split-sequence lisp_alexandria  ];
       inherit stdenv;
       systemName = "cl-ana.typed-table";
       
       sourceProject = "${lisp-project_cl-ana}";
       patches = [];
-      lisp_dependencies = "${lisp_alexandria} ${lisp_cl-ana-list-utils} ${lisp_cl-ana-string-utils} ${lisp_cl-ana-symbol-utils} ${lisp_cl-ana-table} ${lisp_cl-ana-typespec}";
-      name = "lisp_cl-ana-typed-table-20170725-git";
+      lisp_dependencies = "${lisp_cffi} ${lisp_split-sequence} ${lisp_alexandria}";
+      name = "lisp_cl-ana-typed-table-20170830-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
-      lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.clisp}" "${pkgs.ccl}" ];
+      lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
     }

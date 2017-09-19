@@ -16,7 +16,7 @@ in
       sourceProject = "${lisp-project_xsubseq}";
       patches = [];
       lisp_dependencies = "";
-      name = "lisp_xsubseq-20150113-git";
+      name = "lisp_xsubseq-20170830-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.clisp}" "${pkgs.ccl}" ];
     }

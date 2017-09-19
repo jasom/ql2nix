@@ -6,9 +6,9 @@ in
   buildLispProject {
       inherit stdenv;
       patches = [];
-      name = "lisp-project_workout-timer-20170403-git";
+      name = "lisp-project_workout-timer-20170830-git";
       src = pkgs.fetchurl {
-        url = "http://beta.quicklisp.org/archive/workout-timer/2017-04-03/workout-timer-20170403-git.tgz";
-        sha256 = "b3c64e6acbc1145d4449eba55cfa2a2ac1ef5be7810e71593959dd206662f161";
+        url = "http://beta.quicklisp.org/archive/workout-timer/2017-08-30/workout-timer-20170830-git.tgz";
+        sha256 = "52c76824f79fcd005d8e15a7fb04111834271b20bb36cf9534d4de7d371734bc";
       };
     }

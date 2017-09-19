@@ -16,7 +16,7 @@ in
       sourceProject = "${lisp-project_ubiquitous}";
       patches = [];
       lisp_dependencies = "";
-      name = "lisp_ubiquitous-20170630-git";
+      name = "lisp_ubiquitous-20170830-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.ccl}" ];
     }

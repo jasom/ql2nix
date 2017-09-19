@@ -1,6 +1,6 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_cl-glfw, 
-   lisp_cl-glfw-opengl-core,  
+  mesa,   lisp_cffi,  
   ccl, clisp, sbcl,  
   system ? builtins.currentSystem }:
 
@@ -9,13 +9,13 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_cl-glfw-opengl-core  ];
+      propagatedBuildInputs = [ lisp_cffi mesa ];
       inherit stdenv;
       systemName = "cl-glfw-opengl-version_2_0";
       
       sourceProject = "${lisp-project_cl-glfw}";
       patches = [];
-      lisp_dependencies = "${lisp_cl-glfw-opengl-core}";
+      lisp_dependencies = "${lisp_cffi}";
       name = "lisp_cl-glfw-opengl-version-2-0-20150302-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];

@@ -1,7 +1,7 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_trivia, 
-   lisp_iterate, lisp_optima, lisp_trivia, lisp_trivia-balland2006,  
-  sbcl, clisp, ccl,  
+   lisp_trivia-balland2006, lisp_optima, lisp_closer-mop, lisp_lisp-namespace, lisp_alexandria,  
+  ccl, clisp, sbcl,  
   system ? builtins.currentSystem }:
 
 let
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_iterate lisp_optima lisp_trivia lisp_trivia-balland2006  ];
+      propagatedBuildInputs = [ lisp_trivia-balland2006 lisp_optima lisp_closer-mop lisp_lisp-namespace lisp_alexandria  ];
       inherit stdenv;
       systemName = "trivia.benchmark";
       
       sourceProject = "${lisp-project_trivia}";
       patches = [];
-      lisp_dependencies = "${lisp_iterate} ${lisp_optima} ${lisp_trivia} ${lisp_trivia-balland2006}";
-      name = "lisp_trivia-benchmark-20170725-git";
+      lisp_dependencies = "${lisp_trivia-balland2006} ${lisp_optima} ${lisp_closer-mop} ${lisp_lisp-namespace} ${lisp_alexandria}";
+      name = "lisp_trivia-benchmark-20170830-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
-      lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.clisp}" "${pkgs.ccl}" ];
+      lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
     }

@@ -1,7 +1,7 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_liblmdb, 
    lisp_cffi,  
-  sbcl,  
+  ccl, clisp, sbcl,  
   system ? builtins.currentSystem }:
 
 let
@@ -16,7 +16,7 @@ in
       sourceProject = "${lisp-project_liblmdb}";
       patches = [];
       lisp_dependencies = "${lisp_cffi}";
-      name = "lisp_liblmdb-20170227-git";
+      name = "lisp_liblmdb-20170830-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
-      lisp_implementations = [ "${pkgs.sbcl}" ];
+      lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
     }

@@ -1,6 +1,6 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_simple-tasks, 
-   lisp_bordeaux-threads, lisp_array-utils, lisp_dissect,  
+   lisp_dissect, lisp_array-utils, lisp_bordeaux-threads,  
   ccl, clisp, sbcl,  
   system ? builtins.currentSystem }:
 
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_bordeaux-threads lisp_array-utils lisp_dissect  ];
+      propagatedBuildInputs = [ lisp_dissect lisp_array-utils lisp_bordeaux-threads  ];
       inherit stdenv;
       systemName = "simple-tasks";
       
       sourceProject = "${lisp-project_simple-tasks}";
       patches = [];
-      lisp_dependencies = "${lisp_bordeaux-threads} ${lisp_array-utils} ${lisp_dissect}";
-      name = "lisp_simple-tasks-20170630-git";
+      lisp_dependencies = "${lisp_dissect} ${lisp_array-utils} ${lisp_bordeaux-threads}";
+      name = "lisp_simple-tasks-20170830-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
     }

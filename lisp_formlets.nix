@@ -1,7 +1,7 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_formlets, 
-   lisp_cl-ppcre, lisp_cl-who, lisp_drakma, lisp_hunchentoot,  
-  sbcl, clisp, ccl,  
+   lisp_hunchentoot, lisp_drakma, lisp_cl-who,  
+  ccl, clisp, sbcl,  
   system ? builtins.currentSystem }:
 
 let
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_cl-ppcre lisp_cl-who lisp_drakma lisp_hunchentoot  ];
+      propagatedBuildInputs = [ lisp_hunchentoot lisp_drakma lisp_cl-who  ];
       inherit stdenv;
       systemName = "formlets";
       
       sourceProject = "${lisp-project_formlets}";
       patches = [];
-      lisp_dependencies = "${lisp_cl-ppcre} ${lisp_cl-who} ${lisp_drakma} ${lisp_hunchentoot}";
+      lisp_dependencies = "${lisp_hunchentoot} ${lisp_drakma} ${lisp_cl-who}";
       name = "lisp_formlets-20161204-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
-      lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.clisp}" "${pkgs.ccl}" ];
+      lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
     }

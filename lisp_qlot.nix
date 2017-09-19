@@ -16,7 +16,7 @@ in
       sourceProject = "${lisp-project_qlot}";
       patches = [];
       lisp_dependencies = "";
-      name = "lisp_qlot-20170725-git";
+      name = "lisp_qlot-20170830-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.clisp}" "${pkgs.ccl}" ];
     }

@@ -1,6 +1,6 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_nst, 
-   lisp_closer-mop, lisp_org-sampler,  
+   lisp_org-sampler, lisp_closer-mop,  
   sbcl, clisp, ccl,  
   system ? builtins.currentSystem }:
 
@@ -9,13 +9,13 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_closer-mop lisp_org-sampler  ];
+      propagatedBuildInputs = [ lisp_org-sampler lisp_closer-mop  ];
       inherit stdenv;
       systemName = "nst";
       
       sourceProject = "${lisp-project_nst}";
       patches = [];
-      lisp_dependencies = "${lisp_closer-mop} ${lisp_org-sampler}";
+      lisp_dependencies = "${lisp_org-sampler} ${lisp_closer-mop}";
       name = "lisp_nst-4.1.0";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.clisp}" "${pkgs.ccl}" ];

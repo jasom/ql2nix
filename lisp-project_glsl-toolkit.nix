@@ -6,9 +6,9 @@ in
   buildLispProject {
       inherit stdenv;
       patches = [];
-      name = "lisp-project_glsl-toolkit-20170630-git";
+      name = "lisp-project_glsl-toolkit-20170830-git";
       src = pkgs.fetchurl {
-        url = "http://beta.quicklisp.org/archive/glsl-toolkit/2017-06-30/glsl-toolkit-20170630-git.tgz";
-        sha256 = "e19e8f02f0d433fadcd32e21d132a45d7a07def0d3e78a1b301a9fae0221bfbc";
+        url = "http://beta.quicklisp.org/archive/glsl-toolkit/2017-08-30/glsl-toolkit-20170830-git.tgz";
+        sha256 = "bf3392c538d32b30d40220a25c3b62775e8dbd7bbc9a0219fbcabc87427ac679";
       };
     }

@@ -16,7 +16,7 @@ in
       sourceProject = "${lisp-project_trivia}";
       patches = [];
       lisp_dependencies = "${lisp_alexandria}";
-      name = "lisp_trivia-level0-20170725-git";
+      name = "lisp_trivia-level0-20170830-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
     }

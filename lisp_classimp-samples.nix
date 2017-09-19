@@ -1,7 +1,7 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_classimp, 
-   lisp_classimp, lisp_sb-cga, lisp_cl-glut, lisp_cl-glu, lisp_cl-fad, lisp_cl-ilut,  
-  sbcl, clisp, ccl,  
+  assimp,   lisp_cl-ilut, lisp_cl-fad, lisp_cl-glut, lisp_sb-cga, lisp_cffi,  
+  ccl, clisp, sbcl,  
   system ? builtins.currentSystem }:
 
 let
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_classimp lisp_sb-cga lisp_cl-glut lisp_cl-glu lisp_cl-fad lisp_cl-ilut  ];
+      propagatedBuildInputs = [ lisp_cl-ilut lisp_cl-fad lisp_cl-glut lisp_sb-cga lisp_cffi assimp ];
       inherit stdenv;
       systemName = "classimp-samples";
       
       sourceProject = "${lisp-project_classimp}";
       patches = [];
-      lisp_dependencies = "${lisp_classimp} ${lisp_sb-cga} ${lisp_cl-glut} ${lisp_cl-glu} ${lisp_cl-fad} ${lisp_cl-ilut}";
+      lisp_dependencies = "${lisp_cl-ilut} ${lisp_cl-fad} ${lisp_cl-glut} ${lisp_sb-cga} ${lisp_cffi}";
       name = "lisp_classimp-samples-20170630-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
-      lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.clisp}" "${pkgs.ccl}" ];
+      lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
     }

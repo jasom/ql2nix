@@ -6,9 +6,9 @@ in
   buildLispProject {
       inherit stdenv;
       patches = [];
-      name = "lisp-project_cl-gamepad-20170630-git";
+      name = "lisp-project_cl-gamepad-20170830-git";
       src = pkgs.fetchurl {
-        url = "http://beta.quicklisp.org/archive/cl-gamepad/2017-06-30/cl-gamepad-20170630-git.tgz";
-        sha256 = "ceddcc2583a3e51d004fe462323e5c48454b4dbe2676d184b12c7d4cf6d137aa";
+        url = "http://beta.quicklisp.org/archive/cl-gamepad/2017-08-30/cl-gamepad-20170830-git.tgz";
+        sha256 = "3d0affba3033bef81792ad519ce5eb7dc57638d46d3ad7caea27f114962089c9";
       };
     }

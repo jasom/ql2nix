@@ -16,7 +16,7 @@ in
       sourceProject = "${lisp-project_physical-quantities}";
       patches = [];
       lisp_dependencies = "${lisp_parseq}";
-      name = "lisp_physical-quantities-20170725-git";
+      name = "lisp_physical-quantities-20170830-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
     }

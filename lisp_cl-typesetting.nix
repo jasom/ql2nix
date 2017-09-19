@@ -16,7 +16,7 @@ in
       sourceProject = "${lisp-project_cl-typesetting}";
       patches = [];
       lisp_dependencies = "${lisp_cl-pdf}";
-      name = "lisp_cl-typesetting-20170725-git";
+      name = "lisp_cl-typesetting-20170830-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
     }

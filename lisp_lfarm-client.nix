@@ -1,7 +1,7 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_lfarm, 
-   lisp_lfarm-common, lisp_lparallel, lisp_usocket,  
-  ccl, clisp, sbcl,  
+   lisp_cl-store, lisp_flexi-streams, lisp_lparallel, lisp_usocket,  
+  sbcl, clisp, ccl,  
   system ? builtins.currentSystem }:
 
 let
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_lfarm-common lisp_lparallel lisp_usocket  ];
+      propagatedBuildInputs = [ lisp_cl-store lisp_flexi-streams lisp_lparallel lisp_usocket  ];
       inherit stdenv;
       systemName = "lfarm-client";
       
       sourceProject = "${lisp-project_lfarm}";
       patches = [];
-      lisp_dependencies = "${lisp_lfarm-common} ${lisp_lparallel} ${lisp_usocket}";
+      lisp_dependencies = "${lisp_cl-store} ${lisp_flexi-streams} ${lisp_lparallel} ${lisp_usocket}";
       name = "lisp_lfarm-client-20150608-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
-      lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
+      lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.clisp}" "${pkgs.ccl}" ];
     }

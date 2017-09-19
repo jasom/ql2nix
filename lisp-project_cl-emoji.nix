@@ -6,9 +6,9 @@ in
   buildLispProject {
       inherit stdenv;
       patches = [];
-      name = "lisp-project_cl-emoji-20170725-git";
+      name = "lisp-project_cl-emoji-20170830-git";
       src = pkgs.fetchurl {
-        url = "http://beta.quicklisp.org/archive/cl-emoji/2017-07-25/cl-emoji-20170725-git.tgz";
-        sha256 = "faa58388a0555fde67c4e229c169a23a81fc1a043da2e65802a23509a09ab365";
+        url = "http://beta.quicklisp.org/archive/cl-emoji/2017-08-30/cl-emoji-20170830-git.tgz";
+        sha256 = "6364cad7ef6b88fd5d7aebddbeb40935140fe535756da4594563613501e5829e";
       };
     }

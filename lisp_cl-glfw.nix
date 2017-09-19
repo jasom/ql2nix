@@ -1,7 +1,7 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_cl-glfw, 
-  glfw,   lisp_cffi, lisp_cl-glfw-types,  
-  sbcl, clisp, ccl,  
+  glfw,   lisp_cffi,  
+  ccl, clisp, sbcl,  
   system ? builtins.currentSystem }:
 
 let
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_cffi lisp_cl-glfw-types glfw ];
+      propagatedBuildInputs = [ lisp_cffi glfw ];
       inherit stdenv;
       systemName = "cl-glfw";
       
       sourceProject = "${lisp-project_cl-glfw}";
       patches = [];
-      lisp_dependencies = "${lisp_cffi} ${lisp_cl-glfw-types}";
+      lisp_dependencies = "${lisp_cffi}";
       name = "lisp_cl-glfw-20150302-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
-      lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.clisp}" "${pkgs.ccl}" ];
+      lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
     }

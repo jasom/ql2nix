@@ -6,9 +6,9 @@ in
   buildLispProject {
       inherit stdenv;
       patches = [];
-      name = "lisp-project_varjo-release-quicklisp-525a7693-git";
+      name = "lisp-project_varjo-release-quicklisp-b46bcb0d-git";
       src = pkgs.fetchurl {
-        url = "http://beta.quicklisp.org/archive/varjo/2017-06-30/varjo-release-quicklisp-525a7693-git.tgz";
-        sha256 = "7ff58ab90cb51e2ea9e55ec5d10c2cbc2bc8cf023ad96e5d85bdd68535a476e3";
+        url = "http://beta.quicklisp.org/archive/varjo/2017-08-30/varjo-release-quicklisp-b46bcb0d-git.tgz";
+        sha256 = "582338cf59840514be59cff9d412d09523aa8fabe9735d9d1a60337516001f6c";
       };
     }

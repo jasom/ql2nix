@@ -6,9 +6,9 @@ in
   buildLispProject {
       inherit stdenv;
       patches = [];
-      name = "lisp-project_easy-routes-20170725-git";
+      name = "lisp-project_easy-routes-20170830-git";
       src = pkgs.fetchurl {
-        url = "http://beta.quicklisp.org/archive/easy-routes/2017-07-25/easy-routes-20170725-git.tgz";
-        sha256 = "f8ac64ab3baeb792d139a343179b068e2e4cc817beb348d4144f83cc6a3ed25e";
+        url = "http://beta.quicklisp.org/archive/easy-routes/2017-08-30/easy-routes-20170830-git.tgz";
+        sha256 = "bd6767835ab3c3105cb9ec1c7b7d99195fd111d0a164c7e137b8725826aaf085";
       };
     }

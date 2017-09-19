@@ -16,7 +16,7 @@ in
       sourceProject = "${lisp-project_parse-float}";
       patches = [];
       lisp_dependencies = "${lisp_alexandria}";
-      name = "lisp_parse-float-20170124-git";
+      name = "lisp_parse-float-20170830-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
     }

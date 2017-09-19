@@ -6,9 +6,9 @@ in
   buildLispProject {
       inherit stdenv;
       patches = [];
-      name = "lisp-project_asd-generator-20170124-git";
+      name = "lisp-project_asd-generator-20170830-git";
       src = pkgs.fetchurl {
-        url = "http://beta.quicklisp.org/archive/asd-generator/2017-01-24/asd-generator-20170124-git.tgz";
-        sha256 = "59435d0ab82c32a01e5ff727082fada3daa33e4103227fe2ad8834a784364102";
+        url = "http://beta.quicklisp.org/archive/asd-generator/2017-08-30/asd-generator-20170830-git.tgz";
+        sha256 = "8b40de651313f4248f6059b4034773a9103076abad587a67cd29b071c9f601c1";
       };
     }

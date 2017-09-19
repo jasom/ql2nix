@@ -1,7 +1,7 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_toot, 
-   lisp_alexandria, lisp_bordeaux-threads, lisp_chunga, lisp_cl-ssl, lisp_cl-base64, lisp_cl-fad, lisp_cl-ppcre, lisp_flexi-streams, lisp_md5, lisp_puri, lisp_trivial-backtrace, lisp_usocket,  
-  sbcl, clisp, ccl,  
+   lisp_puri, lisp_usocket, lisp_trivial-backtrace, lisp_md5, lisp_cl-ssl, lisp_flexi-streams, lisp_cl-ppcre, lisp_cl-fad, lisp_cl-base64, lisp_chunga, lisp_alexandria,  
+  ccl, clisp, sbcl,  
   system ? builtins.currentSystem }:
 
 let
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_alexandria lisp_bordeaux-threads lisp_chunga lisp_cl-ssl lisp_cl-base64 lisp_cl-fad lisp_cl-ppcre lisp_flexi-streams lisp_md5 lisp_puri lisp_trivial-backtrace lisp_usocket  ];
+      propagatedBuildInputs = [ lisp_puri lisp_usocket lisp_trivial-backtrace lisp_md5 lisp_cl-ssl lisp_flexi-streams lisp_cl-ppcre lisp_cl-fad lisp_cl-base64 lisp_chunga lisp_alexandria  ];
       inherit stdenv;
       systemName = "toot";
       
       sourceProject = "${lisp-project_toot}";
       patches = [];
-      lisp_dependencies = "${lisp_alexandria} ${lisp_bordeaux-threads} ${lisp_chunga} ${lisp_cl-ssl} ${lisp_cl-base64} ${lisp_cl-fad} ${lisp_cl-ppcre} ${lisp_flexi-streams} ${lisp_md5} ${lisp_puri} ${lisp_trivial-backtrace} ${lisp_usocket}";
+      lisp_dependencies = "${lisp_puri} ${lisp_usocket} ${lisp_trivial-backtrace} ${lisp_md5} ${lisp_cl-ssl} ${lisp_flexi-streams} ${lisp_cl-ppcre} ${lisp_cl-fad} ${lisp_cl-base64} ${lisp_chunga} ${lisp_alexandria}";
       name = "lisp_toot-20121125-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
-      lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.clisp}" "${pkgs.ccl}" ];
+      lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
     }

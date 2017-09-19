@@ -1,7 +1,7 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_cl-hamcrest, 
-   lisp_iterate, lisp_prove, lisp_hamcrest,  
-  ccl, clisp, sbcl,  
+   lisp_cl-reexport, lisp_split-sequence, lisp_prove, lisp_iterate,  
+  sbcl, clisp, ccl,  
   system ? builtins.currentSystem }:
 
 let
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_iterate lisp_prove lisp_hamcrest  ];
+      propagatedBuildInputs = [ lisp_cl-reexport lisp_split-sequence lisp_prove lisp_iterate  ];
       inherit stdenv;
       systemName = "hamcrest-prove";
       
       sourceProject = "${lisp-project_cl-hamcrest}";
       patches = [];
-      lisp_dependencies = "${lisp_iterate} ${lisp_prove} ${lisp_hamcrest}";
+      lisp_dependencies = "${lisp_cl-reexport} ${lisp_split-sequence} ${lisp_prove} ${lisp_iterate}";
       name = "lisp_hamcrest-prove-20170630-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
-      lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
+      lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.clisp}" "${pkgs.ccl}" ];
     }

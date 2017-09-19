@@ -1,7 +1,7 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_cl-png, 
-  libpng, libpng12,   lisp_cffi, lisp_cffi-grovel,  
-  sbcl, ccl,  
+  libpng, libpng12,   lisp_cffi-grovel,  
+  ccl, sbcl,  
   system ? builtins.currentSystem }:
 
 let
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_cffi lisp_cffi-grovel libpng libpng12 ];
+      propagatedBuildInputs = [ lisp_cffi-grovel libpng libpng12 ];
       inherit stdenv;
       systemName = "png";
       
       sourceProject = "${lisp-project_cl-png}";
       patches = [];
-      lisp_dependencies = "${lisp_cffi} ${lisp_cffi-grovel}";
+      lisp_dependencies = "${lisp_cffi-grovel}";
       name = "lisp_png-0.6";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
-      lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.ccl}" ];
+      lisp_implementations = [ "${pkgs.ccl}" "${pkgs.sbcl}" ];
     }

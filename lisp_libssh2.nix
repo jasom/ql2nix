@@ -1,7 +1,7 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_cl-libssh2, 
-  libssh2,   lisp_babel, lisp_cffi, lisp_cffi-grovel, lisp_cl-fad, lisp_hu-dwim-logger, lisp_split-sequence, lisp_trivial-gray-streams, lisp_usocket,  
-  sbcl,  
+  libssh2,   lisp_usocket, lisp_trivial-gray-streams, lisp_split-sequence, lisp_hu-dwim-logger, lisp_cl-fad, lisp_cffi-grovel,  
+  sbcl, ccl,  
   system ? builtins.currentSystem }:
 
 let
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_babel lisp_cffi lisp_cffi-grovel lisp_cl-fad lisp_hu-dwim-logger lisp_split-sequence lisp_trivial-gray-streams lisp_usocket libssh2 ];
+      propagatedBuildInputs = [ lisp_usocket lisp_trivial-gray-streams lisp_split-sequence lisp_hu-dwim-logger lisp_cl-fad lisp_cffi-grovel libssh2 ];
       inherit stdenv;
       systemName = "libssh2";
       
       sourceProject = "${lisp-project_cl-libssh2}";
       patches = [];
-      lisp_dependencies = "${lisp_babel} ${lisp_cffi} ${lisp_cffi-grovel} ${lisp_cl-fad} ${lisp_hu-dwim-logger} ${lisp_split-sequence} ${lisp_trivial-gray-streams} ${lisp_usocket}";
+      lisp_dependencies = "${lisp_usocket} ${lisp_trivial-gray-streams} ${lisp_split-sequence} ${lisp_hu-dwim-logger} ${lisp_cl-fad} ${lisp_cffi-grovel}";
       name = "lisp_libssh2-20160531-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
-      lisp_implementations = [ "${pkgs.sbcl}" ];
+      lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.ccl}" ];
     }

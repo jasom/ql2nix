@@ -1,6 +1,6 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_clml, 
-   lisp_alexandria, lisp_iterate, lisp_clml-utility, lisp_introspect-environment,  
+   lisp_introspect-environment, lisp_drakma, lisp_cl-fad, lisp_cl-ppcre, lisp_parse-number, lisp_iterate, lisp_alexandria,  
   ccl,  
   system ? builtins.currentSystem }:
 
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_alexandria lisp_iterate lisp_clml-utility lisp_introspect-environment  ];
+      propagatedBuildInputs = [ lisp_introspect-environment lisp_drakma lisp_cl-fad lisp_cl-ppcre lisp_parse-number lisp_iterate lisp_alexandria  ];
       inherit stdenv;
       systemName = "clml.hjs";
       
       sourceProject = "${lisp-project_clml}";
       patches = [];
-      lisp_dependencies = "${lisp_alexandria} ${lisp_iterate} ${lisp_clml-utility} ${lisp_introspect-environment}";
-      name = "lisp_clml-hjs-20170630-git";
+      lisp_dependencies = "${lisp_introspect-environment} ${lisp_drakma} ${lisp_cl-fad} ${lisp_cl-ppcre} ${lisp_parse-number} ${lisp_iterate} ${lisp_alexandria}";
+      name = "lisp_clml-hjs-20170830-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ "${pkgs.ccl}" ];
     }

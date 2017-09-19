@@ -1,6 +1,6 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_asteroids, 
-   lisp_lispbuilder-sdl, lisp_lispbuilder-sdl-gfx, lisp_lispbuilder-sdl-mixer,  
+  SDL_gfx, SDL_mixer,   lisp_lispbuilder-sdl,  
   ccl, sbcl,  
   system ? builtins.currentSystem }:
 
@@ -9,13 +9,13 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_lispbuilder-sdl lisp_lispbuilder-sdl-gfx lisp_lispbuilder-sdl-mixer  ];
+      propagatedBuildInputs = [ lisp_lispbuilder-sdl SDL_gfx SDL_mixer ];
       inherit stdenv;
       systemName = "asteroids";
       
       sourceProject = "${lisp-project_asteroids}";
       patches = [];
-      lisp_dependencies = "${lisp_lispbuilder-sdl} ${lisp_lispbuilder-sdl-gfx} ${lisp_lispbuilder-sdl-mixer}";
+      lisp_dependencies = "${lisp_lispbuilder-sdl}";
       name = "lisp_asteroids-20160421-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ "${pkgs.ccl}" "${pkgs.sbcl}" ];

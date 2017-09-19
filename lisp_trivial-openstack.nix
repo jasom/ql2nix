@@ -1,7 +1,7 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_trivial-openstack, 
-   lisp_alexandria, lisp_drakma, lisp_local-time, lisp_st-json,  
-  sbcl, clisp, ccl,  
+   lisp_local-time, lisp_st-json, lisp_drakma,  
+  ccl, clisp, sbcl,  
   system ? builtins.currentSystem }:
 
 let
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_alexandria lisp_drakma lisp_local-time lisp_st-json  ];
+      propagatedBuildInputs = [ lisp_local-time lisp_st-json lisp_drakma  ];
       inherit stdenv;
       systemName = "trivial-openstack";
       
       sourceProject = "${lisp-project_trivial-openstack}";
       patches = [];
-      lisp_dependencies = "${lisp_alexandria} ${lisp_drakma} ${lisp_local-time} ${lisp_st-json}";
+      lisp_dependencies = "${lisp_local-time} ${lisp_st-json} ${lisp_drakma}";
       name = "lisp_trivial-openstack-20160628-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
-      lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.clisp}" "${pkgs.ccl}" ];
+      lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
     }

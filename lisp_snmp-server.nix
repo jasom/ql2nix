@@ -1,6 +1,6 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_snmp, 
-   lisp_snmp, lisp_usocket-server,  
+   lisp_usocket-server, lisp_portable-threads, lisp_ieee-floats, lisp_trivial-gray-streams, lisp_usocket, lisp_ironclad,  
   sbcl, clisp, ccl,  
   system ? builtins.currentSystem }:
 
@@ -9,13 +9,13 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_snmp lisp_usocket-server  ];
+      propagatedBuildInputs = [ lisp_usocket-server lisp_portable-threads lisp_ieee-floats lisp_trivial-gray-streams lisp_usocket lisp_ironclad  ];
       inherit stdenv;
       systemName = "snmp-server";
       
       sourceProject = "${lisp-project_snmp}";
       patches = [];
-      lisp_dependencies = "${lisp_snmp} ${lisp_usocket-server}";
+      lisp_dependencies = "${lisp_usocket-server} ${lisp_portable-threads} ${lisp_ieee-floats} ${lisp_trivial-gray-streams} ${lisp_usocket} ${lisp_ironclad}";
       name = "lisp_snmp-server-6.1";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.clisp}" "${pkgs.ccl}" ];

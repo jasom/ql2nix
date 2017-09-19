@@ -6,9 +6,9 @@ in
   buildLispProject {
       inherit stdenv;
       patches = [];
-      name = "lisp-project_cepl-release-quicklisp-d24231e2-git";
+      name = "lisp-project_cepl-release-quicklisp-2a61dc0d-git";
       src = pkgs.fetchurl {
-        url = "http://beta.quicklisp.org/archive/cepl/2017-07-25/cepl-release-quicklisp-d24231e2-git.tgz";
-        sha256 = "3893066ea4996c7bfc443528d8e3277da7caa7a77ed01a3d10c566fa6ff34cda";
+        url = "http://beta.quicklisp.org/archive/cepl/2017-08-30/cepl-release-quicklisp-2a61dc0d-git.tgz";
+        sha256 = "59da9492a3b0791c2013dd8d61778885d66574cc9b5342bc24b1ab5ef7af0e85";
       };
     }

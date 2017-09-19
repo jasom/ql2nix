@@ -1,7 +1,7 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_cl-fad, 
-   lisp_alexandria, lisp_bordeaux-threads,  
-  sbcl, clisp, ccl,  
+   lisp_bordeaux-threads,  
+  ccl, clisp, sbcl,  
   system ? builtins.currentSystem }:
 
 let
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_alexandria lisp_bordeaux-threads  ];
+      propagatedBuildInputs = [ lisp_bordeaux-threads  ];
       inherit stdenv;
       systemName = "cl-fad";
       
       sourceProject = "${lisp-project_cl-fad}";
       patches = [];
-      lisp_dependencies = "${lisp_alexandria} ${lisp_bordeaux-threads}";
+      lisp_dependencies = "${lisp_bordeaux-threads}";
       name = "lisp_cl-fad-0.7.4";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
-      lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.clisp}" "${pkgs.ccl}" ];
+      lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
     }

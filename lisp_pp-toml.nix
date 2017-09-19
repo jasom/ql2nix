@@ -1,6 +1,6 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_pp-toml, 
-   lisp_alexandria, lisp_cl-ppcre, lisp_esrap, lisp_generic-comparability, lisp_local-time, lisp_parse-number, lisp_split-sequence,  
+   lisp_esrap, lisp_split-sequence, lisp_parse-number, lisp_local-time, lisp_generic-comparability, lisp_cl-ppcre, lisp_alexandria,  
   sbcl,  
   system ? builtins.currentSystem }:
 
@@ -9,13 +9,13 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_alexandria lisp_cl-ppcre lisp_esrap lisp_generic-comparability lisp_local-time lisp_parse-number lisp_split-sequence  ];
+      propagatedBuildInputs = [ lisp_esrap lisp_split-sequence lisp_parse-number lisp_local-time lisp_generic-comparability lisp_cl-ppcre lisp_alexandria  ];
       inherit stdenv;
       systemName = "pp-toml";
       
       sourceProject = "${lisp-project_pp-toml}";
       patches = [];
-      lisp_dependencies = "${lisp_alexandria} ${lisp_cl-ppcre} ${lisp_esrap} ${lisp_generic-comparability} ${lisp_local-time} ${lisp_parse-number} ${lisp_split-sequence}";
+      lisp_dependencies = "${lisp_esrap} ${lisp_split-sequence} ${lisp_parse-number} ${lisp_local-time} ${lisp_generic-comparability} ${lisp_cl-ppcre} ${lisp_alexandria}";
       name = "lisp_pp-toml-20160208-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ "${pkgs.sbcl}" ];

@@ -1,7 +1,7 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_postmodern, 
-   lisp_cl-postgres,  
-  ccl, clisp, sbcl,  
+   lisp_usocket, lisp_md5,  
+  sbcl, clisp, ccl,  
   system ? builtins.currentSystem }:
 
 let
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_cl-postgres  ];
+      propagatedBuildInputs = [ lisp_usocket lisp_md5  ];
       inherit stdenv;
       systemName = "s-sql";
       
       sourceProject = "${lisp-project_postmodern}";
       patches = [];
-      lisp_dependencies = "${lisp_cl-postgres}";
+      lisp_dependencies = "${lisp_usocket} ${lisp_md5}";
       name = "lisp_s-sql-20170403-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
-      lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
+      lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.clisp}" "${pkgs.ccl}" ];
     }

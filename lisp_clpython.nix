@@ -1,7 +1,7 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_cl-python, 
-   lisp_clpython-basic, lisp_clpython-parser, lisp_clpython-runtime,  
-  ccl, clisp, sbcl,  
+   lisp_cl-custom-hash-table, lisp_cl-fad, lisp_yacc, lisp_closer-mop,  
+  sbcl, clisp, ccl,  
   system ? builtins.currentSystem }:
 
 let
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_clpython-basic lisp_clpython-parser lisp_clpython-runtime  ];
+      propagatedBuildInputs = [ lisp_cl-custom-hash-table lisp_cl-fad lisp_yacc lisp_closer-mop  ];
       inherit stdenv;
       systemName = "clpython";
       
       sourceProject = "${lisp-project_cl-python}";
       patches = [];
-      lisp_dependencies = "${lisp_clpython-basic} ${lisp_clpython-parser} ${lisp_clpython-runtime}";
+      lisp_dependencies = "${lisp_cl-custom-hash-table} ${lisp_cl-fad} ${lisp_yacc} ${lisp_closer-mop}";
       name = "lisp_clpython-20170630-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
-      lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
+      lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.clisp}" "${pkgs.ccl}" ];
     }

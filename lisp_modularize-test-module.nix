@@ -1,6 +1,6 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_modularize, 
-   lisp_modularize,  
+   lisp_documentation-utils,  
   ccl, clisp, sbcl,  
   system ? builtins.currentSystem }:
 
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_modularize  ];
+      propagatedBuildInputs = [ lisp_documentation-utils  ];
       inherit stdenv;
       systemName = "modularize-test-module";
       
       sourceProject = "${lisp-project_modularize}";
       patches = [];
-      lisp_dependencies = "${lisp_modularize}";
-      name = "lisp_modularize-test-module-20170630-git";
+      lisp_dependencies = "${lisp_documentation-utils}";
+      name = "lisp_modularize-test-module-20170830-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
     }

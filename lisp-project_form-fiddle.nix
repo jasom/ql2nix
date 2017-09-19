@@ -6,9 +6,9 @@ in
   buildLispProject {
       inherit stdenv;
       patches = [];
-      name = "lisp-project_form-fiddle-20170630-git";
+      name = "lisp-project_form-fiddle-20170830-git";
       src = pkgs.fetchurl {
-        url = "http://beta.quicklisp.org/archive/form-fiddle/2017-06-30/form-fiddle-20170630-git.tgz";
-        sha256 = "4eee3647b59fb6ce0df2e1d0a662424ca921042812a24030d7db40e153d49170";
+        url = "http://beta.quicklisp.org/archive/form-fiddle/2017-08-30/form-fiddle-20170830-git.tgz";
+        sha256 = "ebba7e6b77b05ec71e9ba68f4b93e2a6cd9b46a1ba65a61edb5c07728eedf573";
       };
     }

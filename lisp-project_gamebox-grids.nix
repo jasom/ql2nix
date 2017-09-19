@@ -6,9 +6,9 @@ in
   buildLispProject {
       inherit stdenv;
       patches = [];
-      name = "lisp-project_gamebox-grids-20170725-git";
+      name = "lisp-project_gamebox-grids-20170830-git";
       src = pkgs.fetchurl {
-        url = "http://beta.quicklisp.org/archive/gamebox-grids/2017-07-25/gamebox-grids-20170725-git.tgz";
-        sha256 = "7bcf4148ab01506b5201fa052afb356ff640af8541c8571e9ec9564d6fc8a01f";
+        url = "http://beta.quicklisp.org/archive/gamebox-grids/2017-08-30/gamebox-grids-20170830-git.tgz";
+        sha256 = "28f6eeb28e0a22e4b666c329d28235a6993215978227c708383ec0538d66256e";
       };
     }

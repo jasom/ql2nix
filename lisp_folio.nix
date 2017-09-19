@@ -1,7 +1,7 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_folio, 
-   lisp_folio-as, lisp_folio-boxes, lisp_folio-collections, lisp_folio-functions,  
-  sbcl, clisp, ccl,  
+   lisp_fset,  
+  ccl, clisp, sbcl,  
   system ? builtins.currentSystem }:
 
 let
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_folio-as lisp_folio-boxes lisp_folio-collections lisp_folio-functions  ];
+      propagatedBuildInputs = [ lisp_fset  ];
       inherit stdenv;
       systemName = "folio";
       
       sourceProject = "${lisp-project_folio}";
       patches = [];
-      lisp_dependencies = "${lisp_folio-as} ${lisp_folio-boxes} ${lisp_folio-collections} ${lisp_folio-functions}";
+      lisp_dependencies = "${lisp_fset}";
       name = "lisp_folio-20130128-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
-      lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.clisp}" "${pkgs.ccl}" ];
+      lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
     }

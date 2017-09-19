@@ -6,9 +6,9 @@ in
   buildLispProject {
       inherit stdenv;
       patches = [];
-      name = "lisp-project_flac-parser-20170725-git";
+      name = "lisp-project_flac-parser-20170830-git";
       src = pkgs.fetchurl {
-        url = "http://beta.quicklisp.org/archive/flac-parser/2017-07-25/flac-parser-20170725-git.tgz";
-        sha256 = "c7536972d25cf28087d7c957662bb2b3b3fb7724f4171f8cb25b0fd3cc6d57bb";
+        url = "http://beta.quicklisp.org/archive/flac-parser/2017-08-30/flac-parser-20170830-git.tgz";
+        sha256 = "961f9328510beb4826e13893914b99f188f0e38e9d50ad02cc443130cd38b313";
       };
     }

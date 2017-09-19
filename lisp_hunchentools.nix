@@ -1,6 +1,6 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_hunchentools, 
-   lisp_alexandria, lisp_cl-ppcre, lisp_hunchentoot, lisp_ironclad,  
+   lisp_ironclad, lisp_hunchentoot,  
   sbcl, clisp, ccl,  
   system ? builtins.currentSystem }:
 
@@ -9,13 +9,13 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_alexandria lisp_cl-ppcre lisp_hunchentoot lisp_ironclad  ];
+      propagatedBuildInputs = [ lisp_ironclad lisp_hunchentoot  ];
       inherit stdenv;
       systemName = "hunchentools";
       
       sourceProject = "${lisp-project_hunchentools}";
       patches = [];
-      lisp_dependencies = "${lisp_alexandria} ${lisp_cl-ppcre} ${lisp_hunchentoot} ${lisp_ironclad}";
+      lisp_dependencies = "${lisp_ironclad} ${lisp_hunchentoot}";
       name = "lisp_hunchentools-20161204-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.clisp}" "${pkgs.ccl}" ];

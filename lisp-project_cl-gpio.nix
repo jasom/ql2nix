@@ -6,9 +6,9 @@ in
   buildLispProject {
       inherit stdenv;
       patches = [];
-      name = "lisp-project_cl-gpio-20170630-git";
+      name = "lisp-project_cl-gpio-20170830-git";
       src = pkgs.fetchurl {
-        url = "http://beta.quicklisp.org/archive/cl-gpio/2017-06-30/cl-gpio-20170630-git.tgz";
-        sha256 = "07b45ea53d83b8dbc6ea212a49ef38b02eed6b1f39eb6453fe65927b5ad96673";
+        url = "http://beta.quicklisp.org/archive/cl-gpio/2017-08-30/cl-gpio-20170830-git.tgz";
+        sha256 = "a5e7e97d692c433a536861b8ef1bb82d0ac90fc956e1c62b135c64399d59a9b8";
       };
     }

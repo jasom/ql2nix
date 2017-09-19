@@ -1,6 +1,6 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_cl-scan, 
-   lisp_inferior-shell, lisp_lparallel, lisp_usocket,  
+   lisp_lparallel, lisp_inferior-shell, lisp_usocket,  
   ccl, clisp, sbcl,  
   system ? builtins.currentSystem }:
 
@@ -9,13 +9,13 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_inferior-shell lisp_lparallel lisp_usocket  ];
+      propagatedBuildInputs = [ lisp_lparallel lisp_inferior-shell lisp_usocket  ];
       inherit stdenv;
       systemName = "cl-scan";
       
       sourceProject = "${lisp-project_cl-scan}";
       patches = [];
-      lisp_dependencies = "${lisp_inferior-shell} ${lisp_lparallel} ${lisp_usocket}";
+      lisp_dependencies = "${lisp_lparallel} ${lisp_inferior-shell} ${lisp_usocket}";
       name = "lisp_cl-scan-20161031-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];

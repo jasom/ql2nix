@@ -1,7 +1,7 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_restas-file-publisher, 
-   lisp_cl-fad, lisp_restas,  
-  sbcl, clisp, ccl,  
+   lisp_restas,  
+  ccl, clisp, sbcl,  
   system ? builtins.currentSystem }:
 
 let
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_cl-fad lisp_restas  ];
+      propagatedBuildInputs = [ lisp_restas  ];
       inherit stdenv;
       systemName = "restas.file-publisher";
       
       sourceProject = "${lisp-project_restas-file-publisher}";
       patches = [];
-      lisp_dependencies = "${lisp_cl-fad} ${lisp_restas}";
+      lisp_dependencies = "${lisp_restas}";
       name = "lisp_restas-file-publisher-20120107-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
-      lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.clisp}" "${pkgs.ccl}" ];
+      lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
     }

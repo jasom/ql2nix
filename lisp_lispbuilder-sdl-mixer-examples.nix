@@ -1,6 +1,6 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_lispbuilder, 
-   lisp_cffi, lisp_lispbuilder-sdl, lisp_lispbuilder-sdl-mixer,  
+  SDL, SDL_mixer,   lisp_cffi,  
   ccl, sbcl,  
   system ? builtins.currentSystem }:
 
@@ -9,13 +9,13 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_cffi lisp_lispbuilder-sdl lisp_lispbuilder-sdl-mixer  ];
+      propagatedBuildInputs = [ lisp_cffi SDL SDL_mixer ];
       inherit stdenv;
       systemName = "lispbuilder-sdl-mixer-examples";
       
       sourceProject = "${lisp-project_lispbuilder}";
       patches = [];
-      lisp_dependencies = "${lisp_cffi} ${lisp_lispbuilder-sdl} ${lisp_lispbuilder-sdl-mixer}";
+      lisp_dependencies = "${lisp_cffi}";
       name = "lisp_lispbuilder-sdl-mixer-examples-20170403-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ "${pkgs.ccl}" "${pkgs.sbcl}" ];

@@ -6,9 +6,9 @@ in
   buildLispProject {
       inherit stdenv;
       patches = [];
-      name = "lisp-project_cl-yesql-20170725-git";
+      name = "lisp-project_cl-yesql-20170830-git";
       src = pkgs.fetchurl {
-        url = "http://beta.quicklisp.org/archive/cl-yesql/2017-07-25/cl-yesql-20170725-git.tgz";
-        sha256 = "94a380644c2f4e2316fbf4891bfc18301d438ec588ef2af45400ef38bcd3c459";
+        url = "http://beta.quicklisp.org/archive/cl-yesql/2017-08-30/cl-yesql-20170830-git.tgz";
+        sha256 = "56cc42eba94f8a0f1dc8f81d41c1598ebcaf7a8dc1e90abe30f036f5234a4f5c";
       };
     }

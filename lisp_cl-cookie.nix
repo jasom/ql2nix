@@ -1,7 +1,7 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_cl-cookie, 
-   lisp_alexandria, lisp_cl-ppcre, lisp_local-time, lisp_proc-parse, lisp_quri,  
-  ccl, clisp, sbcl,  
+   lisp_local-time, lisp_quri, lisp_cl-ppcre, lisp_proc-parse,  
+  sbcl, clisp, ccl,  
   system ? builtins.currentSystem }:
 
 let
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_alexandria lisp_cl-ppcre lisp_local-time lisp_proc-parse lisp_quri  ];
+      propagatedBuildInputs = [ lisp_local-time lisp_quri lisp_cl-ppcre lisp_proc-parse  ];
       inherit stdenv;
       systemName = "cl-cookie";
       
       sourceProject = "${lisp-project_cl-cookie}";
       patches = [];
-      lisp_dependencies = "${lisp_alexandria} ${lisp_cl-ppcre} ${lisp_local-time} ${lisp_proc-parse} ${lisp_quri}";
+      lisp_dependencies = "${lisp_local-time} ${lisp_quri} ${lisp_cl-ppcre} ${lisp_proc-parse}";
       name = "lisp_cl-cookie-20150804-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
-      lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
+      lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.clisp}" "${pkgs.ccl}" ];
     }

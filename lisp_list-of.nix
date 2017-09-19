@@ -1,7 +1,7 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_asdf-finalizers, 
-   lisp_asdf-finalizers,  
-  ccl, clisp, sbcl,  
+   
+  sbcl, clisp, ccl,  
   system ? builtins.currentSystem }:
 
 let
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_asdf-finalizers  ];
+      propagatedBuildInputs = [   ];
       inherit stdenv;
       systemName = "list-of";
       
       sourceProject = "${lisp-project_asdf-finalizers}";
       patches = [];
-      lisp_dependencies = "${lisp_asdf-finalizers}";
+      lisp_dependencies = "";
       name = "lisp_list-of-20170403-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
-      lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
+      lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.clisp}" "${pkgs.ccl}" ];
     }

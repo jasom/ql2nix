@@ -1,6 +1,6 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_nineveh, 
-   lisp_cepl, lisp_cl-soil, lisp_livesupport, lisp_easing, lisp_dendrite-primitives,  
+   lisp_dendrite-primitives, lisp_easing, lisp_livesupport, lisp_cl-soil, lisp_cepl,  
   ccl, sbcl,  
   system ? builtins.currentSystem }:
 
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_cepl lisp_cl-soil lisp_livesupport lisp_easing lisp_dendrite-primitives  ];
+      propagatedBuildInputs = [ lisp_dendrite-primitives lisp_easing lisp_livesupport lisp_cl-soil lisp_cepl  ];
       inherit stdenv;
       systemName = "nineveh";
       
       sourceProject = "${lisp-project_nineveh}";
       patches = [];
-      lisp_dependencies = "${lisp_cepl} ${lisp_cl-soil} ${lisp_livesupport} ${lisp_easing} ${lisp_dendrite-primitives}";
-      name = "lisp_nineveh-release-quicklisp-fd995883-git";
+      lisp_dependencies = "${lisp_dendrite-primitives} ${lisp_easing} ${lisp_livesupport} ${lisp_cl-soil} ${lisp_cepl}";
+      name = "lisp_nineveh-release-quicklisp-06899fb4-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ "${pkgs.ccl}" "${pkgs.sbcl}" ];
     }

@@ -16,7 +16,7 @@ in
       sourceProject = "${lisp-project_modularize}";
       patches = [];
       lisp_dependencies = "${lisp_documentation-utils}";
-      name = "lisp_modularize-20170630-git";
+      name = "lisp_modularize-20170830-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
     }

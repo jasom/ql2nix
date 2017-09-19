@@ -1,6 +1,6 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_iolib, 
-   lisp_iolib-asdf, lisp_iolib-base, lisp_cffi,  
+   lisp_cffi, lisp_split-sequence, lisp_alexandria,  
   ccl, clisp, sbcl,  
   system ? builtins.currentSystem }:
 
@@ -9,13 +9,13 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_iolib-asdf lisp_iolib-base lisp_cffi  ];
+      propagatedBuildInputs = [ lisp_cffi lisp_split-sequence lisp_alexandria  ];
       inherit stdenv;
       systemName = "iolib.grovel";
       
       sourceProject = "${lisp-project_iolib}";
       patches = [];
-      lisp_dependencies = "${lisp_iolib-asdf} ${lisp_iolib-base} ${lisp_cffi}";
+      lisp_dependencies = "${lisp_cffi} ${lisp_split-sequence} ${lisp_alexandria}";
       name = "lisp_iolib-grovel-v0.8.3";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];

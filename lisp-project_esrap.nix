@@ -6,9 +6,9 @@ in
   buildLispProject {
       inherit stdenv;
       patches = [];
-      name = "lisp-project_esrap-20170630-git";
+      name = "lisp-project_esrap-20170830-git";
       src = pkgs.fetchurl {
-        url = "http://beta.quicklisp.org/archive/esrap/2017-06-30/esrap-20170630-git.tgz";
-        sha256 = "b08769db4ca71a3b25db32c6bcc9b7144e13570eea2f1fd903d98f354b81579c";
+        url = "http://beta.quicklisp.org/archive/esrap/2017-08-30/esrap-20170830-git.tgz";
+        sha256 = "134cdd069be534355dcbdfd10a2def6705c354441169beb86643dfffd21112f1";
       };
     }

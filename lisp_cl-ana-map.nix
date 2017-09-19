@@ -1,7 +1,7 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_cl-ana, 
-   lisp_cl-ana-hash-table-utils,  
-  ccl, clisp, sbcl,  
+   
+  sbcl, clisp, ccl,  
   system ? builtins.currentSystem }:
 
 let
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_cl-ana-hash-table-utils  ];
+      propagatedBuildInputs = [   ];
       inherit stdenv;
       systemName = "cl-ana.map";
       
       sourceProject = "${lisp-project_cl-ana}";
       patches = [];
-      lisp_dependencies = "${lisp_cl-ana-hash-table-utils}";
-      name = "lisp_cl-ana-map-20170725-git";
+      lisp_dependencies = "";
+      name = "lisp_cl-ana-map-20170830-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
-      lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
+      lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.clisp}" "${pkgs.ccl}" ];
     }

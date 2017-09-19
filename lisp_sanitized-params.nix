@@ -16,7 +16,7 @@ in
       sourceProject = "${lisp-project_sanitized-params}";
       patches = [];
       lisp_dependencies = "${lisp_alexandria} ${lisp_closer-mop}";
-      name = "lisp_sanitized-params-20170725-git";
+      name = "lisp_sanitized-params-20170830-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.clisp}" "${pkgs.ccl}" ];
     }

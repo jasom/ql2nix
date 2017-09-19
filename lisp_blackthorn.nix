@@ -1,6 +1,6 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_blackthorn-engine, 
-   lisp_alexandria, lisp_cl-containers, lisp_cl-fad, lisp_cl-opengl, lisp_cl-store, lisp_command-line-arguments, lisp_iterate, lisp_lispbuilder-sdl, lisp_lispbuilder-sdl-image, lisp_lispbuilder-sdl-mixer, lisp_mt19937, lisp_trivial-features, lisp_usocket,  
+  SDL_image, SDL_mixer,   lisp_cl-opengl, lisp_lispbuilder-sdl, lisp_cl-store, lisp_usocket, lisp_mt19937, lisp_cl-containers, lisp_iterate, lisp_cl-fad, lisp_command-line-arguments, lisp_trivial-features, lisp_alexandria,  
   ccl, sbcl,  
   system ? builtins.currentSystem }:
 
@@ -9,13 +9,13 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_alexandria lisp_cl-containers lisp_cl-fad lisp_cl-opengl lisp_cl-store lisp_command-line-arguments lisp_iterate lisp_lispbuilder-sdl lisp_lispbuilder-sdl-image lisp_lispbuilder-sdl-mixer lisp_mt19937 lisp_trivial-features lisp_usocket  ];
+      propagatedBuildInputs = [ lisp_cl-opengl lisp_lispbuilder-sdl lisp_cl-store lisp_usocket lisp_mt19937 lisp_cl-containers lisp_iterate lisp_cl-fad lisp_command-line-arguments lisp_trivial-features lisp_alexandria SDL_image SDL_mixer ];
       inherit stdenv;
       systemName = "blackthorn";
       
       sourceProject = "${lisp-project_blackthorn-engine}";
       patches = [];
-      lisp_dependencies = "${lisp_alexandria} ${lisp_cl-containers} ${lisp_cl-fad} ${lisp_cl-opengl} ${lisp_cl-store} ${lisp_command-line-arguments} ${lisp_iterate} ${lisp_lispbuilder-sdl} ${lisp_lispbuilder-sdl-image} ${lisp_lispbuilder-sdl-mixer} ${lisp_mt19937} ${lisp_trivial-features} ${lisp_usocket}";
+      lisp_dependencies = "${lisp_cl-opengl} ${lisp_lispbuilder-sdl} ${lisp_cl-store} ${lisp_usocket} ${lisp_mt19937} ${lisp_cl-containers} ${lisp_iterate} ${lisp_cl-fad} ${lisp_command-line-arguments} ${lisp_trivial-features} ${lisp_alexandria}";
       name = "lisp_blackthorn-20150608-hg";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ "${pkgs.ccl}" "${pkgs.sbcl}" ];

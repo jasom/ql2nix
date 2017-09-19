@@ -16,7 +16,7 @@ in
       sourceProject = "${lisp-project_ieee-floats}";
       patches = [];
       lisp_dependencies = "";
-      name = "lisp_ieee-floats-20160318-git";
+      name = "lisp_ieee-floats-20170830-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.clisp}" "${pkgs.ccl}" ];
     }

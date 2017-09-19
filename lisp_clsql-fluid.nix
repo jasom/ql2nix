@@ -16,7 +16,7 @@ in
       sourceProject = "${lisp-project_clsql-fluid}";
       patches = [];
       lisp_dependencies = "${lisp_bordeaux-threads} ${lisp_closer-mop} ${lisp_clsql}";
-      name = "lisp_clsql-fluid-20170725-git";
+      name = "lisp_clsql-fluid-20170830-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ "${pkgs.ccl}" "${pkgs.sbcl}" ];
     }

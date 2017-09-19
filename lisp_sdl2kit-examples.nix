@@ -1,7 +1,7 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_sdl2kit, 
-   lisp_alexandria, lisp_sdl2kit, lisp_glkit,  
-  ccl, sbcl,  
+   lisp_glkit, lisp_cl-opengl, lisp_sdl2, lisp_alexandria,  
+  sbcl, ccl,  
   system ? builtins.currentSystem }:
 
 let
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_alexandria lisp_sdl2kit lisp_glkit  ];
+      propagatedBuildInputs = [ lisp_glkit lisp_cl-opengl lisp_sdl2 lisp_alexandria  ];
       inherit stdenv;
       systemName = "sdl2kit-examples";
       
       sourceProject = "${lisp-project_sdl2kit}";
       patches = [];
-      lisp_dependencies = "${lisp_alexandria} ${lisp_sdl2kit} ${lisp_glkit}";
+      lisp_dependencies = "${lisp_glkit} ${lisp_cl-opengl} ${lisp_sdl2} ${lisp_alexandria}";
       name = "lisp_sdl2kit-examples-20170630-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
-      lisp_implementations = [ "${pkgs.ccl}" "${pkgs.sbcl}" ];
+      lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.ccl}" ];
     }

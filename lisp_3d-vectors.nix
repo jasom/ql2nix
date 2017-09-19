@@ -16,7 +16,7 @@ in
       sourceProject = "${lisp-project_3d-vectors}";
       patches = [];
       lisp_dependencies = "${lisp_documentation-utils}";
-      name = "lisp_3d-vectors-20170725-git";
+      name = "lisp_3d-vectors-20170830-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ "${pkgs.ccl}" "${pkgs.sbcl}" ];
     }

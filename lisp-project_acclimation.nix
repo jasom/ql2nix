@@ -6,9 +6,9 @@ in
   buildLispProject {
       inherit stdenv;
       patches = [];
-      name = "lisp-project_acclimation-20170124-git";
+      name = "lisp-project_acclimation-20170830-git";
       src = pkgs.fetchurl {
-        url = "http://beta.quicklisp.org/archive/acclimation/2017-01-24/acclimation-20170124-git.tgz";
-        sha256 = "04e677389a71b7f8ecfa77b17107024df76d444f819bdc6e65bcab7a873f6945";
+        url = "http://beta.quicklisp.org/archive/acclimation/2017-08-30/acclimation-20170830-git.tgz";
+        sha256 = "8e539f75f25e03cb53b1a00f2e8f21e218a49d6544529967d4b8969459addc1e";
       };
     }

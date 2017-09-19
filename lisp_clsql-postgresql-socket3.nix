@@ -1,6 +1,6 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_clsql, 
-   lisp_cl-postgres, lisp_clsql, lisp_md5,  
+   lisp_cl-postgres, lisp_md5, lisp_uffi,  
   ccl, sbcl,  
   system ? builtins.currentSystem }:
 
@@ -9,13 +9,13 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_cl-postgres lisp_clsql lisp_md5  ];
+      propagatedBuildInputs = [ lisp_cl-postgres lisp_md5 lisp_uffi  ];
       inherit stdenv;
       systemName = "clsql-postgresql-socket3";
       
       sourceProject = "${lisp-project_clsql}";
       patches = [];
-      lisp_dependencies = "${lisp_cl-postgres} ${lisp_clsql} ${lisp_md5}";
+      lisp_dependencies = "${lisp_cl-postgres} ${lisp_md5} ${lisp_uffi}";
       name = "lisp_clsql-postgresql-socket3-20160208-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ "${pkgs.ccl}" "${pkgs.sbcl}" ];

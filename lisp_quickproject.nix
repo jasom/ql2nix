@@ -1,6 +1,6 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_quickproject, 
-   lisp_cl-fad, lisp_html-template,  
+   lisp_html-template, lisp_cl-fad,  
   sbcl, clisp, ccl,  
   system ? builtins.currentSystem }:
 
@@ -9,13 +9,13 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_cl-fad lisp_html-template  ];
+      propagatedBuildInputs = [ lisp_html-template lisp_cl-fad  ];
       inherit stdenv;
       systemName = "quickproject";
       
       sourceProject = "${lisp-project_quickproject}";
       patches = [];
-      lisp_dependencies = "${lisp_cl-fad} ${lisp_html-template}";
+      lisp_dependencies = "${lisp_html-template} ${lisp_cl-fad}";
       name = "lisp_quickproject-1.2.2";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.clisp}" "${pkgs.ccl}" ];

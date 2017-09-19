@@ -1,6 +1,6 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_lisp-zmq, 
-   lisp_bordeaux-threads, lisp_zmq,  
+  zeromq,   lisp_bordeaux-threads, lisp_cffi-grovel,  
   sbcl, ccl,  
   system ? builtins.currentSystem }:
 
@@ -9,13 +9,13 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_bordeaux-threads lisp_zmq  ];
+      propagatedBuildInputs = [ lisp_bordeaux-threads lisp_cffi-grovel zeromq ];
       inherit stdenv;
       systemName = "zmq-examples";
       
       sourceProject = "${lisp-project_lisp-zmq}";
       patches = [];
-      lisp_dependencies = "${lisp_bordeaux-threads} ${lisp_zmq}";
+      lisp_dependencies = "${lisp_bordeaux-threads} ${lisp_cffi-grovel}";
       name = "lisp_zmq-examples-20160208-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.ccl}" ];

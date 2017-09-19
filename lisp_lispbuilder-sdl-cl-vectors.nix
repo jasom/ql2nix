@@ -1,7 +1,7 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_lispbuilder, 
-   lisp_cl-aa-misc, lisp_cl-paths-ttf, lisp_cl-vectors, lisp_lispbuilder-sdl, lisp_zpb-ttf,  
-  ccl, sbcl,  
+  SDL,   lisp_cffi, lisp_cl-paths-ttf,  
+  sbcl, ccl,  
   system ? builtins.currentSystem }:
 
 let
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_cl-aa-misc lisp_cl-paths-ttf lisp_cl-vectors lisp_lispbuilder-sdl lisp_zpb-ttf  ];
+      propagatedBuildInputs = [ lisp_cffi lisp_cl-paths-ttf SDL ];
       inherit stdenv;
       systemName = "lispbuilder-sdl-cl-vectors";
       
       sourceProject = "${lisp-project_lispbuilder}";
       patches = [];
-      lisp_dependencies = "${lisp_cl-aa-misc} ${lisp_cl-paths-ttf} ${lisp_cl-vectors} ${lisp_lispbuilder-sdl} ${lisp_zpb-ttf}";
+      lisp_dependencies = "${lisp_cffi} ${lisp_cl-paths-ttf}";
       name = "lisp_lispbuilder-sdl-cl-vectors-20170403-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
-      lisp_implementations = [ "${pkgs.ccl}" "${pkgs.sbcl}" ];
+      lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.ccl}" ];
     }

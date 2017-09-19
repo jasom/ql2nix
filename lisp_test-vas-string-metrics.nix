@@ -1,7 +1,7 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_vas-string-metrics, 
-   lisp_vas-string-metrics,  
-  ccl, clisp, sbcl,  
+   
+  sbcl, clisp, ccl,  
   system ? builtins.currentSystem }:
 
 let
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_vas-string-metrics  ];
+      propagatedBuildInputs = [   ];
       inherit stdenv;
       systemName = "test.vas-string-metrics";
       
       sourceProject = "${lisp-project_vas-string-metrics}";
       patches = [];
-      lisp_dependencies = "${lisp_vas-string-metrics}";
+      lisp_dependencies = "";
       name = "lisp_test-vas-string-metrics-20160208-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
-      lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
+      lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.clisp}" "${pkgs.ccl}" ];
     }

@@ -6,9 +6,9 @@ in
   buildLispProject {
       inherit stdenv;
       patches = [];
-      name = "lisp-project_plump-bundle-20170630-git";
+      name = "lisp-project_plump-bundle-20170830-git";
       src = pkgs.fetchurl {
-        url = "http://beta.quicklisp.org/archive/plump-bundle/2017-06-30/plump-bundle-20170630-git.tgz";
-        sha256 = "207548061a09c2b3830ebabc48704d2d22666a786a57a0dd729ec73e39ae6f74";
+        url = "http://beta.quicklisp.org/archive/plump-bundle/2017-08-30/plump-bundle-20170830-git.tgz";
+        sha256 = "4ece0f9c8035ff9e1dae5457fd0c633335820317e247c3437dbbef8d0162a350";
       };
     }

@@ -6,9 +6,9 @@ in
   buildLispProject {
       inherit stdenv;
       patches = [];
-      name = "lisp-project_humbler-20170630-git";
+      name = "lisp-project_humbler-20170830-git";
       src = pkgs.fetchurl {
-        url = "http://beta.quicklisp.org/archive/humbler/2017-06-30/humbler-20170630-git.tgz";
-        sha256 = "3f62285b22b2f3572097252a499ba80f7cb74ccd7c6c0715f0545269f4307ef4";
+        url = "http://beta.quicklisp.org/archive/humbler/2017-08-30/humbler-20170830-git.tgz";
+        sha256 = "efcdb23d14a1172838423d63c5185cb8dd138f6280dfb8653026d5a643254dbf";
       };
     }

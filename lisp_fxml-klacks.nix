@@ -1,6 +1,6 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_fxml, 
-   lisp_fxml-runes, lisp_fxml-xml,  
+   lisp_serapeum, lisp_flexi-streams, lisp_quri, lisp_trivial-gray-streams, lisp_named-readtables, lisp_babel,  
   sbcl, clisp, ccl,  
   system ? builtins.currentSystem }:
 
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_fxml-runes lisp_fxml-xml  ];
+      propagatedBuildInputs = [ lisp_serapeum lisp_flexi-streams lisp_quri lisp_trivial-gray-streams lisp_named-readtables lisp_babel  ];
       inherit stdenv;
       systemName = "fxml/klacks";
       
       sourceProject = "${lisp-project_fxml}";
       patches = [];
-      lisp_dependencies = "${lisp_fxml-runes} ${lisp_fxml-xml}";
-      name = "lisp_fxml-klacks-20170630-git";
+      lisp_dependencies = "${lisp_serapeum} ${lisp_flexi-streams} ${lisp_quri} ${lisp_trivial-gray-streams} ${lisp_named-readtables} ${lisp_babel}";
+      name = "lisp_fxml-klacks-20170830-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.clisp}" "${pkgs.ccl}" ];
     }

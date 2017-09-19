@@ -16,7 +16,7 @@ in
       sourceProject = "${lisp-project_fiasco}";
       patches = [];
       lisp_dependencies = "${lisp_alexandria}";
-      name = "lisp_fiasco-20161031-git";
+      name = "lisp_fiasco-20170830-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
     }

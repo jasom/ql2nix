@@ -1,7 +1,7 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_dendrite, 
-   lisp_dendrite-primitives,  
-  ccl, clisp, sbcl,  
+   lisp_cffi, lisp_rtg-math,  
+  sbcl, clisp, ccl,  
   system ? builtins.currentSystem }:
 
 let
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_dendrite-primitives  ];
+      propagatedBuildInputs = [ lisp_cffi lisp_rtg-math  ];
       inherit stdenv;
       systemName = "dendrite";
       
       sourceProject = "${lisp-project_dendrite}";
       patches = [];
-      lisp_dependencies = "${lisp_dendrite-primitives}";
+      lisp_dependencies = "${lisp_cffi} ${lisp_rtg-math}";
       name = "lisp_dendrite-release-quicklisp-662aedba-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
-      lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
+      lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.clisp}" "${pkgs.ccl}" ];
     }

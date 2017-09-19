@@ -6,9 +6,9 @@ in
   buildLispProject {
       inherit stdenv;
       patches = [];
-      name = "lisp-project_south-20170630-git";
+      name = "lisp-project_south-20170830-git";
       src = pkgs.fetchurl {
-        url = "http://beta.quicklisp.org/archive/south/2017-06-30/south-20170630-git.tgz";
-        sha256 = "2ae8b5f8c37cf3cecd442bba49038ef5f3d9619215df8928daa92c40623a35c9";
+        url = "http://beta.quicklisp.org/archive/south/2017-08-30/south-20170830-git.tgz";
+        sha256 = "06003a6f33063a0bdb9586d6e90018c09ca6a7c30ce4251be93262de55c90757";
       };
     }

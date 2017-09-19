@@ -6,9 +6,9 @@ in
   buildLispProject {
       inherit stdenv;
       patches = [];
-      name = "lisp-project_cl-fluent-logger-20170725-git";
+      name = "lisp-project_cl-fluent-logger-20170830-git";
       src = pkgs.fetchurl {
-        url = "http://beta.quicklisp.org/archive/cl-fluent-logger/2017-07-25/cl-fluent-logger-20170725-git.tgz";
-        sha256 = "b9845ab6f45381c8507927b508182a8eddab5456085723268823afa372b05c27";
+        url = "http://beta.quicklisp.org/archive/cl-fluent-logger/2017-08-30/cl-fluent-logger-20170830-git.tgz";
+        sha256 = "c04d5bd7c7dd95844cfca9b28217503fa0cbd9bded317da64e6f3f3967b87188";
       };
     }

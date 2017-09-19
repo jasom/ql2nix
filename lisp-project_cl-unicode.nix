@@ -5,7 +5,7 @@ let
 in
   buildLispProject {
       inherit stdenv;
-      patches = [];
+      patches = [./patches/lisp-project_cl-unicode-0.1.5.generated-files.patch];
       name = "lisp-project_cl-unicode-0.1.5";
       src = pkgs.fetchurl {
         url = "http://beta.quicklisp.org/archive/cl-unicode/2014-12-17/cl-unicode-0.1.5.tgz";

@@ -1,6 +1,6 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_gendl, 
-   lisp_geom-base,  
+   lisp_acl-compat, lisp_babel, lisp_cl-base64, lisp_cl-who, lisp_cl-ppcre, lisp_cl-typesetting, lisp_bordeaux-threads,  
   ccl, sbcl,  
   system ? builtins.currentSystem }:
 
@@ -9,13 +9,13 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_geom-base  ];
+      propagatedBuildInputs = [ lisp_acl-compat lisp_babel lisp_cl-base64 lisp_cl-who lisp_cl-ppcre lisp_cl-typesetting lisp_bordeaux-threads  ];
       inherit stdenv;
       systemName = "surf";
       
       sourceProject = "${lisp-project_gendl}";
       patches = [];
-      lisp_dependencies = "${lisp_geom-base}";
+      lisp_dependencies = "${lisp_acl-compat} ${lisp_babel} ${lisp_cl-base64} ${lisp_cl-who} ${lisp_cl-ppcre} ${lisp_cl-typesetting} ${lisp_bordeaux-threads}";
       name = "lisp_surf-devo-0272a167-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ "${pkgs.ccl}" "${pkgs.sbcl}" ];

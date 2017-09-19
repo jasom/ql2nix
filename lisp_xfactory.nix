@@ -1,7 +1,7 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_cl-libxml2, 
-   lisp_cl-libxml2,  
-  ccl, clisp, sbcl,  
+  libxml2,   lisp_metabang-bind, lisp_garbage-pools, lisp_flexi-streams, lisp_puri, lisp_iterate, lisp_cffi,  
+  sbcl, clisp, ccl,  
   system ? builtins.currentSystem }:
 
 let
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_cl-libxml2  ];
+      propagatedBuildInputs = [ lisp_metabang-bind lisp_garbage-pools lisp_flexi-streams lisp_puri lisp_iterate lisp_cffi libxml2 ];
       inherit stdenv;
       systemName = "xfactory";
       
       sourceProject = "${lisp-project_cl-libxml2}";
       patches = [];
-      lisp_dependencies = "${lisp_cl-libxml2}";
+      lisp_dependencies = "${lisp_metabang-bind} ${lisp_garbage-pools} ${lisp_flexi-streams} ${lisp_puri} ${lisp_iterate} ${lisp_cffi}";
       name = "lisp_xfactory-20130615-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
-      lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
+      lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.clisp}" "${pkgs.ccl}" ];
     }

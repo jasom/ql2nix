@@ -16,7 +16,7 @@ in
       sourceProject = "${lisp-project_cl-tidy}";
       patches = [];
       lisp_dependencies = "${lisp_cffi}";
-      name = "lisp_cl-tidy-20131111-git";
+      name = "lisp_cl-tidy-20170830-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
     }

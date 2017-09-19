@@ -6,9 +6,9 @@ in
   buildLispProject {
       inherit stdenv;
       patches = [];
-      name = "lisp-project_checkl-20150113-git";
+      name = "lisp-project_checkl-20170830-git";
       src = pkgs.fetchurl {
-        url = "http://beta.quicklisp.org/archive/checkl/2015-01-13/checkl-20150113-git.tgz";
-        sha256 = "53d3e2b36b76352f207b74fc221cdcc7478fe07cb004253084d164e7fc974752";
+        url = "http://beta.quicklisp.org/archive/checkl/2017-08-30/checkl-20170830-git.tgz";
+        sha256 = "17be612981ea1753a3e1af0340f571bea84a617bfb1ea493078316d775b849c1";
       };
     }

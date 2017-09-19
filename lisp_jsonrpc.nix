@@ -1,6 +1,6 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_jsonrpc, 
-   lisp_yason, lisp_bordeaux-threads, lisp_dissect, lisp_event-emitter, lisp_chanl, lisp_vom, lisp_usocket,  
+   lisp_usocket, lisp_vom, lisp_chanl, lisp_event-emitter, lisp_dissect, lisp_bordeaux-threads, lisp_yason,  
   ccl, clisp, sbcl,  
   system ? builtins.currentSystem }:
 
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_yason lisp_bordeaux-threads lisp_dissect lisp_event-emitter lisp_chanl lisp_vom lisp_usocket  ];
+      propagatedBuildInputs = [ lisp_usocket lisp_vom lisp_chanl lisp_event-emitter lisp_dissect lisp_bordeaux-threads lisp_yason  ];
       inherit stdenv;
       systemName = "jsonrpc";
       
       sourceProject = "${lisp-project_jsonrpc}";
       patches = [];
-      lisp_dependencies = "${lisp_yason} ${lisp_bordeaux-threads} ${lisp_dissect} ${lisp_event-emitter} ${lisp_chanl} ${lisp_vom} ${lisp_usocket}";
-      name = "lisp_jsonrpc-20170725-git";
+      lisp_dependencies = "${lisp_usocket} ${lisp_vom} ${lisp_chanl} ${lisp_event-emitter} ${lisp_dissect} ${lisp_bordeaux-threads} ${lisp_yason}";
+      name = "lisp_jsonrpc-20170830-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
     }

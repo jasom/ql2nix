@@ -16,7 +16,7 @@ in
       sourceProject = "${lisp-project_checkl}";
       patches = [];
       lisp_dependencies = "${lisp_marshal}";
-      name = "lisp_checkl-20150113-git";
+      name = "lisp_checkl-20170830-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
     }

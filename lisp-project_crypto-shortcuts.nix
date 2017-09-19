@@ -6,9 +6,9 @@ in
   buildLispProject {
       inherit stdenv;
       patches = [];
-      name = "lisp-project_crypto-shortcuts-20170630-git";
+      name = "lisp-project_crypto-shortcuts-20170830-git";
       src = pkgs.fetchurl {
-        url = "http://beta.quicklisp.org/archive/crypto-shortcuts/2017-06-30/crypto-shortcuts-20170630-git.tgz";
-        sha256 = "55b1d25766d928ebb3b2a45d005bce051cf5214807334e06f235b95e9165a2dc";
+        url = "http://beta.quicklisp.org/archive/crypto-shortcuts/2017-08-30/crypto-shortcuts-20170830-git.tgz";
+        sha256 = "a2727ff77f6cf914a02e09dec411614063a2e69534cb048baf72ad4de4f0163f";
       };
     }

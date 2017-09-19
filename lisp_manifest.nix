@@ -1,6 +1,6 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_manifest, 
-   lisp_alexandria, lisp_closer-mop, lisp_monkeylib-html, lisp_puri, lisp_split-sequence, lisp_toot,  
+   lisp_monkeylib-html, lisp_toot, lisp_closer-mop, lisp_alexandria,  
   sbcl, clisp, ccl,  
   system ? builtins.currentSystem }:
 
@@ -9,13 +9,13 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_alexandria lisp_closer-mop lisp_monkeylib-html lisp_puri lisp_split-sequence lisp_toot  ];
+      propagatedBuildInputs = [ lisp_monkeylib-html lisp_toot lisp_closer-mop lisp_alexandria  ];
       inherit stdenv;
       systemName = "manifest";
       
       sourceProject = "${lisp-project_manifest}";
       patches = [];
-      lisp_dependencies = "${lisp_alexandria} ${lisp_closer-mop} ${lisp_monkeylib-html} ${lisp_puri} ${lisp_split-sequence} ${lisp_toot}";
+      lisp_dependencies = "${lisp_monkeylib-html} ${lisp_toot} ${lisp_closer-mop} ${lisp_alexandria}";
       name = "lisp_manifest-20120208-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.clisp}" "${pkgs.ccl}" ];

@@ -16,7 +16,7 @@ in
       sourceProject = "${lisp-project_py-configparser}";
       patches = [];
       lisp_dependencies = "${lisp_parse-number}";
-      name = "lisp_py-configparser-20170725-svn";
+      name = "lisp_py-configparser-20170830-svn";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
     }

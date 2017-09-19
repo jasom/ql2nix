@@ -1,6 +1,6 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_parenml, 
-   lisp_common-doc-plump, lisp_esrap, lisp_plump,  
+   lisp_esrap, lisp_common-doc-plump, lisp_plump,  
   ccl, clisp, sbcl,  
   system ? builtins.currentSystem }:
 
@@ -9,13 +9,13 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_common-doc-plump lisp_esrap lisp_plump  ];
+      propagatedBuildInputs = [ lisp_esrap lisp_common-doc-plump lisp_plump  ];
       inherit stdenv;
       systemName = "parenml";
       
       sourceProject = "${lisp-project_parenml}";
       patches = [];
-      lisp_dependencies = "${lisp_common-doc-plump} ${lisp_esrap} ${lisp_plump}";
+      lisp_dependencies = "${lisp_esrap} ${lisp_common-doc-plump} ${lisp_plump}";
       name = "lisp_parenml-20150923-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];

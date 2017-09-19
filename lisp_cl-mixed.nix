@@ -1,7 +1,7 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_cl-mixed, 
-   lisp_alexandria, lisp_cffi, lisp_documentation-utils, lisp_trivial-features, lisp_trivial-garbage,  
-  ccl, clisp, sbcl,  
+   lisp_documentation-utils, lisp_trivial-garbage, lisp_cffi, lisp_alexandria,  
+  sbcl, clisp, ccl,  
   system ? builtins.currentSystem }:
 
 let
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_alexandria lisp_cffi lisp_documentation-utils lisp_trivial-features lisp_trivial-garbage  ];
+      propagatedBuildInputs = [ lisp_documentation-utils lisp_trivial-garbage lisp_cffi lisp_alexandria  ];
       inherit stdenv;
       systemName = "cl-mixed";
       
       sourceProject = "${lisp-project_cl-mixed}";
       patches = [];
-      lisp_dependencies = "${lisp_alexandria} ${lisp_cffi} ${lisp_documentation-utils} ${lisp_trivial-features} ${lisp_trivial-garbage}";
-      name = "lisp_cl-mixed-20170725-git";
+      lisp_dependencies = "${lisp_documentation-utils} ${lisp_trivial-garbage} ${lisp_cffi} ${lisp_alexandria}";
+      name = "lisp_cl-mixed-20170830-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
-      lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
+      lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.clisp}" "${pkgs.ccl}" ];
     }

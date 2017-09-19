@@ -1,7 +1,7 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_stmx, 
-   lisp_alexandria, lisp_bordeaux-threads, lisp_closer-mop, lisp_log4cl, lisp_trivial-garbage,  
-  ccl, clisp, sbcl,  
+   lisp_trivial-garbage, lisp_closer-mop, lisp_log4cl, lisp_alexandria,  
+  sbcl, clisp, ccl,  
   system ? builtins.currentSystem }:
 
 let
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_alexandria lisp_bordeaux-threads lisp_closer-mop lisp_log4cl lisp_trivial-garbage  ];
+      propagatedBuildInputs = [ lisp_trivial-garbage lisp_closer-mop lisp_log4cl lisp_alexandria  ];
       inherit stdenv;
       systemName = "stmx";
       
       sourceProject = "${lisp-project_stmx}";
       patches = [];
-      lisp_dependencies = "${lisp_alexandria} ${lisp_bordeaux-threads} ${lisp_closer-mop} ${lisp_log4cl} ${lisp_trivial-garbage}";
+      lisp_dependencies = "${lisp_trivial-garbage} ${lisp_closer-mop} ${lisp_log4cl} ${lisp_alexandria}";
       name = "lisp_stmx-stable-e4dace56-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
-      lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
+      lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.clisp}" "${pkgs.ccl}" ];
     }

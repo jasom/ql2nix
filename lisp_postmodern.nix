@@ -1,6 +1,6 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_postmodern, 
-   lisp_bordeaux-threads, lisp_cl-postgres, lisp_closer-mop, lisp_s-sql,  
+   lisp_usocket, lisp_bordeaux-threads, lisp_closer-mop, lisp_md5,  
   sbcl, clisp, ccl,  
   system ? builtins.currentSystem }:
 
@@ -9,13 +9,13 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_bordeaux-threads lisp_cl-postgres lisp_closer-mop lisp_s-sql  ];
+      propagatedBuildInputs = [ lisp_usocket lisp_bordeaux-threads lisp_closer-mop lisp_md5  ];
       inherit stdenv;
       systemName = "postmodern";
       
       sourceProject = "${lisp-project_postmodern}";
       patches = [];
-      lisp_dependencies = "${lisp_bordeaux-threads} ${lisp_cl-postgres} ${lisp_closer-mop} ${lisp_s-sql}";
+      lisp_dependencies = "${lisp_usocket} ${lisp_bordeaux-threads} ${lisp_closer-mop} ${lisp_md5}";
       name = "lisp_postmodern-20170403-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.clisp}" "${pkgs.ccl}" ];

@@ -1,7 +1,7 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_modularize-interfaces, 
-   lisp_modularize, lisp_modularize-interfaces,  
-  sbcl, ccl,  
+   lisp_lambda-fiddle, lisp_trivial-arguments, lisp_modularize,  
+  ccl, sbcl,  
   system ? builtins.currentSystem }:
 
 let
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_modularize lisp_modularize-interfaces  ];
+      propagatedBuildInputs = [ lisp_lambda-fiddle lisp_trivial-arguments lisp_modularize  ];
       inherit stdenv;
       systemName = "interfaces-test-implementation";
       
       sourceProject = "${lisp-project_modularize-interfaces}";
       patches = [];
-      lisp_dependencies = "${lisp_modularize} ${lisp_modularize-interfaces}";
-      name = "lisp_interfaces-test-implementation-20170630-git";
+      lisp_dependencies = "${lisp_lambda-fiddle} ${lisp_trivial-arguments} ${lisp_modularize}";
+      name = "lisp_interfaces-test-implementation-20170830-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
-      lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.ccl}" ];
+      lisp_implementations = [ "${pkgs.ccl}" "${pkgs.sbcl}" ];
     }

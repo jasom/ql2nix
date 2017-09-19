@@ -1,7 +1,7 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_antik, 
-   lisp_antik-base, lisp_cffi, lisp_cffi-grovel, lisp_static-vectors, lisp_trivial-garbage,  
-  ccl, sbcl,  
+   lisp_trivial-garbage, lisp_cffi, lisp_lisp-unit, lisp_split-sequence, lisp_cl-ppcre, lisp_named-readtables, lisp_metabang-bind, lisp_alexandria, lisp_iterate,  
+  ccl, clisp, sbcl,  
   system ? builtins.currentSystem }:
 
 let
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_antik-base lisp_cffi lisp_cffi-grovel lisp_static-vectors lisp_trivial-garbage  ];
+      propagatedBuildInputs = [ lisp_trivial-garbage lisp_cffi lisp_lisp-unit lisp_split-sequence lisp_cl-ppcre lisp_named-readtables lisp_metabang-bind lisp_alexandria lisp_iterate  ];
       inherit stdenv;
       systemName = "foreign-array";
       
       sourceProject = "${lisp-project_antik}";
       patches = [];
-      lisp_dependencies = "${lisp_antik-base} ${lisp_cffi} ${lisp_cffi-grovel} ${lisp_static-vectors} ${lisp_trivial-garbage}";
+      lisp_dependencies = "${lisp_trivial-garbage} ${lisp_cffi} ${lisp_lisp-unit} ${lisp_split-sequence} ${lisp_cl-ppcre} ${lisp_named-readtables} ${lisp_metabang-bind} ${lisp_alexandria} ${lisp_iterate}";
       name = "lisp_foreign-array-master-ad6432e3-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
-      lisp_implementations = [ "${pkgs.ccl}" "${pkgs.sbcl}" ];
+      lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
     }

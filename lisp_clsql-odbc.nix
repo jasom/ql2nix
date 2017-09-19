@@ -1,7 +1,7 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_clsql, 
-  libiodbc,   lisp_clsql, lisp_clsql-uffi,  
-  sbcl, ccl,  
+  libiodbc,   lisp_uffi,  
+  ccl, sbcl,  
   system ? builtins.currentSystem }:
 
 let
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_clsql lisp_clsql-uffi libiodbc ];
+      propagatedBuildInputs = [ lisp_uffi libiodbc ];
       inherit stdenv;
       systemName = "clsql-odbc";
       
       sourceProject = "${lisp-project_clsql}";
       patches = [];
-      lisp_dependencies = "${lisp_clsql} ${lisp_clsql-uffi}";
+      lisp_dependencies = "${lisp_uffi}";
       name = "lisp_clsql-odbc-20160208-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
-      lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.ccl}" ];
+      lisp_implementations = [ "${pkgs.ccl}" "${pkgs.sbcl}" ];
     }

@@ -16,7 +16,7 @@ in
       sourceProject = "${lisp-project_plump-sexp}";
       patches = [];
       lisp_dependencies = "${lisp_plump}";
-      name = "lisp_plump-sexp-20170630-git";
+      name = "lisp_plump-sexp-20170830-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
     }

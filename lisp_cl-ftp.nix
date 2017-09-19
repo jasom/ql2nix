@@ -1,6 +1,6 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_cl-ftp, 
-   lisp_split-sequence, lisp_usocket,  
+   lisp_usocket, lisp_split-sequence,  
   sbcl, clisp, ccl,  
   system ? builtins.currentSystem }:
 
@@ -9,13 +9,13 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_split-sequence lisp_usocket  ];
+      propagatedBuildInputs = [ lisp_usocket lisp_split-sequence  ];
       inherit stdenv;
       systemName = "cl-ftp";
       
       sourceProject = "${lisp-project_cl-ftp}";
       patches = [];
-      lisp_dependencies = "${lisp_split-sequence} ${lisp_usocket}";
+      lisp_dependencies = "${lisp_usocket} ${lisp_split-sequence}";
       name = "lisp_cl-ftp-20150608-http";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.clisp}" "${pkgs.ccl}" ];

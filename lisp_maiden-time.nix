@@ -1,6 +1,6 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_maiden, 
-   lisp_maiden-api-access, lisp_maiden-client-entities, lisp_maiden-commands, lisp_maiden-location,  
+   lisp_plump, lisp_jsown, lisp_drakma, lisp_uuid, lisp_trivial-garbage, lisp_verbose, lisp_deeds, lisp_lambda-fiddle,  
   sbcl,  
   system ? builtins.currentSystem }:
 
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_maiden-api-access lisp_maiden-client-entities lisp_maiden-commands lisp_maiden-location  ];
+      propagatedBuildInputs = [ lisp_plump lisp_jsown lisp_drakma lisp_uuid lisp_trivial-garbage lisp_verbose lisp_deeds lisp_lambda-fiddle  ];
       inherit stdenv;
       systemName = "maiden-time";
       
       sourceProject = "${lisp-project_maiden}";
       patches = [];
-      lisp_dependencies = "${lisp_maiden-api-access} ${lisp_maiden-client-entities} ${lisp_maiden-commands} ${lisp_maiden-location}";
-      name = "lisp_maiden-time-20170725-git";
+      lisp_dependencies = "${lisp_plump} ${lisp_jsown} ${lisp_drakma} ${lisp_uuid} ${lisp_trivial-garbage} ${lisp_verbose} ${lisp_deeds} ${lisp_lambda-fiddle}";
+      name = "lisp_maiden-time-20170830-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ "${pkgs.sbcl}" ];
     }

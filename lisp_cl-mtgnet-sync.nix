@@ -1,7 +1,7 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_cl-mtgnet, 
-   lisp_cl-mtgnet, lisp_usocket,  
-  sbcl, clisp, ccl,  
+   lisp_usocket, lisp_blackbird, lisp_cl-netstring-, lisp_cl-json, lisp_trivial-utf-8,  
+  ccl, clisp, sbcl,  
   system ? builtins.currentSystem }:
 
 let
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_cl-mtgnet lisp_usocket  ];
+      propagatedBuildInputs = [ lisp_usocket lisp_blackbird lisp_cl-netstring- lisp_cl-json lisp_trivial-utf-8  ];
       inherit stdenv;
       systemName = "cl-mtgnet-sync";
       
       sourceProject = "${lisp-project_cl-mtgnet}";
       patches = [];
-      lisp_dependencies = "${lisp_cl-mtgnet} ${lisp_usocket}";
+      lisp_dependencies = "${lisp_usocket} ${lisp_blackbird} ${lisp_cl-netstring-} ${lisp_cl-json} ${lisp_trivial-utf-8}";
       name = "lisp_cl-mtgnet-sync-20160929-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
-      lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.clisp}" "${pkgs.ccl}" ];
+      lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
     }

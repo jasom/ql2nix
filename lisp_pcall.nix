@@ -1,7 +1,7 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_pcall, 
-   lisp_bordeaux-threads, lisp_pcall-queue,  
-  sbcl, clisp, ccl,  
+   lisp_bordeaux-threads,  
+  ccl, clisp, sbcl,  
   system ? builtins.currentSystem }:
 
 let
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_bordeaux-threads lisp_pcall-queue  ];
+      propagatedBuildInputs = [ lisp_bordeaux-threads  ];
       inherit stdenv;
       systemName = "pcall";
       
       sourceProject = "${lisp-project_pcall}";
       patches = [];
-      lisp_dependencies = "${lisp_bordeaux-threads} ${lisp_pcall-queue}";
+      lisp_dependencies = "${lisp_bordeaux-threads}";
       name = "lisp_pcall-0.3";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
-      lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.clisp}" "${pkgs.ccl}" ];
+      lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
     }

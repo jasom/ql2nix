@@ -1,7 +1,7 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_cl-yaml, 
-   lisp_alexandria, lisp_cl-libyaml, lisp_cl-ppcre, lisp_parse-number,  
-  sbcl, ccl,  
+   lisp_parse-number, lisp_cl-ppcre, lisp_cl-libyaml,  
+  ccl, sbcl,  
   system ? builtins.currentSystem }:
 
 let
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_alexandria lisp_cl-libyaml lisp_cl-ppcre lisp_parse-number  ];
+      propagatedBuildInputs = [ lisp_parse-number lisp_cl-ppcre lisp_cl-libyaml  ];
       inherit stdenv;
       systemName = "cl-yaml";
       
       sourceProject = "${lisp-project_cl-yaml}";
       patches = [];
-      lisp_dependencies = "${lisp_alexandria} ${lisp_cl-libyaml} ${lisp_cl-ppcre} ${lisp_parse-number}";
+      lisp_dependencies = "${lisp_parse-number} ${lisp_cl-ppcre} ${lisp_cl-libyaml}";
       name = "lisp_cl-yaml-20170124-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
-      lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.ccl}" ];
+      lisp_implementations = [ "${pkgs.ccl}" "${pkgs.sbcl}" ];
     }

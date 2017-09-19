@@ -6,9 +6,9 @@ in
   buildLispProject {
       inherit stdenv;
       patches = [];
-      name = "lisp-project_lambda-fiddle-20170630-git";
+      name = "lisp-project_lambda-fiddle-20170830-git";
       src = pkgs.fetchurl {
-        url = "http://beta.quicklisp.org/archive/lambda-fiddle/2017-06-30/lambda-fiddle-20170630-git.tgz";
-        sha256 = "ba9f43f0595d88926cbd00fea1b06320cbf15785b62e0a45d82c03d89b86fe49";
+        url = "http://beta.quicklisp.org/archive/lambda-fiddle/2017-08-30/lambda-fiddle-20170830-git.tgz";
+        sha256 = "6c8d975e2333756c7e8906e6b6ce4e7edb5b1f70f575b4a55b46170f96c42484";
       };
     }

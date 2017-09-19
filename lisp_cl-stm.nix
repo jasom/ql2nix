@@ -1,7 +1,7 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_cl-stm, 
-   lisp_arnesi, lisp_bordeaux-threads, lisp_closer-mop,  
-  clisp, sbcl,  
+   lisp_bordeaux-threads, lisp_arnesi,  
+  sbcl, clisp,  
   system ? builtins.currentSystem }:
 
 let
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_arnesi lisp_bordeaux-threads lisp_closer-mop  ];
+      propagatedBuildInputs = [ lisp_bordeaux-threads lisp_arnesi  ];
       inherit stdenv;
       systemName = "cl-stm";
       
       sourceProject = "${lisp-project_cl-stm}";
       patches = [];
-      lisp_dependencies = "${lisp_arnesi} ${lisp_bordeaux-threads} ${lisp_closer-mop}";
+      lisp_dependencies = "${lisp_bordeaux-threads} ${lisp_arnesi}";
       name = "lisp_cl-stm-20101207-http";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
-      lisp_implementations = [ "${pkgs.clisp}" "${pkgs.sbcl}" ];
+      lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.clisp}" ];
     }

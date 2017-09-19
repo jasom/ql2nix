@@ -1,7 +1,7 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_ltk, 
-   lisp_ltk,  
-  ccl, clisp, sbcl,  
+   
+  sbcl, clisp, ccl,  
   system ? builtins.currentSystem }:
 
 let
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_ltk  ];
+      propagatedBuildInputs = [   ];
       inherit stdenv;
       systemName = "ltk-remote";
       
       sourceProject = "${lisp-project_ltk}";
       patches = [];
-      lisp_dependencies = "${lisp_ltk}";
+      lisp_dependencies = "";
       name = "lisp_ltk-remote-20150113-http";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
-      lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
+      lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.clisp}" "${pkgs.ccl}" ];
     }

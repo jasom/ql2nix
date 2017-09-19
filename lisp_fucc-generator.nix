@@ -1,7 +1,7 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_fucc, 
-   lisp_fucc-parser,  
-  ccl, clisp, sbcl,  
+   
+  sbcl, clisp, ccl,  
   system ? builtins.currentSystem }:
 
 let
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_fucc-parser  ];
+      propagatedBuildInputs = [   ];
       inherit stdenv;
       systemName = "fucc-generator";
       
       sourceProject = "${lisp-project_fucc}";
       patches = [];
-      lisp_dependencies = "${lisp_fucc-parser}";
+      lisp_dependencies = "";
       name = "lisp_fucc-generator_0.2.1";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
-      lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
+      lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.clisp}" "${pkgs.ccl}" ];
     }

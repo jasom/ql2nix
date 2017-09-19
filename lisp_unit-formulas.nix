@@ -16,7 +16,7 @@ in
       sourceProject = "${lisp-project_unit-formula}";
       patches = [];
       lisp_dependencies = "${lisp_alexandria} ${lisp_iterate}";
-      name = "lisp_unit-formulas-20110418-git";
+      name = "lisp_unit-formulas-20170830-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.clisp}" "${pkgs.ccl}" ];
     }

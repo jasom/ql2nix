@@ -6,9 +6,9 @@ in
   buildLispProject {
       inherit stdenv;
       patches = [];
-      name = "lisp-project_opticl-20170630-git";
+      name = "lisp-project_opticl-20170830-git";
       src = pkgs.fetchurl {
-        url = "http://beta.quicklisp.org/archive/opticl/2017-06-30/opticl-20170630-git.tgz";
-        sha256 = "65b22e991aeac70c20df2dbb763fa3871de578e37b66fea8e733dfb12a868a71";
+        url = "http://beta.quicklisp.org/archive/opticl/2017-08-30/opticl-20170830-git.tgz";
+        sha256 = "aedf5f39e86e0f2753b26137bafabb52b45631511b4dfc278a7e02272fc2c930";
       };
     }

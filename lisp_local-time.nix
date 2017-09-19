@@ -16,7 +16,7 @@ in
       sourceProject = "${lisp-project_local-time}";
       patches = [];
       lisp_dependencies = "${lisp_cl-fad}";
-      name = "lisp_local-time-20170725-git";
+      name = "lisp_local-time-20170830-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
     }

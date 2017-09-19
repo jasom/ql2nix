@@ -16,7 +16,7 @@ in
       sourceProject = "${lisp-project_doubly-linked-list}";
       patches = [];
       lisp_dependencies = "${lisp_alexandria}";
-      name = "lisp_doubly-linked-list-20170725-git";
+      name = "lisp_doubly-linked-list-20170830-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
     }

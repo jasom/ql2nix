@@ -1,7 +1,7 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_what3words, 
-   lisp_cl-ppcre, lisp_drakma, lisp_jsown,  
-  ccl, clisp, sbcl,  
+   lisp_jsown, lisp_drakma,  
+  sbcl, clisp, ccl,  
   system ? builtins.currentSystem }:
 
 let
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_cl-ppcre lisp_drakma lisp_jsown  ];
+      propagatedBuildInputs = [ lisp_jsown lisp_drakma  ];
       inherit stdenv;
       systemName = "what3words";
       
       sourceProject = "${lisp-project_what3words}";
       patches = [];
-      lisp_dependencies = "${lisp_cl-ppcre} ${lisp_drakma} ${lisp_jsown}";
+      lisp_dependencies = "${lisp_jsown} ${lisp_drakma}";
       name = "lisp_what3words-20161204-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
-      lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
+      lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.clisp}" "${pkgs.ccl}" ];
     }

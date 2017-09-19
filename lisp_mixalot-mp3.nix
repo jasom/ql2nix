@@ -1,7 +1,7 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_mixalot, 
-   lisp_cffi, lisp_mixalot, lisp_mpg123-ffi,  
-  ccl, clisp, sbcl,  
+   lisp_bordeaux-threads, lisp_cffi,  
+  sbcl, clisp, ccl,  
   system ? builtins.currentSystem }:
 
 let
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_cffi lisp_mixalot lisp_mpg123-ffi  ];
+      propagatedBuildInputs = [ lisp_bordeaux-threads lisp_cffi  ];
       inherit stdenv;
       systemName = "mixalot-mp3";
       
       sourceProject = "${lisp-project_mixalot}";
       patches = [];
-      lisp_dependencies = "${lisp_cffi} ${lisp_mixalot} ${lisp_mpg123-ffi}";
+      lisp_dependencies = "${lisp_bordeaux-threads} ${lisp_cffi}";
       name = "lisp_mixalot-mp3-20151218-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
-      lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
+      lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.clisp}" "${pkgs.ccl}" ];
     }

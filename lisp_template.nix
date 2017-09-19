@@ -1,7 +1,7 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_template, 
-   lisp_alexandria, lisp_parameterized-function,  
-  sbcl, clisp, ccl,  
+   lisp_parameterized-function,  
+  ccl, clisp, sbcl,  
   system ? builtins.currentSystem }:
 
 let
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_alexandria lisp_parameterized-function  ];
+      propagatedBuildInputs = [ lisp_parameterized-function  ];
       inherit stdenv;
       systemName = "template";
       
       sourceProject = "${lisp-project_template}";
       patches = [];
-      lisp_dependencies = "${lisp_alexandria} ${lisp_parameterized-function}";
+      lisp_dependencies = "${lisp_parameterized-function}";
       name = "lisp_template-20150113-hg";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
-      lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.clisp}" "${pkgs.ccl}" ];
+      lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
     }

@@ -1,6 +1,6 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_folio2, 
-   lisp_folio2-as, lisp_folio2-make, lisp_folio2-pairs, lisp_folio2-sequences, lisp_fset, lisp_series,  
+   lisp_series, lisp_fset,  
   sbcl, clisp, ccl,  
   system ? builtins.currentSystem }:
 
@@ -9,13 +9,13 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_folio2-as lisp_folio2-make lisp_folio2-pairs lisp_folio2-sequences lisp_fset lisp_series  ];
+      propagatedBuildInputs = [ lisp_series lisp_fset  ];
       inherit stdenv;
       systemName = "folio2-series";
       
       sourceProject = "${lisp-project_folio2}";
       patches = [];
-      lisp_dependencies = "${lisp_folio2-as} ${lisp_folio2-make} ${lisp_folio2-pairs} ${lisp_folio2-sequences} ${lisp_fset} ${lisp_series}";
+      lisp_dependencies = "${lisp_series} ${lisp_fset}";
       name = "lisp_folio2-series-20170403-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.clisp}" "${pkgs.ccl}" ];

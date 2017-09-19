@@ -6,9 +6,9 @@ in
   buildLispProject {
       inherit stdenv;
       patches = [];
-      name = "lisp-project_overlord-20170725-git";
+      name = "lisp-project_overlord-20170830-git";
       src = pkgs.fetchurl {
-        url = "http://beta.quicklisp.org/archive/overlord/2017-07-25/overlord-20170725-git.tgz";
-        sha256 = "339b5570cb69ac5818181e64cab1fa0a33037cf0f76fbbf3835c56864d46f197";
+        url = "http://beta.quicklisp.org/archive/overlord/2017-08-30/overlord-20170830-git.tgz";
+        sha256 = "aefc9c36124ac338e8f7c45390a21e38070cfc927661a5181aedfc7d63cffdea";
       };
     }

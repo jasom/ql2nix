@@ -1,7 +1,7 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_cl-cffi-gtk, 
-   lisp_cl-cffi-gtk-glib, lisp_cl-cffi-gtk-gobject,  
-  sbcl, clisp, ccl,  
+  glib,   lisp_closer-mop, lisp_bordeaux-threads, lisp_trivial-garbage, lisp_iterate, lisp_cffi,  
+  ccl, clisp, sbcl,  
   system ? builtins.currentSystem }:
 
 let
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_cl-cffi-gtk-glib lisp_cl-cffi-gtk-gobject  ];
+      propagatedBuildInputs = [ lisp_closer-mop lisp_bordeaux-threads lisp_trivial-garbage lisp_iterate lisp_cffi glib ];
       inherit stdenv;
       systemName = "cl-cffi-gtk-gio";
       
       sourceProject = "${lisp-project_cl-cffi-gtk}";
       patches = [];
-      lisp_dependencies = "${lisp_cl-cffi-gtk-glib} ${lisp_cl-cffi-gtk-gobject}";
+      lisp_dependencies = "${lisp_closer-mop} ${lisp_bordeaux-threads} ${lisp_trivial-garbage} ${lisp_iterate} ${lisp_cffi}";
       name = "lisp_cl-cffi-gtk-gio-20160208-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
-      lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.clisp}" "${pkgs.ccl}" ];
+      lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
     }

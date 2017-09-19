@@ -1,7 +1,7 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_weblocks-examples, 
-   lisp_metatilities, lisp_weblocks, lisp_weblocks-clsql, lisp_weblocks-stores,  
-  sbcl, ccl,  
+   lisp_clsql-fluid, lisp_clsql, lisp_weblocks,  
+  ccl, sbcl,  
   system ? builtins.currentSystem }:
 
 let
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_metatilities lisp_weblocks lisp_weblocks-clsql lisp_weblocks-stores  ];
+      propagatedBuildInputs = [ lisp_clsql-fluid lisp_clsql lisp_weblocks  ];
       inherit stdenv;
       systemName = "weblocks-clsql-demo";
       
       sourceProject = "${lisp-project_weblocks-examples}";
       patches = [];
-      lisp_dependencies = "${lisp_metatilities} ${lisp_weblocks} ${lisp_weblocks-clsql} ${lisp_weblocks-stores}";
+      lisp_dependencies = "${lisp_clsql-fluid} ${lisp_clsql} ${lisp_weblocks}";
       name = "lisp_weblocks-clsql-demo-20170403-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
-      lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.ccl}" ];
+      lisp_implementations = [ "${pkgs.ccl}" "${pkgs.sbcl}" ];
     }

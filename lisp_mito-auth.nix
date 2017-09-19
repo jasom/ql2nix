@@ -16,7 +16,7 @@ in
       sourceProject = "${lisp-project_mito-auth}";
       patches = [];
       lisp_dependencies = "${lisp_babel} ${lisp_ironclad} ${lisp_mito}";
-      name = "lisp_mito-auth-20170725-git";
+      name = "lisp_mito-auth-20170830-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ "${pkgs.ccl}" "${pkgs.sbcl}" ];
     }

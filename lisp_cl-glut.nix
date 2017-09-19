@@ -1,7 +1,7 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_cl-opengl, 
-  freeglut,   lisp_alexandria, lisp_cffi, lisp_cl-opengl,  
-  ccl, clisp, sbcl,  
+  freeglut, mesa,   lisp_cffi, lisp_alexandria,  
+  sbcl, clisp, ccl,  
   system ? builtins.currentSystem }:
 
 let
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_alexandria lisp_cffi lisp_cl-opengl freeglut ];
+      propagatedBuildInputs = [ lisp_cffi lisp_alexandria freeglut mesa ];
       inherit stdenv;
       systemName = "cl-glut";
       
       sourceProject = "${lisp-project_cl-opengl}";
       patches = [];
-      lisp_dependencies = "${lisp_alexandria} ${lisp_cffi} ${lisp_cl-opengl}";
-      name = "lisp_cl-glut-20170725-git";
+      lisp_dependencies = "${lisp_cffi} ${lisp_alexandria}";
+      name = "lisp_cl-glut-20170830-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
-      lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
+      lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.clisp}" "${pkgs.ccl}" ];
     }

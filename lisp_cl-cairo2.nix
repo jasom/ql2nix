@@ -1,7 +1,7 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_cl-cairo2, 
-  cairo,   lisp_cffi, lisp_cl-colors, lisp_cl-utilities, lisp_metabang-bind, lisp_trivial-features, lisp_trivial-garbage,  
-  sbcl, clisp, ccl,  
+  cairo,   lisp_metabang-bind, lisp_trivial-garbage, lisp_cl-utilities, lisp_cl-colors, lisp_cffi,  
+  ccl, clisp, sbcl,  
   system ? builtins.currentSystem }:
 
 let
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_cffi lisp_cl-colors lisp_cl-utilities lisp_metabang-bind lisp_trivial-features lisp_trivial-garbage cairo ];
+      propagatedBuildInputs = [ lisp_metabang-bind lisp_trivial-garbage lisp_cl-utilities lisp_cl-colors lisp_cffi cairo ];
       inherit stdenv;
       systemName = "cl-cairo2";
       
       sourceProject = "${lisp-project_cl-cairo2}";
       patches = [];
-      lisp_dependencies = "${lisp_cffi} ${lisp_cl-colors} ${lisp_cl-utilities} ${lisp_metabang-bind} ${lisp_trivial-features} ${lisp_trivial-garbage}";
+      lisp_dependencies = "${lisp_metabang-bind} ${lisp_trivial-garbage} ${lisp_cl-utilities} ${lisp_cl-colors} ${lisp_cffi}";
       name = "lisp_cl-cairo2-20160531-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
-      lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.clisp}" "${pkgs.ccl}" ];
+      lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
     }

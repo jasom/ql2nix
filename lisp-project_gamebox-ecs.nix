@@ -6,9 +6,9 @@ in
   buildLispProject {
       inherit stdenv;
       patches = [];
-      name = "lisp-project_gamebox-ecs-20170725-git";
+      name = "lisp-project_gamebox-ecs-20170830-git";
       src = pkgs.fetchurl {
-        url = "http://beta.quicklisp.org/archive/gamebox-ecs/2017-07-25/gamebox-ecs-20170725-git.tgz";
-        sha256 = "1726012f9ee4877bc55b0a23147c6eda5e6f07e71e31b722416ca339f3b7011c";
+        url = "http://beta.quicklisp.org/archive/gamebox-ecs/2017-08-30/gamebox-ecs-20170830-git.tgz";
+        sha256 = "dda93cbe228a515ebc6269f15f18a80dfadf26ea6a103cf8a761cc4db5f96682";
       };
     }

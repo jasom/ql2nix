@@ -6,9 +6,9 @@ in
   buildLispProject {
       inherit stdenv;
       patches = [];
-      name = "lisp-project_staple-20170725-git";
+      name = "lisp-project_staple-20170830-git";
       src = pkgs.fetchurl {
-        url = "http://beta.quicklisp.org/archive/staple/2017-07-25/staple-20170725-git.tgz";
-        sha256 = "644b1e3b6ca6dcc36da45f6f63d3fa0141e91630802366523ecabdeb71997708";
+        url = "http://beta.quicklisp.org/archive/staple/2017-08-30/staple-20170830-git.tgz";
+        sha256 = "bd7d19ffb6bc9fbe29cd429600bc6c792777e44c3c26551c452f7f578204a8b7";
       };
     }

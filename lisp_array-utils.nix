@@ -16,7 +16,7 @@ in
       sourceProject = "${lisp-project_array-utils}";
       patches = [];
       lisp_dependencies = "";
-      name = "lisp_array-utils-20170630-git";
+      name = "lisp_array-utils-20170830-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.clisp}" "${pkgs.ccl}" ];
     }

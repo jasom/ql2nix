@@ -1,7 +1,7 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_cl-num-utils, 
-   lisp_alexandria, lisp_anaphora, lisp_array-operations, lisp_cl-slice, lisp_let-plus,  
-  ccl, clisp, sbcl,  
+   lisp_cl-slice, lisp_array-operations, lisp_alexandria, lisp_anaphora,  
+  sbcl, clisp, ccl,  
   system ? builtins.currentSystem }:
 
 let
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_alexandria lisp_anaphora lisp_array-operations lisp_cl-slice lisp_let-plus  ];
+      propagatedBuildInputs = [ lisp_cl-slice lisp_array-operations lisp_alexandria lisp_anaphora  ];
       inherit stdenv;
       systemName = "cl-num-utils";
       
       sourceProject = "${lisp-project_cl-num-utils}";
       patches = [];
-      lisp_dependencies = "${lisp_alexandria} ${lisp_anaphora} ${lisp_array-operations} ${lisp_cl-slice} ${lisp_let-plus}";
+      lisp_dependencies = "${lisp_cl-slice} ${lisp_array-operations} ${lisp_alexandria} ${lisp_anaphora}";
       name = "lisp_cl-num-utils-20131211-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
-      lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
+      lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.clisp}" "${pkgs.ccl}" ];
     }

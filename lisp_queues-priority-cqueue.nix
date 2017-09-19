@@ -1,6 +1,6 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_queues, 
-   lisp_bordeaux-threads, lisp_queues, lisp_queues-priority-queue,  
+   lisp_bordeaux-threads,  
   ccl, clisp, sbcl,  
   system ? builtins.currentSystem }:
 
@@ -9,13 +9,13 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_bordeaux-threads lisp_queues lisp_queues-priority-queue  ];
+      propagatedBuildInputs = [ lisp_bordeaux-threads  ];
       inherit stdenv;
       systemName = "queues.priority-cqueue";
       
       sourceProject = "${lisp-project_queues}";
       patches = [];
-      lisp_dependencies = "${lisp_bordeaux-threads} ${lisp_queues} ${lisp_queues-priority-queue}";
+      lisp_dependencies = "${lisp_bordeaux-threads}";
       name = "lisp_queues-priority-cqueue-20170124-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];

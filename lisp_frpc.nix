@@ -1,7 +1,7 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_frpc, 
-   lisp_alexandria, lisp_babel, lisp_bordeaux-threads, lisp_flexi-streams, lisp_glass, lisp_nibbles, lisp_pounds, lisp_usocket,  
-  sbcl, clisp, ccl,  
+   lisp_glass, lisp_pounds, lisp_bordeaux-threads, lisp_usocket, lisp_flexi-streams, lisp_nibbles, lisp_alexandria,  
+  ccl, clisp, sbcl,  
   system ? builtins.currentSystem }:
 
 let
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_alexandria lisp_babel lisp_bordeaux-threads lisp_flexi-streams lisp_glass lisp_nibbles lisp_pounds lisp_usocket  ];
+      propagatedBuildInputs = [ lisp_glass lisp_pounds lisp_bordeaux-threads lisp_usocket lisp_flexi-streams lisp_nibbles lisp_alexandria  ];
       inherit stdenv;
       systemName = "frpc";
       
       sourceProject = "${lisp-project_frpc}";
       patches = [];
-      lisp_dependencies = "${lisp_alexandria} ${lisp_babel} ${lisp_bordeaux-threads} ${lisp_flexi-streams} ${lisp_glass} ${lisp_nibbles} ${lisp_pounds} ${lisp_usocket}";
+      lisp_dependencies = "${lisp_glass} ${lisp_pounds} ${lisp_bordeaux-threads} ${lisp_usocket} ${lisp_flexi-streams} ${lisp_nibbles} ${lisp_alexandria}";
       name = "lisp_frpc-20151031-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
-      lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.clisp}" "${pkgs.ccl}" ];
+      lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
     }

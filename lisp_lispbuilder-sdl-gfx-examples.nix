@@ -1,6 +1,6 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_lispbuilder, 
-   lisp_lispbuilder-sdl-gfx,  
+  SDL, SDL_gfx,   lisp_cffi,  
   ccl, sbcl,  
   system ? builtins.currentSystem }:
 
@@ -9,13 +9,13 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_lispbuilder-sdl-gfx  ];
+      propagatedBuildInputs = [ lisp_cffi SDL SDL_gfx ];
       inherit stdenv;
       systemName = "lispbuilder-sdl-gfx-examples";
       
       sourceProject = "${lisp-project_lispbuilder}";
       patches = [];
-      lisp_dependencies = "${lisp_lispbuilder-sdl-gfx}";
+      lisp_dependencies = "${lisp_cffi}";
       name = "lisp_lispbuilder-sdl-gfx-examples-20170403-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ "${pkgs.ccl}" "${pkgs.sbcl}" ];

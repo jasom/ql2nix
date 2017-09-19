@@ -1,7 +1,7 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_spinneret, 
-   lisp_alexandria, lisp_cl-ppcre, lisp_global-vars, lisp_parenscript, lisp_serapeum, lisp_trivial-gray-streams,  
-  sbcl, clisp, ccl,  
+   lisp_trivial-gray-streams, lisp_serapeum, lisp_global-vars, lisp_alexandria, lisp_parenscript,  
+  ccl, clisp, sbcl,  
   system ? builtins.currentSystem }:
 
 let
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_alexandria lisp_cl-ppcre lisp_global-vars lisp_parenscript lisp_serapeum lisp_trivial-gray-streams  ];
+      propagatedBuildInputs = [ lisp_trivial-gray-streams lisp_serapeum lisp_global-vars lisp_alexandria lisp_parenscript  ];
       inherit stdenv;
       systemName = "spinneret";
       
       sourceProject = "${lisp-project_spinneret}";
       patches = [];
-      lisp_dependencies = "${lisp_alexandria} ${lisp_cl-ppcre} ${lisp_global-vars} ${lisp_parenscript} ${lisp_serapeum} ${lisp_trivial-gray-streams}";
-      name = "lisp_spinneret-20170725-git";
+      lisp_dependencies = "${lisp_trivial-gray-streams} ${lisp_serapeum} ${lisp_global-vars} ${lisp_alexandria} ${lisp_parenscript}";
+      name = "lisp_spinneret-20170830-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
-      lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.clisp}" "${pkgs.ccl}" ];
+      lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
     }

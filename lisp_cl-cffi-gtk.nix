@@ -1,6 +1,6 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_cl-cffi-gtk, 
-   lisp_bordeaux-threads, lisp_cffi, lisp_cl-cffi-gtk-cairo, lisp_cl-cffi-gtk-gdk, lisp_cl-cffi-gtk-gdk-pixbuf, lisp_cl-cffi-gtk-gio, lisp_cl-cffi-gtk-glib, lisp_cl-cffi-gtk-gobject, lisp_cl-cffi-gtk-pango, lisp_iterate, lisp_trivial-features,  
+  gdk_pixbuf, cairo, pango, gnome3,   lisp_closer-mop, lisp_bordeaux-threads, lisp_trivial-garbage, lisp_iterate, lisp_cffi,  
   ccl, clisp, sbcl,  
   system ? builtins.currentSystem }:
 
@@ -9,13 +9,13 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_bordeaux-threads lisp_cffi lisp_cl-cffi-gtk-cairo lisp_cl-cffi-gtk-gdk lisp_cl-cffi-gtk-gdk-pixbuf lisp_cl-cffi-gtk-gio lisp_cl-cffi-gtk-glib lisp_cl-cffi-gtk-gobject lisp_cl-cffi-gtk-pango lisp_iterate lisp_trivial-features  ];
+      propagatedBuildInputs = [ lisp_closer-mop lisp_bordeaux-threads lisp_trivial-garbage lisp_iterate lisp_cffi gdk_pixbuf cairo pango gnome3.gtk ];
       inherit stdenv;
       systemName = "cl-cffi-gtk";
       
       sourceProject = "${lisp-project_cl-cffi-gtk}";
       patches = [];
-      lisp_dependencies = "${lisp_bordeaux-threads} ${lisp_cffi} ${lisp_cl-cffi-gtk-cairo} ${lisp_cl-cffi-gtk-gdk} ${lisp_cl-cffi-gtk-gdk-pixbuf} ${lisp_cl-cffi-gtk-gio} ${lisp_cl-cffi-gtk-glib} ${lisp_cl-cffi-gtk-gobject} ${lisp_cl-cffi-gtk-pango} ${lisp_iterate} ${lisp_trivial-features}";
+      lisp_dependencies = "${lisp_closer-mop} ${lisp_bordeaux-threads} ${lisp_trivial-garbage} ${lisp_iterate} ${lisp_cffi}";
       name = "lisp_cl-cffi-gtk-20160208-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];

@@ -6,9 +6,9 @@ in
   buildLispProject {
       inherit stdenv;
       patches = [];
-      name = "lisp-project_mito-auth-20170725-git";
+      name = "lisp-project_mito-auth-20170830-git";
       src = pkgs.fetchurl {
-        url = "http://beta.quicklisp.org/archive/mito-auth/2017-07-25/mito-auth-20170725-git.tgz";
-        sha256 = "5a3c9da69d392801245bb111d2f8888a0d10cedb835c8dbf4991e33efd8bb0fa";
+        url = "http://beta.quicklisp.org/archive/mito-auth/2017-08-30/mito-auth-20170830-git.tgz";
+        sha256 = "bad4f09cd5c8068e67c251ac97bc6d5bb32ccaf975bf9b9aeb5101973f02d4a0";
       };
     }

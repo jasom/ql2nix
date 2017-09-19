@@ -6,9 +6,9 @@ in
   buildLispProject {
       inherit stdenv;
       patches = [];
-      name = "lisp-project_3d-vectors-20170725-git";
+      name = "lisp-project_3d-vectors-20170830-git";
       src = pkgs.fetchurl {
-        url = "http://beta.quicklisp.org/archive/3d-vectors/2017-07-25/3d-vectors-20170725-git.tgz";
-        sha256 = "20146ae8a205426b0dc0215bfd51334ca15bd057c5e02880a1c3a84bef95a5ef";
+        url = "http://beta.quicklisp.org/archive/3d-vectors/2017-08-30/3d-vectors-20170830-git.tgz";
+        sha256 = "a0142cd6263396fa9bee3451ed15238d323037003f72b0c215c7958f1e5cc7fb";
       };
     }

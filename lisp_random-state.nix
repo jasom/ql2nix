@@ -16,7 +16,7 @@ in
       sourceProject = "${lisp-project_random-state}";
       patches = [];
       lisp_dependencies = "${lisp_documentation-utils}";
-      name = "lisp_random-state-20170630-git";
+      name = "lisp_random-state-20170830-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
     }

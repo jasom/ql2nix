@@ -6,9 +6,9 @@ in
   buildLispProject {
       inherit stdenv;
       patches = [];
-      name = "lisp-project_do-urlencode-20130720-git";
+      name = "lisp-project_do-urlencode-20170830-git";
       src = pkgs.fetchurl {
-        url = "http://beta.quicklisp.org/archive/do-urlencode/2013-07-20/do-urlencode-20130720-git.tgz";
-        sha256 = "aa8f7ffb5d0a53fc6a17d68351d893176dd6841d8ba4e46fb6878bc230cf84a6";
+        url = "http://beta.quicklisp.org/archive/do-urlencode/2017-08-30/do-urlencode-20170830-git.tgz";
+        sha256 = "1690ffcd4e47c6c8adcedce6f428b3d99e45fd8eb96393c67501985f6bbe0495";
       };
     }

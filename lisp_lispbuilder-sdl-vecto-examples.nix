@@ -1,6 +1,6 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_lispbuilder, 
-   lisp_lispbuilder-sdl-vecto,  
+  SDL,   lisp_vecto, lisp_cffi, lisp_cl-paths-ttf,  
   ccl, sbcl,  
   system ? builtins.currentSystem }:
 
@@ -9,13 +9,13 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_lispbuilder-sdl-vecto  ];
+      propagatedBuildInputs = [ lisp_vecto lisp_cffi lisp_cl-paths-ttf SDL ];
       inherit stdenv;
       systemName = "lispbuilder-sdl-vecto-examples";
       
       sourceProject = "${lisp-project_lispbuilder}";
       patches = [];
-      lisp_dependencies = "${lisp_lispbuilder-sdl-vecto}";
+      lisp_dependencies = "${lisp_vecto} ${lisp_cffi} ${lisp_cl-paths-ttf}";
       name = "lisp_lispbuilder-sdl-vecto-examples-20170403-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ "${pkgs.ccl}" "${pkgs.sbcl}" ];

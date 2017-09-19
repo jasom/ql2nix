@@ -1,6 +1,6 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_overlord, 
-   lisp_asdf-package-system, lisp_alexandria, lisp_serapeum, lisp_local-time, lisp_iterate, lisp_md5, lisp_s-base64, lisp_quri, lisp_cl-custom-hash-table,  
+   lisp_trivial-file-size, lisp_quri, lisp_s-base64, lisp_md5, lisp_fset, lisp_iterate, lisp_local-time, lisp_serapeum, lisp_alexandria,  
   ccl, clisp, sbcl,  
   system ? builtins.currentSystem }:
 
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_asdf-package-system lisp_alexandria lisp_serapeum lisp_local-time lisp_iterate lisp_md5 lisp_s-base64 lisp_quri lisp_cl-custom-hash-table  ];
+      propagatedBuildInputs = [ lisp_trivial-file-size lisp_quri lisp_s-base64 lisp_md5 lisp_fset lisp_iterate lisp_local-time lisp_serapeum lisp_alexandria  ];
       inherit stdenv;
       systemName = "overlord";
       
       sourceProject = "${lisp-project_overlord}";
       patches = [];
-      lisp_dependencies = "${lisp_asdf-package-system} ${lisp_alexandria} ${lisp_serapeum} ${lisp_local-time} ${lisp_iterate} ${lisp_md5} ${lisp_s-base64} ${lisp_quri} ${lisp_cl-custom-hash-table}";
-      name = "lisp_overlord-20170725-git";
+      lisp_dependencies = "${lisp_trivial-file-size} ${lisp_quri} ${lisp_s-base64} ${lisp_md5} ${lisp_fset} ${lisp_iterate} ${lisp_local-time} ${lisp_serapeum} ${lisp_alexandria}";
+      name = "lisp_overlord-20170830-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
     }

@@ -6,9 +6,9 @@ in
   buildLispProject {
       inherit stdenv;
       patches = [];
-      name = "lisp-project_cl-ntp-client-20170630-git";
+      name = "lisp-project_cl-ntp-client-20170830-git";
       src = pkgs.fetchurl {
-        url = "http://beta.quicklisp.org/archive/cl-ntp-client/2017-06-30/cl-ntp-client-20170630-git.tgz";
-        sha256 = "5cc2e6c29934740537ed4ac987936386b097e20515f986933752e5a82ccf13e8";
+        url = "http://beta.quicklisp.org/archive/cl-ntp-client/2017-08-30/cl-ntp-client-20170830-git.tgz";
+        sha256 = "1594773015849114133529829640e82af702321cfed53c3574deba25a5051261";
       };
     }

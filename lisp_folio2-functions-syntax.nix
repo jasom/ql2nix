@@ -1,7 +1,7 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_folio2, 
-   lisp_alexandria, lisp_folio2-functions,  
-  sbcl, clisp, ccl,  
+   lisp_alexandria,  
+  ccl, clisp, sbcl,  
   system ? builtins.currentSystem }:
 
 let
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_alexandria lisp_folio2-functions  ];
+      propagatedBuildInputs = [ lisp_alexandria  ];
       inherit stdenv;
       systemName = "folio2-functions-syntax";
       
       sourceProject = "${lisp-project_folio2}";
       patches = [];
-      lisp_dependencies = "${lisp_alexandria} ${lisp_folio2-functions}";
+      lisp_dependencies = "${lisp_alexandria}";
       name = "lisp_folio2-functions-syntax-20170403-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
-      lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.clisp}" "${pkgs.ccl}" ];
+      lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
     }

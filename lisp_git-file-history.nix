@@ -1,7 +1,7 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_git-file-history, 
-   lisp_cl-ppcre, lisp_legit, lisp_local-time,  
-  ccl, clisp, sbcl,  
+   lisp_local-time, lisp_legit,  
+  sbcl, clisp, ccl,  
   system ? builtins.currentSystem }:
 
 let
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_cl-ppcre lisp_legit lisp_local-time  ];
+      propagatedBuildInputs = [ lisp_local-time lisp_legit  ];
       inherit stdenv;
       systemName = "git-file-history";
       
       sourceProject = "${lisp-project_git-file-history}";
       patches = [];
-      lisp_dependencies = "${lisp_cl-ppcre} ${lisp_legit} ${lisp_local-time}";
+      lisp_dependencies = "${lisp_local-time} ${lisp_legit}";
       name = "lisp_git-file-history-20160825-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
-      lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
+      lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.clisp}" "${pkgs.ccl}" ];
     }

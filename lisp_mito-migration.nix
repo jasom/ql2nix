@@ -1,6 +1,6 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_mito, 
-   lisp_alexandria, lisp_cl-reexport, lisp_closer-mop, lisp_dbi, lisp_mito-core, lisp_sxql,  
+   lisp_local-time, lisp_cl-reexport, lisp_dissect, lisp_cl-ppcre, lisp_sxql, lisp_dbi,  
   sbcl, ccl,  
   system ? builtins.currentSystem }:
 
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_alexandria lisp_cl-reexport lisp_closer-mop lisp_dbi lisp_mito-core lisp_sxql  ];
+      propagatedBuildInputs = [ lisp_local-time lisp_cl-reexport lisp_dissect lisp_cl-ppcre lisp_sxql lisp_dbi  ];
       inherit stdenv;
       systemName = "mito-migration";
       
       sourceProject = "${lisp-project_mito}";
       patches = [];
-      lisp_dependencies = "${lisp_alexandria} ${lisp_cl-reexport} ${lisp_closer-mop} ${lisp_dbi} ${lisp_mito-core} ${lisp_sxql}";
-      name = "lisp_mito-migration-20170725-git";
+      lisp_dependencies = "${lisp_local-time} ${lisp_cl-reexport} ${lisp_dissect} ${lisp_cl-ppcre} ${lisp_sxql} ${lisp_dbi}";
+      name = "lisp_mito-migration-20170830-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.ccl}" ];
     }

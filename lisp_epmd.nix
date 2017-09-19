@@ -1,6 +1,6 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_cl-epmd, 
-   lisp_com-gigamonkeys-binary-data, lisp_usocket,  
+   lisp_usocket, lisp_com-gigamonkeys-binary-data,  
   sbcl, clisp, ccl,  
   system ? builtins.currentSystem }:
 
@@ -9,13 +9,13 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_com-gigamonkeys-binary-data lisp_usocket  ];
+      propagatedBuildInputs = [ lisp_usocket lisp_com-gigamonkeys-binary-data  ];
       inherit stdenv;
       systemName = "epmd";
       
       sourceProject = "${lisp-project_cl-epmd}";
       patches = [];
-      lisp_dependencies = "${lisp_com-gigamonkeys-binary-data} ${lisp_usocket}";
+      lisp_dependencies = "${lisp_usocket} ${lisp_com-gigamonkeys-binary-data}";
       name = "lisp_epmd-20140211-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.clisp}" "${pkgs.ccl}" ];

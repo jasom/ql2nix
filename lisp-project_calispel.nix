@@ -6,9 +6,9 @@ in
   buildLispProject {
       inherit stdenv;
       patches = [];
-      name = "lisp-project_calispel-20151031-git";
+      name = "lisp-project_calispel-20170830-git";
       src = pkgs.fetchurl {
-        url = "http://beta.quicklisp.org/archive/calispel/2015-10-31/calispel-20151031-git.tgz";
-        sha256 = "83945c12caeadb41786570b6bcb892424ab2ef310b6805aeb9ab0248d7f2ca00";
+        url = "http://beta.quicklisp.org/archive/calispel/2017-08-30/calispel-20170830-git.tgz";
+        sha256 = "f1cc4344ffb99b36438f6495f6ce99e9b76051218e93dd56e1540e037dfd9563";
       };
     }

@@ -1,6 +1,6 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_mime4cl, 
-   lisp_npg, lisp_sclf,  
+   lisp_sclf, lisp_npg,  
   sbcl,  
   system ? builtins.currentSystem }:
 
@@ -9,13 +9,13 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_npg lisp_sclf  ];
+      propagatedBuildInputs = [ lisp_sclf lisp_npg  ];
       inherit stdenv;
       systemName = "mime4cl";
       
       sourceProject = "${lisp-project_mime4cl}";
       patches = [];
-      lisp_dependencies = "${lisp_npg} ${lisp_sclf}";
+      lisp_dependencies = "${lisp_sclf} ${lisp_npg}";
       name = "lisp_mime4cl-20150207T211851";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ "${pkgs.sbcl}" ];

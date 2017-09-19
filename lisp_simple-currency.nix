@@ -1,7 +1,7 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_simple-currency, 
-   lisp_cl-store, lisp_drakma, lisp_simple-date, lisp_split-sequence, lisp_xmls,  
-  ccl, clisp, sbcl,  
+   lisp_cl-store, lisp_simple-date, lisp_xmls, lisp_drakma,  
+  sbcl, clisp, ccl,  
   system ? builtins.currentSystem }:
 
 let
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_cl-store lisp_drakma lisp_simple-date lisp_split-sequence lisp_xmls  ];
+      propagatedBuildInputs = [ lisp_cl-store lisp_simple-date lisp_xmls lisp_drakma  ];
       inherit stdenv;
       systemName = "simple-currency";
       
       sourceProject = "${lisp-project_simple-currency}";
       patches = [];
-      lisp_dependencies = "${lisp_cl-store} ${lisp_drakma} ${lisp_simple-date} ${lisp_split-sequence} ${lisp_xmls}";
+      lisp_dependencies = "${lisp_cl-store} ${lisp_simple-date} ${lisp_xmls} ${lisp_drakma}";
       name = "lisp_simple-currency-20150302-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
-      lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
+      lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.clisp}" "${pkgs.ccl}" ];
     }

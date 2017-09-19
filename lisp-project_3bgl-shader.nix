@@ -6,9 +6,9 @@ in
   buildLispProject {
       inherit stdenv;
       patches = [];
-      name = "lisp-project_3bgl-shader-20170725-git";
+      name = "lisp-project_3bgl-shader-20170830-git";
       src = pkgs.fetchurl {
-        url = "http://beta.quicklisp.org/archive/3bgl-shader/2017-07-25/3bgl-shader-20170725-git.tgz";
-        sha256 = "e3f5a9eb230ecfaba2e93e84defbfeded6db4ce5daabddf16a4a39ba841726e3";
+        url = "http://beta.quicklisp.org/archive/3bgl-shader/2017-08-30/3bgl-shader-20170830-git.tgz";
+        sha256 = "1968d98bca92f3a8d55d0aa2a9487fc76017d4e86c24c82bbb478f36caead393";
       };
     }

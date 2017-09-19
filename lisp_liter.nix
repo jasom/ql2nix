@@ -1,6 +1,6 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_colliflower, 
-   lisp_iterate, lisp_serapeum,  
+   lisp_serapeum, lisp_iterate,  
   sbcl, clisp, ccl,  
   system ? builtins.currentSystem }:
 
@@ -9,13 +9,13 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_iterate lisp_serapeum  ];
+      propagatedBuildInputs = [ lisp_serapeum lisp_iterate  ];
       inherit stdenv;
       systemName = "liter";
       
       sourceProject = "${lisp-project_colliflower}";
       patches = [];
-      lisp_dependencies = "${lisp_iterate} ${lisp_serapeum}";
+      lisp_dependencies = "${lisp_serapeum} ${lisp_iterate}";
       name = "lisp_liter-20151218-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.clisp}" "${pkgs.ccl}" ];

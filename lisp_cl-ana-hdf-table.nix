@@ -1,7 +1,7 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_cl-ana, 
-   lisp_alexandria, lisp_cl-ana-binary-tree, lisp_cl-ana-hdf-cffi, lisp_cl-ana-hdf-typespec, lisp_cl-ana-hdf-utils, lisp_cl-ana-list-utils, lisp_cl-ana-memoization, lisp_cl-ana-table, lisp_cl-ana-typed-table, lisp_cl-ana-typespec,  
-  sbcl, clisp, ccl,  
+  hdf5,   lisp_cffi, lisp_split-sequence, lisp_alexandria,  
+  ccl, clisp, sbcl,  
   system ? builtins.currentSystem }:
 
 let
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_alexandria lisp_cl-ana-binary-tree lisp_cl-ana-hdf-cffi lisp_cl-ana-hdf-typespec lisp_cl-ana-hdf-utils lisp_cl-ana-list-utils lisp_cl-ana-memoization lisp_cl-ana-table lisp_cl-ana-typed-table lisp_cl-ana-typespec  ];
+      propagatedBuildInputs = [ lisp_cffi lisp_split-sequence lisp_alexandria hdf5 ];
       inherit stdenv;
       systemName = "cl-ana.hdf-table";
       
       sourceProject = "${lisp-project_cl-ana}";
       patches = [];
-      lisp_dependencies = "${lisp_alexandria} ${lisp_cl-ana-binary-tree} ${lisp_cl-ana-hdf-cffi} ${lisp_cl-ana-hdf-typespec} ${lisp_cl-ana-hdf-utils} ${lisp_cl-ana-list-utils} ${lisp_cl-ana-memoization} ${lisp_cl-ana-table} ${lisp_cl-ana-typed-table} ${lisp_cl-ana-typespec}";
-      name = "lisp_cl-ana-hdf-table-20170725-git";
+      lisp_dependencies = "${lisp_cffi} ${lisp_split-sequence} ${lisp_alexandria}";
+      name = "lisp_cl-ana-hdf-table-20170830-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
-      lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.clisp}" "${pkgs.ccl}" ];
+      lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
     }

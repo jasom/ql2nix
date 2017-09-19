@@ -6,9 +6,9 @@ in
   buildLispProject {
       inherit stdenv;
       patches = [];
-      name = "lisp-project_clml-20170630-git";
+      name = "lisp-project_clml-20170830-git";
       src = pkgs.fetchurl {
-        url = "http://beta.quicklisp.org/archive/clml/2017-06-30/clml-20170630-git.tgz";
-        sha256 = "15c74d01aa8668cca13cfd1d683fa5098cc5f525d1a918a7bd19d87708850fd3";
+        url = "http://beta.quicklisp.org/archive/clml/2017-08-30/clml-20170830-git.tgz";
+        sha256 = "211d64091b7c3b1b06e9befcb5b4a02d86275aabe7cef8bd927e9a39a1866a97";
       };
     }

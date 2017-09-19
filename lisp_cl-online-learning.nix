@@ -16,7 +16,7 @@ in
       sourceProject = "${lisp-project_cl-online-learning}";
       patches = [];
       lisp_dependencies = "${lisp_parse-number} ${lisp_split-sequence}";
-      name = "lisp_cl-online-learning-20170403-git";
+      name = "lisp_cl-online-learning-20170830-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.clisp}" "${pkgs.ccl}" ];
     }

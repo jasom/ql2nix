@@ -6,9 +6,9 @@ in
   buildLispProject {
       inherit stdenv;
       patches = [];
-      name = "lisp-project_dexador-20170725-git";
+      name = "lisp-project_dexador-20170830-git";
       src = pkgs.fetchurl {
-        url = "http://beta.quicklisp.org/archive/dexador/2017-07-25/dexador-20170725-git.tgz";
-        sha256 = "d4d7866bbb73d37eb192daa73bd7d555bc26d61fee7b4978cb87ede60fe0b2f4";
+        url = "http://beta.quicklisp.org/archive/dexador/2017-08-30/dexador-20170830-git.tgz";
+        sha256 = "6d37d5cc9543a375096bce66dd0da7e0a5d251562cb226ef67e130137b6654a5";
       };
     }

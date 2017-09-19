@@ -1,7 +1,7 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_cl-opsresearch, 
-  gsl,   lisp_cffi, lisp_cl-opsresearch,  
-  sbcl, clisp, ccl,  
+  gsl,   lisp_cffi,  
+  ccl, clisp, sbcl,  
   system ? builtins.currentSystem }:
 
 let
@@ -9,14 +9,14 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_cffi lisp_cl-opsresearch gsl ];
+      propagatedBuildInputs = [ lisp_cffi gsl ];
       inherit stdenv;
       systemName = "or-gsl";
       
       sourceProject = "${lisp-project_cl-opsresearch}";
       patches = [];
-      lisp_dependencies = "${lisp_cffi} ${lisp_cl-opsresearch}";
+      lisp_dependencies = "${lisp_cffi}";
       name = "lisp_or-gsl-20170403-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
-      lisp_implementations = [ "${pkgs.sbcl}" "${pkgs.clisp}" "${pkgs.ccl}" ];
+      lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
     }

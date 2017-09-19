@@ -6,9 +6,9 @@ in
   buildLispProject {
       inherit stdenv;
       patches = [];
-      name = "lisp-project_cl-autowrap-20170725-git";
+      name = "lisp-project_cl-autowrap-20170830-git";
       src = pkgs.fetchurl {
-        url = "http://beta.quicklisp.org/archive/cl-autowrap/2017-07-25/cl-autowrap-20170725-git.tgz";
-        sha256 = "fd570d8f10a77b162f9ca4494ea9fd1fa6dd4f5ee1ef02f10a7a5d32c3fe5205";
+        url = "http://beta.quicklisp.org/archive/cl-autowrap/2017-08-30/cl-autowrap-20170830-git.tgz";
+        sha256 = "2d7fec28316365cffbd02cecf0f121cdb80c7d7aed53dd881044ec8b6ffc9e47";
       };
     }

@@ -6,9 +6,9 @@ in
   buildLispProject {
       inherit stdenv;
       patches = [];
-      name = "lisp-project_doubly-linked-list-20170725-git";
+      name = "lisp-project_doubly-linked-list-20170830-git";
       src = pkgs.fetchurl {
-        url = "http://beta.quicklisp.org/archive/doubly-linked-list/2017-07-25/doubly-linked-list-20170725-git.tgz";
-        sha256 = "f806b3cbfa52d66990bff53638d62fdb6acd86ddc44d57d2cf40f0eb29d13d7f";
+        url = "http://beta.quicklisp.org/archive/doubly-linked-list/2017-08-30/doubly-linked-list-20170830-git.tgz";
+        sha256 = "46de0955ab3ccc3e9657aaeea69d94c2f8ddd8d347ae235438ef2d014256c062";
       };
     }
