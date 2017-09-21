@@ -37,7 +37,6 @@
    "libdrm[.\"-]" "libdrm" "libdrm"
    "libEGL[.\"-]" "mesa" "mesa"
    "libwebkit2gtk[.\"-]" "gnome3" "gnome3.webkitgtk"
-   "libosicat[.\"-]" :blacklist :blacklist
    "Python[.]h:" :blacklist :blacklist
    "libportaudio[.\"-]" "portaudio" "portaudio"
    "libzmq[.\"-]" "zeromq" "zeromq"
@@ -352,7 +351,10 @@ in
   (gethash system-name *system-lisp-deps*))
 
 (defun append-lisp-dep (system-name dep-name)
-  (push dep-name (gethash system-name *system-lisp-deps*)))
+  (when (member dep-name (gethash system-name *system-lisp-deps*) :test #'equal)
+    (format *error-output* "System ~A already depends on ~A~%" system-name dep-name)
+    (throw 'ql2nix-exit 3))
+  (pushnew dep-name (gethash system-name *system-lisp-deps*) :test #'equal))
 
 
 (defun flush-lisp-depcache (input-directory)
@@ -452,7 +454,7 @@ in
 
 (defun main2 (input-directory output-directory skip)
   (declare (ignore skip))
-  (setf *kernel* (make-kernel 8))
+  (setf *kernel* (make-kernel 12))
   (let* ((completed-systems (make-hash-table :test #'equal))
 	 (channel (make-channel))
 	 (*information-directory* input-directory))
@@ -657,8 +659,8 @@ in
     (library-add system new-dep new-input)))
 
 (defun library-add (system dep input)
-  (format *error-output* "Existing deps ~S~%" (system-foreign-deps system :deps t))
-  (when (member dep (system-foreign-deps system :deps t) :test #'equal)
+  (when
+      (member input (system-foreign-deps system :inputs t) :test #'equal)
     (format *error-output* "attempting to add duplicate foreign-dependency ~A to ~A~%" dep system)
     (throw 'ql2nix-exit 1))
   (append-to-input-file
@@ -699,74 +701,76 @@ in
 	  (t (error "Unknown implementation ~a" impl))))))
 
 (defun maybe-correct (system-name)
- (cond
-   ((check-all-libs system-name)
+  (cond
+    ((check-all-libs system-name)
+     t)
+    ((cl-ppcre:register-groups-bind (dep by)
+	 ("Unmet Dependency: ([^ ]*) by ([^ ]*)" *nix-build-output*)
+       (cond
+	 ((and				; First check if we have an unkown dep in "by"
+	   (not (equalp by system-name))
+	   (not (member by (system-lisp-deps system-name) :test #'equalp)))
+	  (append-lisp-dep system-name by))
+	 ((equalp dep system-name)
+	  (blacklist-system system-name "System unable to find itself!"))
+	 ((member dep (system-lisp-deps system-name) :test #'equalp)
+	  (blacklist-system system-name "Unable to find ~A even after it's in dependencies!"
+			    dep))
+	 (t
+	  (append-lisp-dep system-name dep)))
+       t)
+     t)
+    ((library-test "libosicat[.\"-]")
+     (append-lisp-dep system-name "osicat"))
+    ((cl-ppcre:register-groups-bind (dep)
+	 ("Missing component: (.*)" *nix-build-output*)
+       (cond
+	 ((equalp dep system-name)
+	  (blacklist-system system-name "System unable to find itself!"))
+	 ((member dep (system-lisp-deps system-name) :test #'equalp)
+	  (blacklist-system system-name "Unable to find ~A even after it's in dependencies!"
+			    dep))
+	 (t
+	  (append-lisp-dep system-name dep)))
+       t)
+     t)
+    #|
+    ((let ((pkg (scan-group-one "Component #?:([^ ]+) not found" *nix-build-output*)))
+    (format *error-output* "~&Pkg: ~A~%" pkg)
+    (when 
+    (and pkg
+    (not (equalp pkg system-name))
+    (not (member pkg (system-lisp-deps system-name) :test #'equalp)))
+    (append-lisp-dep system-name (string-downcase pkg))))
     t)
-   ((cl-ppcre:register-groups-bind (dep by)
-	("Unmet Dependency: ([^ ]*) by ([^ ]*)" *nix-build-output*)
-      (cond
-	((and				; First check if we have an unkown dep in "by"
-	  (not (equalp by system-name))
-	  (not (member by (system-lisp-deps system-name) :test #'equalp)))
-	 (append-lisp-dep system-name by))
-	((equalp dep system-name)
-	 (blacklist-system system-name "System unable to find itself!"))
-	((member dep (system-lisp-deps system-name) :test #'equalp)
-	 (blacklist-system system-name "Unable to find ~A even after it's in dependencies!"
-			   dep))
-	(t
-	 (append-lisp-dep system-name dep)))
-      t)
+    ((and
+    (cl-ppcre:scan "Component \"([^\"]+)\" not found" *nix-build-output*)
+    (let ((name (elt (nth-value 1 (cl-ppcre:scan-to-strings
+    "Component \"([^\"]+)\" not found"
+    *nix-build-output*))
+    0)))
+    (unless (equalp system-name name)
+    (append-lisp-dep system-name (string-downcase name)))))
     t)
-((cl-ppcre:register-groups-bind (dep)
-	("Missing component: (.*)" *nix-build-output*)
-      (cond
-	((equalp dep system-name)
-	 (blacklist-system system-name "System unable to find itself!"))
-	((member dep (system-lisp-deps system-name) :test #'equalp)
-	 (blacklist-system system-name "Unable to find ~A even after it's in dependencies!"
-			   dep))
-	(t
-	 (append-lisp-dep system-name dep)))
-      t)
-    t)
-   #|
-     ((let ((pkg (scan-group-one "Component #?:([^ ]+) not found" *nix-build-output*)))
-	(format *error-output* "~&Pkg: ~A~%" pkg)
-	(when 
-	    (and pkg
-		 (not (equalp pkg system-name))
-		 (not (member pkg (system-lisp-deps system-name) :test #'equalp)))
-	  (append-lisp-dep system-name (string-downcase pkg))))
-      t)
-     ((and
-       (cl-ppcre:scan "Component \"([^\"]+)\" not found" *nix-build-output*)
-       (let ((name (elt (nth-value 1 (cl-ppcre:scan-to-strings
-				      "Component \"([^\"]+)\" not found"
-				      *nix-build-output*))
-                        0)))
-         (unless (equalp system-name name)
-	   (append-lisp-dep system-name (string-downcase name)))))
-      t)
-   |#
-     ((cl-ppcre:scan "Unable to determine Python include directory" *nix-build-output*)
-      (blacklist-system system-name "Python include not working yet"))
-     ((cl-ppcre:scan "does not currently work with GSL version 2.x" *nix-build-output*)
-      (library-replace system-name "gsl" "gsl" "gsl_1" "gsl_1"))
-     ((and
-       (multiple-value-bind (match groups)
-	   (cl-ppcre:scan-to-strings "Component ([^: ]*::?([^ ]*)|\"([^\"]+)\"|([^ ]+)) not found" *nix-build-output*)
-         (when match
-           (format *error-output* "~^~%GROUPS: ~A~%" groups))
-         (unless (or (not match)
-                     (equalp
-		      (or (elt groups 1) (elt groups 2) (elt groups 3))
-		      system-name))
-	   (append-lisp-dep system-name
-			    (string-downcase
-			     (or (elt groups 1) (elt groups 2) (elt groups 3)))))))
-      t)
-     (t nil)))
+    |#
+    ((cl-ppcre:scan "Unable to determine Python include directory" *nix-build-output*)
+     (blacklist-system system-name "Python include not working yet"))
+    ((cl-ppcre:scan "does not currently work with GSL version 2.x" *nix-build-output*)
+     (library-replace system-name "gsl" "gsl" "gsl_1" "gsl_1"))
+    ((and
+      (multiple-value-bind (match groups)
+	  (cl-ppcre:scan-to-strings "Component ([^: ]*::?([^ ]*)|\"([^\"]+)\"|([^ ]+)) not found" *nix-build-output*)
+	(when match
+	  (format *error-output* "~^~%GROUPS: ~A~%" groups))
+	(unless (or (not match)
+		    (equalp
+		     (or (elt groups 1) (elt groups 2) (elt groups 3))
+		     system-name))
+	  (append-lisp-dep system-name
+			   (string-downcase
+			    (or (elt groups 1) (elt groups 2) (elt groups 3)))))))
+     t)
+    (t nil)))
 
 (defun fixup-rules (system-name)
   (format *error-output* "Fixing up ~A~%" system-name)

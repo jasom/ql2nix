@@ -8,6 +8,9 @@
 *.swp
 /input/extradeps.txt
 /input/extralispdeps.txt
+/input/extralispdeps.conspack
 /input/blacklist.clisp
 /input/blacklist.sbcl
 /input/blacklist.ccl
+\#*#
+.#*
