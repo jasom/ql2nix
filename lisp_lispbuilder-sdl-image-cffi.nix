@@ -1,6 +1,6 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_lispbuilder, 
-  SDL_image, SDL,   lisp_cffi,  
+  SDL, SDL_image,   lisp_cffi,  
   ccl, sbcl,  
   system ? builtins.currentSystem }:
 
@@ -9,7 +9,7 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_cffi SDL_image SDL ];
+      propagatedBuildInputs = [ lisp_cffi SDL SDL_image ];
       inherit stdenv;
       systemName = "lispbuilder-sdl-image-cffi";
       

@@ -1,6 +1,6 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_cl-sdl2-ttf, 
-  libffi, SDL2_ttf,   lisp_cffi-libffi, lisp_sdl2, lisp_cl-autowrap, lisp_defpackage-plus, lisp_alexandria,  
+  SDL2_ttf,   lisp_cffi-libffi, lisp_sdl2, lisp_cl-autowrap, lisp_defpackage-plus, lisp_alexandria,  
   ccl, sbcl,  
   system ? builtins.currentSystem }:
 
@@ -9,7 +9,7 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_cffi-libffi lisp_sdl2 lisp_cl-autowrap lisp_defpackage-plus lisp_alexandria libffi SDL2_ttf ];
+      propagatedBuildInputs = [ lisp_cffi-libffi lisp_sdl2 lisp_cl-autowrap lisp_defpackage-plus lisp_alexandria SDL2_ttf ];
       inherit stdenv;
       systemName = "sdl2-ttf";
       

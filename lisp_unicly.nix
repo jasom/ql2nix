@@ -1,6 +1,6 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_unicly, 
-   lisp_flexi-streams, lisp_split-sequence, lisp_ironclad,  
+   lisp_split-sequence, lisp_ironclad,  
   sbcl,  
   system ? builtins.currentSystem }:
 
@@ -9,13 +9,13 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_flexi-streams lisp_split-sequence lisp_ironclad  ];
+      propagatedBuildInputs = [ lisp_split-sequence lisp_ironclad  ];
       inherit stdenv;
       systemName = "unicly";
       
       sourceProject = "${lisp-project_unicly}";
       patches = [];
-      lisp_dependencies = "${lisp_flexi-streams} ${lisp_split-sequence} ${lisp_ironclad}";
+      lisp_dependencies = "${lisp_split-sequence} ${lisp_ironclad}";
       name = "lisp_unicly-20120909-git";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
       lisp_implementations = [ "${pkgs.sbcl}" ];

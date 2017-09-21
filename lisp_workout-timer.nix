@@ -1,6 +1,6 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_workout-timer, 
-  libvorbis,   lisp_command-line-arguments, lisp_local-time, lisp_mixalot-vorbis, lisp_mixalot, lisp_cffi-toolchain,  
+   lisp_command-line-arguments, lisp_local-time, lisp_mixalot-vorbis, lisp_mixalot, lisp_cffi-toolchain,  
   ccl, sbcl,  
   system ? builtins.currentSystem }:
 
@@ -9,7 +9,7 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_command-line-arguments lisp_local-time lisp_mixalot-vorbis lisp_mixalot lisp_cffi-toolchain libvorbis ];
+      propagatedBuildInputs = [ lisp_command-line-arguments lisp_local-time lisp_mixalot-vorbis lisp_mixalot lisp_cffi-toolchain  ];
       inherit stdenv;
       systemName = "workout-timer";
       

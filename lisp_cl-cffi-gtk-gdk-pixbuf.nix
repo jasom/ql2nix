@@ -1,6 +1,6 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_cl-cffi-gtk, 
-  gdk_pixbuf,   lisp_closer-mop, lisp_bordeaux-threads, lisp_trivial-garbage, lisp_iterate, lisp_cffi,  
+  glib, gdk_pixbuf,   lisp_closer-mop, lisp_bordeaux-threads, lisp_trivial-garbage, lisp_iterate, lisp_cffi,  
   ccl, clisp, sbcl,  
   system ? builtins.currentSystem }:
 
@@ -9,7 +9,7 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_closer-mop lisp_bordeaux-threads lisp_trivial-garbage lisp_iterate lisp_cffi gdk_pixbuf ];
+      propagatedBuildInputs = [ lisp_closer-mop lisp_bordeaux-threads lisp_trivial-garbage lisp_iterate lisp_cffi glib gdk_pixbuf ];
       inherit stdenv;
       systemName = "cl-cffi-gtk-gdk-pixbuf";
       

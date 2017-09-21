@@ -12,7 +12,7 @@ in
       propagatedBuildInputs = [ lisp_cffi-grovel lisp_trivial-features  ];
       inherit stdenv;
       systemName = "osicat";
-      
+      NoBundle = 1;
       sourceProject = "${lisp-project_osicat}";
       patches = [];
       lisp_dependencies = "${lisp_cffi-grovel} ${lisp_trivial-features}";

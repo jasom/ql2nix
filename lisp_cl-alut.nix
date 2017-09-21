@@ -1,6 +1,6 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_cl-openal, 
-  freealut, openal,   lisp_cffi,  
+  openal, freealut,   lisp_cffi,  
   ccl, clisp, sbcl,  
   system ? builtins.currentSystem }:
 
@@ -9,7 +9,7 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_cffi freealut openal ];
+      propagatedBuildInputs = [ lisp_cffi openal freealut ];
       inherit stdenv;
       systemName = "cl-alut";
       

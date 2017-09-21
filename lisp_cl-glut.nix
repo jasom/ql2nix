@@ -1,6 +1,6 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_cl-opengl, 
-  freeglut, mesa,   lisp_cffi, lisp_alexandria,  
+  mesa, freeglut,   lisp_cffi, lisp_alexandria,  
   sbcl, clisp, ccl,  
   system ? builtins.currentSystem }:
 
@@ -9,7 +9,7 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_cffi lisp_alexandria freeglut mesa ];
+      propagatedBuildInputs = [ lisp_cffi lisp_alexandria mesa freeglut ];
       inherit stdenv;
       systemName = "cl-glut";
       

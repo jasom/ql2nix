@@ -1,6 +1,6 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_cl-cffi-gtk, 
-  cairo,   lisp_iterate, lisp_cffi,  
+  glib, cairo,   lisp_iterate, lisp_cffi,  
   sbcl, clisp, ccl,  
   system ? builtins.currentSystem }:
 
@@ -9,7 +9,7 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_iterate lisp_cffi cairo ];
+      propagatedBuildInputs = [ lisp_iterate lisp_cffi glib cairo ];
       inherit stdenv;
       systemName = "cl-cffi-gtk-cairo";
       

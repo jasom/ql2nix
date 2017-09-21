@@ -1,7 +1,7 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_cl-generic-arithmetic, 
    lisp_conduit-packages,  
-  ccl, sbcl,  
+  ccl, clisp, sbcl,  
   system ? builtins.currentSystem }:
 
 let
@@ -18,5 +18,5 @@ in
       lisp_dependencies = "${lisp_conduit-packages}";
       name = "lisp_cl-generic-arithmetic-20130720-hg";
       #lisp = "${pkgs.sbcl}/bin/sbcl";
-      lisp_implementations = [ "${pkgs.ccl}" "${pkgs.sbcl}" ];
+      lisp_implementations = [ "${pkgs.ccl}" "${pkgs.clisp}" "${pkgs.sbcl}" ];
     }

@@ -1,6 +1,6 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_cl-rabbit, 
-  rabbitmq-c, libffi,   lisp_cl-ppcre, lisp_cffi-grovel,  
+  libffi, rabbitmq-c,   lisp_cl-ppcre, lisp_cffi-grovel,  
   sbcl, ccl,  
   system ? builtins.currentSystem }:
 
@@ -9,7 +9,7 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_cl-ppcre lisp_cffi-grovel rabbitmq-c libffi ];
+      propagatedBuildInputs = [ lisp_cl-ppcre lisp_cffi-grovel libffi rabbitmq-c ];
       inherit stdenv;
       systemName = "cl-rabbit";
       

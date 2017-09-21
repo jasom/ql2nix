@@ -1,6 +1,6 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_cl-cairo2, 
-  gnome2,   lisp_metabang-bind, lisp_cl-utilities, lisp_cl-colors, lisp_cl-freetype2,  
+  cairo, gnome2,   lisp_metabang-bind, lisp_cl-utilities, lisp_cl-colors, lisp_cl-freetype2,  
   sbcl, ccl,  
   system ? builtins.currentSystem }:
 
@@ -9,7 +9,7 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_metabang-bind lisp_cl-utilities lisp_cl-colors lisp_cl-freetype2 gnome2.gtk ];
+      propagatedBuildInputs = [ lisp_metabang-bind lisp_cl-utilities lisp_cl-colors lisp_cl-freetype2 cairo gnome2.gtk ];
       inherit stdenv;
       systemName = "cl-cairo2-xlib";
       

@@ -1,6 +1,6 @@
 
 { buildLispPackage, stdenv, fetchurl, lisp-project_cells-gtk3, 
-  freeglut, gnome2,   lisp_cl-glu, lisp_cl-opengl, lisp_cl-cairo2-xlib, lisp_cl-cairo2, lisp_bordeaux-threads, lisp_cffi, lisp_cells,  
+  gnome2, freeglut,   lisp_cl-glu, lisp_cl-opengl, lisp_cl-cairo2-xlib, lisp_cl-cairo2, lisp_bordeaux-threads, lisp_cffi, lisp_cells,  
   ccl, sbcl,  
   system ? builtins.currentSystem }:
 
@@ -9,7 +9,7 @@ let
   #buildLispPackage = pkgs.callPackage ./lisp-builder/default.nix pkgs.sbcl;
 in
   buildLispPackage {
-      propagatedBuildInputs = [ lisp_cl-glu lisp_cl-opengl lisp_cl-cairo2-xlib lisp_cl-cairo2 lisp_bordeaux-threads lisp_cffi lisp_cells freeglut gnome2.gtkglext ];
+      propagatedBuildInputs = [ lisp_cl-glu lisp_cl-opengl lisp_cl-cairo2-xlib lisp_cl-cairo2 lisp_bordeaux-threads lisp_cffi lisp_cells gnome2.gtkglext freeglut ];
       inherit stdenv;
       systemName = "cells-gtk";
       
