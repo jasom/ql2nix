@@ -32,3 +32,4 @@ cl-ana.makeres-progress # manual blacklist until gsll works on sbcl
 cl-ana.makeres-utils # manual blacklist until gsll works on sbcl
 cl-ana # manual blacklist until gsll works on sbcl
 quicklisp-slime-helper # manual blacklist no quicklisp means no QL-slime helper
+cl-feedparser #manual blacklist; odd assertion failure

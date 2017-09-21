@@ -1,3 +1,4 @@
 cffi-grovel
 weblocks-stores
 swank
+osicat
